@@ -7,7 +7,7 @@ const Router = () => {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<ProtectedRoute />} />
-                <Route path="/login" element={<LoginPage />} />
+                <Route path="/app/login" element={<LoginPage />} />
             </Routes>
         </BrowserRouter>
 

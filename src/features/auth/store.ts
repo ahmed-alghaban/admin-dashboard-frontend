@@ -9,6 +9,6 @@ export const useAuthStore = create<AuthState>()(
       setToken: (token) => set({ token }),
       clearToken: () => set({ token: null }),
     }),
-    { name: "auth-storage" }
+    { name: "auth-storage" },
   )
 );
