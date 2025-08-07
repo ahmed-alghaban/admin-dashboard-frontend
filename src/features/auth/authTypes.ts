@@ -12,3 +12,16 @@ export interface LoginInput {
 export interface LoginResponse {
   token: string;
 }
+
+export interface RoleGuardProps {
+  roles: string[];
+  children: React.ReactNode;
+}
+
+export interface JWTPayload {
+  nameid: string; // User ID
+  name: string; // Full name
+  role: string; // User role
+  email: string; // User email
+  exp: number; // Expiration time
+}

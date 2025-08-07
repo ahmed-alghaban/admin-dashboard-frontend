@@ -6,9 +6,11 @@ import { ThemeToggle } from '@/components/theme-toggle';
 import { Link } from 'react-router-dom';
 import { Menu } from 'lucide-react';
 import { useState } from 'react';
+import { useAuthStore } from '@/features/auth/store';
 
 export const LandingNavbar = () => {
     const [open, setOpen] = useState(false);
+    const { token, clearToken } = useAuthStore();
 
     return (
         <header className="w-full px-4 py-3 border-b shadow-sm bg-background">
@@ -21,9 +23,13 @@ export const LandingNavbar = () => {
                 {/* Desktop nav */}
                 <nav className="hidden md:flex items-center gap-4">
                     <ThemeToggle />
-                    <Link to="/login">
-                        <Button variant="outline" size="sm">Login</Button>
-                    </Link>
+                    {token ? (
+                        <Button variant="outline" size="sm" onClick={clearToken}>Logout</Button>
+                    ) : (
+                        <Link to="/login">
+                            <Button variant="outline" size="sm">Login</Button>
+                        </Link>
+                    )}
                 </nav>
 
                 {/* Mobile nav */}
