@@ -1,9 +1,9 @@
-import LoginPage from "./features/auth/pages/LoginPage";
+import Router from "@/routes/Router";
 
 const App = () => {
   return (
     <>
-      <LoginPage />
+      <Router />
     </>
   );
 };
