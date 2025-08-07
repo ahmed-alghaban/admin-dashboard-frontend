@@ -44,10 +44,10 @@ export function LoginForm({
                   <Input
                     id="email"
                     type="email"
-                    placeholder="m@example.com"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    className="transition-all duration-300 ease-in-out hover:scale-[1.02] focus:scale-[1.02] focus:shadow-lg"
                   />
                 </div>
                 <div className="grid gap-3">
@@ -55,22 +55,41 @@ export function LoginForm({
                     <Label htmlFor="password">Password</Label>
                     <a
                       href="#"
-                      className="ml-auto text-sm underline-offset-4 hover:underline"
+                      className="ml-auto text-sm underline-offset-4 hover:underline transition-all duration-75 hover:text-primary"
                     >
                       Forgot your password?
                     </a>
                   </div>
-                  <Input id="password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
+                  <Input
+                    id="password"
+                    type="password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="transition-all duration-300 ease-in-out hover:scale-[1.02] focus:scale-[1.02] focus:shadow-lg"
+                  />
                 </div>
-                {isLoading ? (
-                  <Button type="submit" className="w-full" disabled>
-                    Logging in...
-                  </Button>
-                ) : (
-                  <Button type="submit" className="w-full">
-                    Login
-                  </Button>
-                )}
+                <div>
+                  {isLoading ? (
+                    <Button
+                      type="submit"
+                      className="w-full transition-all duration-300 ease-in-out animate-pulse"
+                      disabled
+                    >
+                      <span className="inline-flex items-center gap-2">
+                        <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+                        Logging in...
+                      </span>
+                    </Button>
+                  ) : (
+                    <Button
+                      type="submit"
+                      className="w-full transition-all duration-300 ease-in-out hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]"
+                    >
+                      Login
+                    </Button>
+                  )}
+                </div>
               </div>
             </div>
           </form>

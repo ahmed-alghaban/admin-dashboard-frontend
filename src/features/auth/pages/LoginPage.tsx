@@ -1,3 +1,4 @@
+import { LandingNavbar } from "@/components/shared/LandingNavbar";
 import { LoginForm } from "@/components/ui/login-form";
 import { Helmet } from "react-helmet";
 import { ToastContainer } from "react-toastify";
@@ -14,6 +15,7 @@ const LoginPage = () => {
           href="https://cdn.jsdelivr.net/npm/@tabler/icons/icons/lock.svg"
         />
       </Helmet>
+      <LandingNavbar />
       <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
         <div className="flex w-full max-w-sm flex-col gap-6">
           <LoginForm />
