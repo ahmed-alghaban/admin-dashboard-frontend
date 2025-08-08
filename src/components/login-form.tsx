@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { useLogin } from "@/features/auth/hooks/useLogin";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import type { LoginInput } from "@/features/auth/authTypes";
+import { useNavigate } from "react-router-dom";
 
 
 export function LoginForm({
@@ -21,9 +22,11 @@ export function LoginForm({
 
   const { register, handleSubmit, formState: { errors } } = useForm<LoginInput>();
   const { mutate: login, isPending: isLoading } = useLogin();
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<LoginInput> = async (data) => {
     await login(data);
+    navigate("/app/dashboard");
   }
 
   return (
