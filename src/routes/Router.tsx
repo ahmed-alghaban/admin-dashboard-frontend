@@ -1,5 +1,5 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import MainLayout from "@/components/layout/MainLayout";
+import MainLayout from "@/components/shared/MainLayout";
 import { ProtectedRoute } from "@/routes/ProtectedRoute";
 import { RoleGuard } from "@/guards/RoleGuard";
 
@@ -7,7 +7,10 @@ import { RoleGuard } from "@/guards/RoleGuard";
 import HomePage from "@/pages/HomePage";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import ForbiddenPage from "@/pages/ForbiddenPage";
-import { SideDrawer } from "@/components/ui/SideDrawer";
+import { productColumns, type ProductRow } from "@/components/shared/Tes";
+import { DataTable } from "@/components/ui/DataTable";
+import type { ColumnDef } from "@tanstack/react-table";
+import { Button } from "@/components/ui/button";
 
 const Router = () => (
     <BrowserRouter>
@@ -38,9 +41,19 @@ const Router = () => (
                     path="users"
                     element={
                         <RoleGuard roles={["Admin"]}>
-                            <SideDrawer>
-                                <div>Users Page</div>
-                            </SideDrawer>
+                            <DataTable<ProductRow, unknown>
+                                columns={productColumns as ColumnDef<ProductRow, unknown>[]}
+                                data={[
+                                    {
+                                        productId: "1",
+                                        productName: "Product 1",
+                                        sku: "1234567890",
+                                        price: 100,
+                                        status: "Active",
+                                        action: <Button variant="outline">Edit</Button>,
+                                    } as ProductRow,
+                                ]}
+                            />
                         </RoleGuard>
                     }
                 />
