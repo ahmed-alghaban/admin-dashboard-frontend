@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/types";
 
 const TypographyH3 = ({
   children,

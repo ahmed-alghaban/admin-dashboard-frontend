@@ -1,21 +1,22 @@
 import * as React from "react"
 import {
-  AudioWaveform,
   BookOpen,
-  Bot,
-  Command,
   Frame,
-  GalleryVerticalEnd,
   Map,
   PieChart,
   Settings2,
-  SquareTerminal,
+  Users,
+  Package,
+  FolderOpen,
+  BarChart3,
+  FileText,
+  Shield,
+  LayoutDashboard,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
 import { NavProjects } from "@/components/nav-projects"
 import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
 import {
   Sidebar,
   SidebarContent,
@@ -31,108 +32,113 @@ const data = {
     email: "m@example.com",
     avatar: "/avatars/shadcn.jpg",
   },
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
+  // Removed teams to disable dropdown/listing behavior
   navMain: [
     {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
+      title: "Dashboard",
+      url: "/app/dashboard",
+      icon: LayoutDashboard,
       isActive: true,
+      items: [],
+      isMainPage: true, // Special flag for dashboard
+    },
+    {
+      title: "Users",
+      url: "/app/users",
+      icon: Users,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "All Users",
+          url: "/app/users",
         },
         {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
+          title: "Add User",
+          url: "/app/users/add",
         },
       ],
     },
     {
-      title: "Models",
-      url: "#",
-      icon: Bot,
+      title: "Roles & Permissions",
+      url: "/app/roles",
+      icon: Shield,
       items: [
         {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
+          title: "All Roles",
+          url: "/app/roles",
         },
       ],
     },
     {
-      title: "Documentation",
-      url: "#",
+      title: "Products",
+      url: "/app/products",
+      icon: Package,
+      items: [
+        {
+          title: "All Products",
+          url: "/app/products",
+        },
+        {
+          title: "Add Product",
+          url: "/app/products/add",
+        },
+      ],
+    },
+    {
+      title: "Categories",
+      url: "/app/categories",
+      icon: FolderOpen,
+      items: [
+        {
+          title: "All Categories",
+          url: "/app/categories",
+        },
+        {
+          title: "Add Category",
+          url: "/app/categories/add",
+        },
+      ],
+    },
+    {
+      title: "Inventory",
+      url: "/app/inventory",
+      icon: BarChart3,
+      items: [
+        {
+          title: "Inventory List",
+          url: "/app/inventory",
+        },
+        {
+          title: "Edit Inventory",
+          url: "/app/inventory/edit",
+        },
+      ],
+    },
+    {
+      title: "Orders",
+      url: "/app/orders",
+      icon: FileText,
+      items: [
+        {
+          title: "All Orders",
+          url: "/app/orders",
+        },
+        {
+          title: "Add Order",
+          url: "/app/orders/add",
+        },
+      ],
+    },
+    {
+      title: "Audit Logs",
+      url: "/app/audit-logs",
       icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
+      items: [],
     },
     {
       title: "Settings",
-      url: "#",
+      url: "/app/settings",
       icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
+      items: [],
     },
   ],
   projects: [
@@ -158,7 +164,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <div className="flex items-center gap-2 px-2 py-2 transition-all group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
+          <Shield className="h-5 w-5 shrink-0 group-data-[collapsible=icon]:h-6 group-data-[collapsible=icon]:w-6" aria-hidden="true" />
+          <span className="font-semibold truncate group-data-[collapsible=icon]:hidden">Admin Dashboard</span>
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />

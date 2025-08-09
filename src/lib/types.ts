@@ -1,0 +1,20 @@
+export interface ConfirmDialogProps {
+  title?: string;
+  description?: string;
+  onConfirm: () => void;
+  triggerText?: string;
+}
+
+export type Trend = {
+  value: number;           // e.g., +12.5 or -7.3
+  label?: string;          // e.g., "vs last week"
+};
+
+export type StatsCardProps = {
+  title: string;           // "Total Sales"
+  value: string | number;  // "SAR 12,340" or 12340
+  subtitle?: string;       // "This month"
+  icon?: React.ReactNode;  // <TrendingUp className="w-5 h-5" />
+  trend?: Trend;           // { value: 12.5, label: "vs last week" }
+  className?: string;      // extra Tailwind if needed
+};

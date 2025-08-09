@@ -1,6 +1,5 @@
 import { LoginForm } from "@/components/login-form";
 import { Helmet } from "react-helmet";
-import { ToastContainer } from "react-toastify";
 
 const LoginPage = () => {
   return (
@@ -19,7 +18,6 @@ const LoginPage = () => {
           <LoginForm />
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };
