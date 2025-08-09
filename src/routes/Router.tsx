@@ -7,10 +7,8 @@ import { RoleGuard } from "@/guards/RoleGuard";
 import HomePage from "@/pages/HomePage";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import ForbiddenPage from "@/pages/ForbiddenPage";
-import { productColumns, type ProductRow } from "@/components/shared/Tes";
-import { DataTable } from "@/components/ui/DataTable";
-import type { ColumnDef } from "@tanstack/react-table";
-import { Button } from "@/components/ui/button";
+import { SideDrawer } from "@/components/ui/sheet/SideDrawer";
+import { Button } from "@/components/ui/button/button";
 
 const Router = () => (
     <BrowserRouter>
@@ -31,7 +29,9 @@ const Router = () => (
                     path="dashboard"
                     element={
                         <RoleGuard roles={["Admin", "Manager", "Viewer"]}>
-                            <div>Dashboard Page</div>
+                            <SideDrawer trigger={<Button>Open</Button>} title="Dashboard">
+                                <div>Dashboard Page</div>
+                            </SideDrawer>
                         </RoleGuard>
                     }
                 />
@@ -41,19 +41,7 @@ const Router = () => (
                     path="users"
                     element={
                         <RoleGuard roles={["Admin"]}>
-                            <DataTable<ProductRow, unknown>
-                                columns={productColumns as ColumnDef<ProductRow, unknown>[]}
-                                data={[
-                                    {
-                                        productId: "1",
-                                        productName: "Product 1",
-                                        sku: "1234567890",
-                                        price: 100,
-                                        status: "Active",
-                                        action: <Button variant="outline">Edit</Button>,
-                                    } as ProductRow,
-                                ]}
-                            />
+                            <div>Users Page</div>
                         </RoleGuard>
                     }
                 />

@@ -1,14 +1,14 @@
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from "@/components/ui/card/card";
+import { Input } from "@/components/ui/form/input";
+import { Label } from "@/components/ui/form/label";
 import { useLogin } from "@/features/auth/hooks/useLogin";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import type { LoginInput } from "@/features/auth/authTypes";

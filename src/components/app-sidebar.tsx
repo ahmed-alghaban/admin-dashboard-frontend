@@ -14,15 +14,15 @@ import {
   LayoutDashboard,
 } from "lucide-react"
 
-import { NavMain } from "@/components/nav-main"
-import { NavUser } from "@/components/nav-user"
+import { NavMain } from "@/components/ui/sidebar/nav-main"
+import { NavUser } from "@/components/ui/sidebar/nav-user"
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar/sidebar"
 
 // This is sample data.
 const data = {

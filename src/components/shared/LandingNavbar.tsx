@@ -1,7 +1,7 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button/button';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet/sheet';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Link } from 'react-router-dom';
 import { Menu } from 'lucide-react';

@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card/card';
 import { Lock, Home, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 

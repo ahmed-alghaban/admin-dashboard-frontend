@@ -8,8 +8,8 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
     AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/dialog/alert-dialog";
+import { Button } from "@/components/ui/button/button";
 import type { ConfirmDialogProps } from "@/lib/types";
 
 export const ConfirmDialog = ({

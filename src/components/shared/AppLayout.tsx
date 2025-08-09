@@ -1,5 +1,5 @@
 import { AppSidebar } from '../app-sidebar'
-import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/components/ui/sidebar'
+import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/components/ui/sidebar/sidebar'
 import { Outlet, useLocation } from 'react-router-dom'
 import {
     Breadcrumb,
@@ -8,8 +8,8 @@ import {
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { Separator } from "@/components/ui/separator"
+} from "@/components/ui/navigation/breadcrumb"
+import { Separator } from "@/components/ui/separator/separator"
 
 const AppLayout = () => {
     const location = useLocation();

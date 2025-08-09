@@ -13,7 +13,7 @@ import {
     TableHead,
     TableBody,
     TableCell,
-} from "@/components/ui/table";
+} from "@/components/ui/table/table";
 import { cn } from "@/lib/utils";
 import type { DataTableProps } from "@/lib/types";
 
@@ -37,7 +37,7 @@ export const DataTable = <TData, TValue>({
     // keep controlled if provided
     React.useEffect(() => {
         setInternalSorting(sorting);
-    }, [sorting]);
+    }, []);
 
     const table = useReactTable({
         data,

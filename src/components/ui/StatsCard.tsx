@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card/card";
 import type { StatsCardProps } from "@/lib/types";
 
 export const StatsCard: React.FC<StatsCardProps> = ({
