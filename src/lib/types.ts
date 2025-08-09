@@ -18,3 +18,14 @@ export type StatsCardProps = {
   trend?: Trend;           // { value: 12.5, label: "vs last week" }
   className?: string;      // extra Tailwind if needed
 };
+
+export type SideDrawerProps = {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  title?: string;
+  description?: string;
+  trigger?: React.ReactNode;          // optional trigger (e.g., a Button)
+  side?: "right" | "left" | "top" | "bottom";
+  children: React.ReactNode;          // the content (forms, details, etc.)
+  widthClassName?: string;            // override width (e.g., "sm:max-w-md")
+};

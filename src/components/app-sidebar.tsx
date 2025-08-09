@@ -15,7 +15,6 @@ import {
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
 import { NavUser } from "@/components/nav-user"
 import {
   Sidebar,
@@ -46,16 +45,7 @@ const data = {
       title: "Users",
       url: "/app/users",
       icon: Users,
-      items: [
-        {
-          title: "All Users",
-          url: "/app/users",
-        },
-        {
-          title: "Add User",
-          url: "/app/users/add",
-        },
-      ],
+      items: [],
     },
     {
       title: "Roles & Permissions",
@@ -72,61 +62,25 @@ const data = {
       title: "Products",
       url: "/app/products",
       icon: Package,
-      items: [
-        {
-          title: "All Products",
-          url: "/app/products",
-        },
-        {
-          title: "Add Product",
-          url: "/app/products/add",
-        },
-      ],
+      items: [],
     },
     {
       title: "Categories",
       url: "/app/categories",
       icon: FolderOpen,
-      items: [
-        {
-          title: "All Categories",
-          url: "/app/categories",
-        },
-        {
-          title: "Add Category",
-          url: "/app/categories/add",
-        },
-      ],
+      items: [],
     },
     {
       title: "Inventory",
       url: "/app/inventory",
       icon: BarChart3,
-      items: [
-        {
-          title: "Inventory List",
-          url: "/app/inventory",
-        },
-        {
-          title: "Edit Inventory",
-          url: "/app/inventory/edit",
-        },
-      ],
+      items: [],
     },
     {
       title: "Orders",
       url: "/app/orders",
       icon: FileText,
-      items: [
-        {
-          title: "All Orders",
-          url: "/app/orders",
-        },
-        {
-          title: "Add Order",
-          url: "/app/orders/add",
-        },
-      ],
+      items: [],
     },
     {
       title: "Audit Logs",
@@ -171,7 +125,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

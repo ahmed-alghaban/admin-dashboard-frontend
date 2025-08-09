@@ -7,6 +7,7 @@ import { RoleGuard } from "@/guards/RoleGuard";
 import HomePage from "@/pages/HomePage";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import ForbiddenPage from "@/pages/ForbiddenPage";
+import { SideDrawer } from "@/components/ui/SideDrawer";
 
 const Router = () => (
     <BrowserRouter>
@@ -37,15 +38,9 @@ const Router = () => (
                     path="users"
                     element={
                         <RoleGuard roles={["Admin"]}>
-                            <div>Users Page</div>
-                        </RoleGuard>
-                    }
-                />
-                <Route
-                    path="users/add"
-                    element={
-                        <RoleGuard roles={["Admin"]}>
-                            <div>Add User Page</div>
+                            <SideDrawer>
+                                <div>Users Page</div>
+                            </SideDrawer>
                         </RoleGuard>
                     }
                 />
@@ -54,14 +49,6 @@ const Router = () => (
                     element={
                         <RoleGuard roles={["Admin"]}>
                             <div>User Details Page</div>
-                        </RoleGuard>
-                    }
-                />
-                <Route
-                    path="users/:id/edit"
-                    element={
-                        <RoleGuard roles={["Admin"]}>
-                            <div>Edit User Page</div>
                         </RoleGuard>
                     }
                 />
@@ -101,22 +88,6 @@ const Router = () => (
                         </RoleGuard>
                     }
                 />
-                <Route
-                    path="products/add"
-                    element={
-                        <RoleGuard roles={["Admin", "Manager"]}>
-                            <div>Add Product</div>
-                        </RoleGuard>
-                    }
-                />
-                <Route
-                    path="products/:id/edit"
-                    element={
-                        <RoleGuard roles={["Admin", "Manager"]}>
-                            <div>Edit Product</div>
-                        </RoleGuard>
-                    }
-                />
 
                 {/* Categories */}
                 <Route
@@ -127,22 +98,6 @@ const Router = () => (
                         </RoleGuard>
                     }
                 />
-                <Route
-                    path="categories/add"
-                    element={
-                        <RoleGuard roles={["Admin", "Manager"]}>
-                            <div>Add Category</div>
-                        </RoleGuard>
-                    }
-                />
-                <Route
-                    path="categories/:id/edit"
-                    element={
-                        <RoleGuard roles={["Admin", "Manager"]}>
-                            <div>Edit Category</div>
-                        </RoleGuard>
-                    }
-                />
 
                 {/* Inventory */}
                 <Route
@@ -150,14 +105,6 @@ const Router = () => (
                     element={
                         <RoleGuard roles={["Admin", "Manager", "Viewer"]}>
                             <div>Inventory List</div>
-                        </RoleGuard>
-                    }
-                />
-                <Route
-                    path="inventory/edit"
-                    element={
-                        <RoleGuard roles={["Admin", "Manager"]}>
-                            <div>Edit Inventory</div>
                         </RoleGuard>
                     }
                 />
@@ -180,34 +127,10 @@ const Router = () => (
                     }
                 />
                 <Route
-                    path="orders/add"
-                    element={
-                        <RoleGuard roles={["Admin", "Manager"]}>
-                            <div>Add Order</div>
-                        </RoleGuard>
-                    }
-                />
-                <Route
                     path="orders/:id"
                     element={
                         <RoleGuard roles={["Admin", "Manager", "Viewer"]}>
                             <div>Order Details</div>
-                        </RoleGuard>
-                    }
-                />
-                <Route
-                    path="orders/:id/edit"
-                    element={
-                        <RoleGuard roles={["Admin", "Manager"]}>
-                            <div>Edit Order</div>
-                        </RoleGuard>
-                    }
-                />
-                <Route
-                    path="orders/:id/status"
-                    element={
-                        <RoleGuard roles={["Admin", "Manager"]}>
-                            <div>Update Order Status</div>
                         </RoleGuard>
                     }
                 />
