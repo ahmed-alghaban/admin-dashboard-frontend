@@ -1,4 +1,6 @@
 import type { ColumnDef, SortingState } from "@tanstack/react-table";
+import type { DefaultValues, Mode } from "react-hook-form";
+import type { z } from "zod";
 
 export interface ConfirmDialogProps {
   title?: string;
@@ -8,17 +10,17 @@ export interface ConfirmDialogProps {
 }
 
 export type Trend = {
-  value: number;           // e.g., +12.5 or -7.3
-  label?: string;          // e.g., "vs last week"
+  value: number; // e.g., +12.5 or -7.3
+  label?: string; // e.g., "vs last week"
 };
 
 export type StatsCardProps = {
-  title: string;           // "Total Sales"
-  value: string | number;  // "SAR 12,340" or 12340
-  subtitle?: string;       // "This month"
-  icon?: React.ReactNode;  // <TrendingUp className="w-5 h-5" />
-  trend?: Trend;           // { value: 12.5, label: "vs last week" }
-  className?: string;      // extra Tailwind if needed
+  title: string; // "Total Sales"
+  value: string | number; // "SAR 12,340" or 12340
+  subtitle?: string; // "This month"
+  icon?: React.ReactNode; // <TrendingUp className="w-5 h-5" />
+  trend?: Trend; // { value: 12.5, label: "vs last week" }
+  className?: string; // extra Tailwind if needed
 };
 
 export type SideDrawerProps = {
@@ -26,10 +28,10 @@ export type SideDrawerProps = {
   onOpenChange?: (open: boolean) => void;
   title?: string;
   description?: string;
-  trigger?: React.ReactNode;          // optional trigger (e.g., a Button)
+  trigger?: React.ReactNode; // optional trigger (e.g., a Button)
   side?: "right" | "left" | "top" | "bottom";
-  children: React.ReactNode;          // the content (forms, details, etc.)
-  widthClassName?: string;            // override width (e.g., "sm:max-w-md")
+  children: React.ReactNode; // the content (forms, details, etc.)
+  widthClassName?: string; // override width (e.g., "sm:max-w-md")
 };
 
 export type DataTableProps<TData, TValue> = {
@@ -45,10 +47,19 @@ export type DataTableProps<TData, TValue> = {
 
   // server-side pagination
   manualPagination?: boolean;
-  page?: number;          // 1-based
+  page?: number; // 1-based
   pageSize?: number;
-  total?: number;         // total items
+  total?: number; // total items
   onPageChange?: (page: number) => void;
 
   className?: string;
+};
+
+export type RHFFormProps<TSchema extends z.ZodTypeAny> = {
+  schema: TSchema;
+  defaultValues?: DefaultValues<z.infer<TSchema>>;
+  onSubmit: (values: z.infer<TSchema>) => void | Promise<void>;
+  children: React.ReactNode;
+  id?: string;
+  mode?: Mode;
 };
