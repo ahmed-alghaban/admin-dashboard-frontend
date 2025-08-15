@@ -1,9 +1,16 @@
 import { DataTable } from '@/components/ui/table/DataTable'
 import { useUsers } from '../hooks/useUser'
-import { columns } from './UserTableCoulumns'
+import { columns } from './UserTableColumns'
+import { useState } from 'react'
+import { SideDrawer } from '@/components/ui/sheet/SideDrawer'
+import { UserCreateForm } from './UserCreateForm'
+import { useQueryClient } from '@tanstack/react-query'
+import { toast } from 'sonner'
 
 const UsersTable = () => {
     const { data: users, isLoading, error } = useUsers()
+    const [isAddDrawerOpen, setIsAddDrawerOpen] = useState(false)
+    const queryClient = useQueryClient()
 
     if (error) {
         return (
@@ -14,6 +21,20 @@ const UsersTable = () => {
                 </div>
             </div>
         )
+    }
+
+    const handleAddUser = () => {
+        setIsAddDrawerOpen(true)
+    }
+
+    const handleAddUserSuccess = () => {
+        setIsAddDrawerOpen(false)
+        queryClient.invalidateQueries({ queryKey: ['users'] })
+        toast.success('User added successfully!')
+    }
+
+    const handleAddUserCancel = () => {
+        setIsAddDrawerOpen(false)
     }
 
     return (
@@ -27,12 +48,26 @@ const UsersTable = () => {
 
             <div className="border rounded-lg bg-card">
                 <DataTable
-                    columns={columns}
+                    columns={columns(handleAddUser)}
                     data={users || []}
                     loading={isLoading}
                     emptyMessage="No users found."
                 />
             </div>
+
+            <SideDrawer
+                open={isAddDrawerOpen}
+                onOpenChange={setIsAddDrawerOpen}
+                title="Add New User"
+                description="Create a new user account"
+                side="right"
+                widthClassName="sm:max-w-2xl"
+            >
+                <UserCreateForm
+                    onSuccess={handleAddUserSuccess}
+                    onCancel={handleAddUserCancel}
+                />
+            </SideDrawer>
         </div>
     )
 }

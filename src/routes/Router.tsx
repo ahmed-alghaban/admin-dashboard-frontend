@@ -7,10 +7,8 @@ import { RoleGuard } from "@/guards/RoleGuard";
 import HomePage from "@/pages/HomePage";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import ForbiddenPage from "@/pages/ForbiddenPage";
-import { SideDrawer } from "@/components/ui/sheet/SideDrawer";
-import { Button } from "@/components/ui/button/button";
-import { ProductCreateForm } from "@/components/PorductFrom"; 
 import UsersTable from "@/features/users/components/UsersTable";
+
 
 const Router = () => (
   <BrowserRouter>
@@ -31,9 +29,7 @@ const Router = () => (
           path="dashboard"
           element={
             <RoleGuard roles={["Admin", "Manager", "Viewer"]}>
-              <SideDrawer trigger={<Button>Open</Button>} title="Dashboard">
-                <ProductCreateForm />
-              </SideDrawer>
+              <div>Dashboard Page</div>
             </RoleGuard>
           }
         />

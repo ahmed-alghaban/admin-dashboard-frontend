@@ -57,7 +57,7 @@ export function GenericForm<TSchema extends z.ZodType<FieldValues>>({
   const form = useForm<FormValues>({
     resolver: makeZodResolver(schema),
     defaultValues,
-    mode: "onBlur",
+    mode: "onSubmit",
   });
 
   return (

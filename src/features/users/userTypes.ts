@@ -17,3 +17,8 @@ export type UserCreateDto = {
     passwordHash: string;
     profileImageUrl?: string | null;
 };
+
+export interface UserCreateFormProps {
+    onSuccess?: () => void;
+    onCancel?: () => void;
+}
