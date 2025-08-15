@@ -23,15 +23,17 @@ export const TextField: React.FC<TextFieldProps> = ({
   type = "text",
 }) => {
   const form = useFormContext();
+  const id = `field-${name}`;
+  
   return (
     <FormField
       control={form.control}
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{label}</FormLabel>
+          <FormLabel htmlFor={id}>{label}</FormLabel>
           <FormControl>
-            <Input {...field} placeholder={placeholder} type={type} />
+            <Input {...field} id={id} placeholder={placeholder} type={type} />
           </FormControl>
           <FormMessage />
         </FormItem>

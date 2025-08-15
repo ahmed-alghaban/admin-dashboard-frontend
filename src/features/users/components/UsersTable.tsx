@@ -65,7 +65,7 @@ const UsersTable = () => {
                 title="Add New User"
                 description="Create a new user account"
                 side="right"
-                widthClassName="sm:max-w-2xl"
+                widthClassName="w-full sm:max-w-2xl"
             >
                 <UserCreateForm
                     onSuccess={handleAddUserSuccess}

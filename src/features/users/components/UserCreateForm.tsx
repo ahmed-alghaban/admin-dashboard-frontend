@@ -2,7 +2,6 @@ import { GenericForm } from "@/components/ui/form/GenericForm";
 import { TextField } from "@/components/ui/form/fields/TextField";
 import { SelectField } from "@/components/ui/form/fields/SelectField";
 import { Button } from "@/components/ui/button/button";
-import { Card, CardContent } from "@/components/ui/card/card";
 import { userCreateSchema, type UserCreateFormData } from "../schemas/userSchema";
 import { toast } from "sonner";
 import { defaultValues } from "../userTypes";
@@ -40,14 +39,13 @@ export const UserCreateForm = ({ onSuccess, onCancel }: UserCreateFormProps) => 
     };
 
     return (
-        <Card className="w-full max-w-2xl mx-auto">
-            <CardContent>
-                <GenericForm
-                    schema={userCreateSchema}
-                    defaultValues={defaultValues}
-                    onSubmit={handleSubmit}
-                    className="space-y-6"
-                >
+        <div className="w-full">
+            <GenericForm
+                schema={userCreateSchema}
+                defaultValues={defaultValues}
+                onSubmit={handleSubmit}
+                className="space-y-4"
+            >
                     {(form) => (
                         <>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -124,7 +122,6 @@ export const UserCreateForm = ({ onSuccess, onCancel }: UserCreateFormProps) => 
                         </>
                     )}
                 </GenericForm>
-            </CardContent>
-        </Card>
+            </div>
     );
 }; 

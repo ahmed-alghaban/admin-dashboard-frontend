@@ -31,3 +31,12 @@ export const defaultValues: UserCreateFormData = {
     profileImageUrl: "",
 };
 
+export type UserUpdateDto = {
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    phoneNumber?: string;
+    roleId?: string; // Guid in C# maps to string in TS
+    passwordHash?: string;
+    profileImageUrl?: string;
+};

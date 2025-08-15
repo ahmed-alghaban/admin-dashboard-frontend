@@ -27,7 +27,7 @@ export const SideDrawer: React.FC<SideDrawerProps> = ({
                 {description && <SheetDescription>{description}</SheetDescription>}
             </SheetHeader>
 
-            <div className="p-4">{children}</div>
+            <div className="flex-1 overflow-y-auto p-4">{children}</div>
         </SheetContent>
     </Sheet>
 );

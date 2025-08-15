@@ -30,19 +30,21 @@ export const SelectField: React.FC<SelectFieldProps> = ({
   placeholder = "Select…",
 }) => {
   const form = useFormContext();
+  const id = `field-${name}`;
+
   return (
     <FormField
       control={form.control}
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{label}</FormLabel>
+          <FormLabel htmlFor={id}>{label}</FormLabel>
           <FormControl>
             <Select
               onValueChange={field.onChange}
               defaultValue={String(field.value ?? "")}
             >
-              <SelectTrigger>
+              <SelectTrigger id={id}>
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
               <SelectContent>
