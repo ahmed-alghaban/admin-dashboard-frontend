@@ -4,5 +4,5 @@ import AppLayout from '@/components/shared/AppLayout';
 
 export const ProtectedRoute = () => {
     const token = useAuthStore((s) => s.token);
-    return token ? <AppLayout /> : <Navigate to="/login" />;
+    return token ? <AppLayout /> : <Navigate to="/" />;
 };

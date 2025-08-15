@@ -7,10 +7,9 @@ import { Link } from 'react-router-dom';
 import { Menu } from 'lucide-react';
 import { useState } from 'react';
 import { useAuthStore } from '@/features/auth/store';
-
 export const LandingNavbar = () => {
     const [open, setOpen] = useState(false);
-    const { token, clearToken } = useAuthStore();
+    const { token } = useAuthStore();
 
     return (
         <header className="w-full px-4 py-3 border-b shadow-sm bg-background">
@@ -23,13 +22,11 @@ export const LandingNavbar = () => {
                 {/* Desktop nav */}
                 <nav className="hidden md:flex items-center gap-4">
                     <ThemeToggle />
-                    {token ? (
-                        <Button variant="outline" size="sm" onClick={clearToken}>Logout</Button>
-                    ) : (
-                        <Link to="/login">
-                            <Button variant="outline" size="sm">Login</Button>
-                        </Link>
-                    )}
+                    <Link to={token ? "/app/dashboard" : "/login"}>
+                        <Button variant="outline" size="sm">
+                            {token ? "Dashboard" : "Login"}
+                        </Button>
+                    </Link>
                 </nav>
 
                 {/* Mobile nav */}
@@ -44,11 +41,11 @@ export const LandingNavbar = () => {
                         <SheetContent side="right" className="w-48">
                             <nav className="mt-8 flex flex-col gap-4">
                                 <Link
-                                    to="/login"
+                                    to={token ? "/app/dashboard" : "/login"}
                                     onClick={() => setOpen(false)}
                                     className="text-sm font-medium text-foreground hover:text-foreground/80"
                                 >
-                                    Login
+                                    {token ? "Dashboard" : "Login"}
                                 </Link>
                             </nav>
                         </SheetContent>

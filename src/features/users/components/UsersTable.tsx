@@ -1,55 +1,38 @@
 import { DataTable } from '@/components/ui/table/DataTable'
 import { useUsers } from '../hooks/useUser'
-import type { User } from '../userTypes'
-import type { ColumnDef } from '@tanstack/react-table'
-
-const columns: ColumnDef<User>[] = [
-    {
-        accessorKey: 'firstName',
-        header: 'First Name',
-    },
-    {
-        accessorKey: 'lastName',
-        header: 'Last Name',
-    },
-    {
-        accessorKey: 'email',
-        header: 'Email',
-    },
-    {
-        accessorKey: 'phoneNumber',
-        header: 'Phone',
-    },
-    {
-        accessorKey: 'status',
-        header: 'Status',
-    },
-    {
-        accessorKey: 'createdAt',
-        header: 'Created At',
-        cell: ({ row }) => {
-            const date = new Date(row.getValue('createdAt'))
-            return date.toLocaleDateString()
-        },
-    },
-]
+import { columns } from './UserTableCoulumns'
 
 const UsersTable = () => {
     const { data: users, isLoading, error } = useUsers()
 
     if (error) {
-        return <div>Error loading users: {error.message}</div>
+        return (
+            <div className="flex items-center justify-center h-64">
+                <div className="text-center">
+                    <div className="text-destructive text-lg font-medium">Error loading users</div>
+                    <div className="text-sm text-muted-foreground mt-1">{error.message}</div>
+                </div>
+            </div>
+        )
     }
 
     return (
-        <div>
-            <h1 className="text-2xl font-bold mb-4">Users Table</h1>
-            <DataTable
-                columns={columns}
-                data={users || []}
-                loading={isLoading}
-                emptyMessage="No users found."
-            />
+        <div className="space-y-6">
+            <div>
+                <h1 className="text-3xl font-bold tracking-tight">Users</h1>
+                <p className="text-muted-foreground">
+                    Manage your users and their permissions
+                </p>
+            </div>
+
+            <div className="border rounded-lg bg-card">
+                <DataTable
+                    columns={columns}
+                    data={users || []}
+                    loading={isLoading}
+                    emptyMessage="No users found."
+                />
+            </div>
         </div>
     )
 }

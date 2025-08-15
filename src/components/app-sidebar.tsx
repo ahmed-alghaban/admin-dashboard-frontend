@@ -1,9 +1,6 @@
 import * as React from "react"
 import {
   BookOpen,
-  Frame,
-  Map,
-  PieChart,
   Settings2,
   Users,
   Package,
@@ -23,98 +20,86 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar/sidebar"
-
-// This is sample data.
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+import { getUserFromToken } from "@/lib/getUserFromToken"
+// Navigation data
+const navMain = [
+  {
+    title: "Dashboard",
+    url: "/app/dashboard",
+    icon: LayoutDashboard,
+    isActive: true,
+    items: [],
+    isMainPage: true, // Special flag for dashboard
   },
-  // Removed teams to disable dropdown/listing behavior
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "/app/dashboard",
-      icon: LayoutDashboard,
-      isActive: true,
-      items: [],
-      isMainPage: true, // Special flag for dashboard
-    },
-    {
-      title: "Users",
-      url: "/app/users",
-      icon: Users,
-      items: [],
-    },
-    {
-      title: "Roles & Permissions",
-      url: "/app/roles",
-      icon: Shield,
-      items: [
-        {
-          title: "All Roles",
-          url: "/app/roles",
-        },
-      ],
-    },
-    {
-      title: "Products",
-      url: "/app/products",
-      icon: Package,
-      items: [],
-    },
-    {
-      title: "Categories",
-      url: "/app/categories",
-      icon: FolderOpen,
-      items: [],
-    },
-    {
-      title: "Inventory",
-      url: "/app/inventory",
-      icon: BarChart3,
-      items: [],
-    },
-    {
-      title: "Orders",
-      url: "/app/orders",
-      icon: FileText,
-      items: [],
-    },
-    {
-      title: "Audit Logs",
-      url: "/app/audit-logs",
-      icon: BookOpen,
-      items: [],
-    },
-    {
-      title: "Settings",
-      url: "/app/settings",
-      icon: Settings2,
-      items: [],
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
-  ],
-}
+  {
+    title: "Users",
+    url: "/app/users",
+    icon: Users,
+    items: [],
+  },
+  {
+    title: "Roles & Permissions",
+    url: "/app/roles",
+    icon: Shield,
+    items: [
+      {
+        title: "All Roles",
+        url: "/app/roles",
+      },
+    ],
+  },
+  {
+    title: "Products",
+    url: "/app/products",
+    icon: Package,
+    items: [],
+  },
+  {
+    title: "Categories",
+    url: "/app/categories",
+    icon: FolderOpen,
+    items: [],
+  },
+  {
+    title: "Inventory",
+    url: "/app/inventory",
+    icon: BarChart3,
+    items: [],
+  },
+  {
+    title: "Orders",
+    url: "/app/orders",
+    icon: FileText,
+    items: [],
+  },
+  {
+    title: "Audit Logs",
+    url: "/app/audit-logs",
+    icon: BookOpen,
+    items: [],
+  },
+  {
+    title: "Settings",
+    url: "/app/settings",
+    icon: Settings2,
+    items: [],
+  },
+]
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const userData = getUserFromToken();
+
+  // Fallback user data if token is not available
+  const user = userData ? {
+    name: userData.name,
+    email: userData.email,
+    avatar: "/avatars/default.jpg", // You can add a default avatar or use user initials
+  } : {
+    name: "Guest",
+    email: "guest@example.com",
+    avatar: "/avatars/default.jpg",
+  };
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -124,10 +109,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </div>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain items={navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
