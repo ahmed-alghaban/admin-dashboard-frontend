@@ -4,7 +4,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Button } from "@/components/ui/button/button"
 import { MoreHorizontal, Edit, Plus, User as UserIcon } from "lucide-react"
 
-export const columns = (handleAddUser: () => void): ColumnDef<User>[] => [
+export const columns: ColumnDef<User>[] = [
     {
         accessorKey: 'firstName',
         header: 'First Name',
@@ -78,10 +78,6 @@ export const columns = (handleAddUser: () => void): ColumnDef<User>[] => [
                         <DropdownMenuItem onClick={() => console.log('Edit user:', user.userId)}>
                             <Edit className="mr-2 h-4 w-4" />
                             Edit User
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={handleAddUser}>
-                            <Plus className="mr-2 h-4 w-4" />
-                            Add User
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => console.log('View user:', user.userId)}>
                             <UserIcon className="mr-2 h-4 w-4" />

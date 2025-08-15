@@ -5,49 +5,38 @@ import { Button } from "@/components/ui/button/button";
 import { Card, CardContent } from "@/components/ui/card/card";
 import { userCreateSchema, type UserCreateFormData } from "../schemas/userSchema";
 import { toast } from "sonner";
-import type { UserCreateFormProps } from "../userTypes";
+import { defaultValues } from "../userTypes";
+import { logger } from "@/lib/logger";
+import { useAddUser } from "../hooks/useAddUser";
+import type { UserCreateFormProps } from "@/lib/types";
 
 // Mock roles - you can replace this with actual API call
 const roleOptions = [
-    { label: "Admin", value: "admin-role-id" },
-    { label: "Manager", value: "manager-role-id" },
-    { label: "Viewer", value: "viewer-role-id" },
+    { label: "Admin", value: "bd7a308d-ef14-4028-9706-1356dba8af56" },
+    { label: "Manager", value: "9e9542bb-c92e-48d5-bf6a-06d510f10aa7" },
+    { label: "Viewer", value: "test-role-id" },
 ];
 
+
+
 export const UserCreateForm = ({ onSuccess, onCancel }: UserCreateFormProps) => {
-    const defaultValues: UserCreateFormData = {
-        firstName: "",
-        lastName: "",
-        email: "",
-        phoneNumber: "",
-        roleId: "",
-        password: "",
-        confirmPassword: "",
-        profileImageUrl: "",
-    };
+    const { mutate: addUser, isPending } = useAddUser();
 
-    const handleSubmit = async (data: UserCreateFormData) => {
-        try {
-            // Remove confirmPassword and hash the password before sending
-            const { confirmPassword, ...userData } = data;
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            void confirmPassword; // Suppress unused variable warning
-
-            // TODO: Hash the password here before sending to API
-            // const hashedPassword = await hashPassword(data.password);
-
-            // TODO: Replace with actual API call
-            console.log("Creating user:", userData);
-
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
-
-            toast.success("User created successfully!");
-            onSuccess?.();
-        } catch (error) {
-            console.error("Error creating user:", error);
-            toast.error("Failed to create user. Please try again.");
+    const handleSubmit = (data: UserCreateFormData) => {
+        if (data.password !== data.confirmPassword) {
+            toast.error("Passwords do not match");
+            return;
         }
+
+        addUser({
+            ...data,
+            passwordHash: data.password, // Password hashing should be handled on the backend
+        }, {
+            onSuccess: () => {
+                logger.log(data);
+                onSuccess?.();
+            }
+        });
     };
 
     return (
@@ -127,7 +116,7 @@ export const UserCreateForm = ({ onSuccess, onCancel }: UserCreateFormProps) => 
                                 </Button>
                                 <Button
                                     type="submit"
-                                    disabled={form.formState.isSubmitting}
+                                    disabled={isPending}
                                 >
                                     {form.formState.isSubmitting ? "Creating..." : "Create User"}
                                 </Button>

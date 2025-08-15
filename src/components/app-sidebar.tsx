@@ -112,7 +112,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={user} />
+        <div className="flex flex-col gap-2 p-2">
+          <NavUser user={user} />
+        </div>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

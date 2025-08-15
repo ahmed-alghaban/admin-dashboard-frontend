@@ -6,6 +6,8 @@ import { SideDrawer } from '@/components/ui/sheet/SideDrawer'
 import { UserCreateForm } from './UserCreateForm'
 import { useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
+import { Button } from '@/components/ui/button/button'
+import { Plus } from 'lucide-react'
 
 const UsersTable = () => {
     const { data: users, isLoading, error } = useUsers()
@@ -23,10 +25,6 @@ const UsersTable = () => {
         )
     }
 
-    const handleAddUser = () => {
-        setIsAddDrawerOpen(true)
-    }
-
     const handleAddUserSuccess = () => {
         setIsAddDrawerOpen(false)
         queryClient.invalidateQueries({ queryKey: ['users'] })
@@ -39,16 +37,22 @@ const UsersTable = () => {
 
     return (
         <div className="space-y-6">
-            <div>
-                <h1 className="text-3xl font-bold tracking-tight">Users</h1>
-                <p className="text-muted-foreground">
-                    Manage your users and their permissions
-                </p>
+            <div className="flex items-center justify-between">
+                <div>
+                    <h1 className="text-3xl font-bold tracking-tight">Users</h1>
+                    <p className="text-muted-foreground">
+                        Manage your users and their permissions
+                    </p>
+                </div>
+                <Button onClick={() => setIsAddDrawerOpen(true)}>
+                    <Plus className="mr-1 h-4 w-4" />
+                    Add User
+                </Button>
             </div>
 
-            <div className="border rounded-lg bg-card">
+            <div className="bg-card">
                 <DataTable
-                    columns={columns(handleAddUser)}
+                    columns={columns}
                     data={users || []}
                     loading={isLoading}
                     emptyMessage="No users found."

@@ -63,3 +63,8 @@ export type RHFFormProps<TSchema extends z.ZodTypeAny> = {
   id?: string;
   mode?: Mode;
 };
+
+export interface UserCreateFormProps {
+  onSuccess?: () => void;
+  onCancel?: () => void;
+}

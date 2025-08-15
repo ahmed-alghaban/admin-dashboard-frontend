@@ -1,3 +1,5 @@
+import type { UserCreateFormData } from "./schemas/userSchema";
+
 export type User = {
     userId: string;
     firstName: string;
@@ -18,7 +20,14 @@ export type UserCreateDto = {
     profileImageUrl?: string | null;
 };
 
-export interface UserCreateFormProps {
-    onSuccess?: () => void;
-    onCancel?: () => void;
-}
+export const defaultValues: UserCreateFormData = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    roleId: "",
+    password: "",
+    confirmPassword: "",
+    profileImageUrl: "",
+};
+
