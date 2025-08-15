@@ -5,7 +5,7 @@ import { logger } from "@/lib/logger";
 export const getUsers = async () => {
     const response = await api.get("/users");
     logger.log(response.data);
-    return response.data;
+    return response.data.result.items;
 };
 
 export const addUser = async (user: UserCreateDto) => {

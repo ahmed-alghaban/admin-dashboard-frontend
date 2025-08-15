@@ -10,6 +10,7 @@ import ForbiddenPage from "@/pages/ForbiddenPage";
 import { SideDrawer } from "@/components/ui/sheet/SideDrawer";
 import { Button } from "@/components/ui/button/button";
 import { ProductCreateForm } from "@/components/PorductFrom";
+import UsersTable from "@/features/users/components/UsersTable";
 
 const Router = () => (
   <BrowserRouter>
@@ -42,7 +43,7 @@ const Router = () => (
           path="users"
           element={
             <RoleGuard roles={["Admin"]}>
-              <div>Users Page</div>
+              <UsersTable />
             </RoleGuard>
           }
         />
