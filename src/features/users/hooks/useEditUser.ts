@@ -5,8 +5,15 @@ import { queryClient } from "@/lib/queryClient";
 import { logger } from "@/lib/logger";
 import { toast } from "sonner";
 import type { AxiosError } from "axios";
+import { z } from "zod";
+import { userEditSchema } from "../schemas/userEditSchema";
+
+
+
+export type UserEditFormData = z.infer<typeof userEditSchema>;
 
 export const useEditUser = () => {
+
     return useMutation({
         mutationFn: ({ userId, user }: { userId: string; user: UserUpdateDto }) => editUser(userId, user),
         onSuccess: () => {

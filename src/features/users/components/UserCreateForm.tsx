@@ -21,21 +21,25 @@ const roleOptions = [
 export const UserCreateForm = ({ onSuccess, onCancel }: UserCreateFormProps) => {
     const { mutate: addUser, isPending } = useAddUser();
 
-    const handleSubmit = (data: UserCreateFormData) => {
-        if (data.password !== data.confirmPassword) {
-            toast.error("Passwords do not match");
-            return;
-        }
-
-        addUser({
-            ...data,
-            passwordHash: data.password, // Password hashing should be handled on the backend
-        }, {
-            onSuccess: () => {
-                logger.log(data);
-                onSuccess?.();
+    const handleSubmit = async (data: UserCreateFormData) => {
+        try {
+            if (data.password !== data.confirmPassword) {
+                toast.error("Passwords do not match");
+                return;
             }
-        });
+
+            await addUser({
+                ...data,
+                passwordHash: data.password, // Password hashing should be handled on the backend
+            }, {
+                onSuccess: () => {
+                    logger.log(data);
+                    onSuccess?.();
+                }
+            });
+        } catch (error) {
+            logger.error(error);
+        }
     };
 
     return (
@@ -46,82 +50,82 @@ export const UserCreateForm = ({ onSuccess, onCancel }: UserCreateFormProps) => 
                 onSubmit={handleSubmit}
                 className="space-y-4"
             >
-                    {(form) => (
-                        <>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <TextField
-                                    name="firstName"
-                                    label="First Name *"
-                                    placeholder="Enter first name"
-                                />
-                                <TextField
-                                    name="lastName"
-                                    label="Last Name *"
-                                    placeholder="Enter last name"
-                                />
-                            </div>
-
+                {(form) => (
+                    <>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <TextField
-                                name="email"
-                                label="Email Address *"
-                                placeholder="Enter email address"
-                                type="email"
+                                name="firstName"
+                                label="First Name *"
+                                placeholder="Enter first name"
                             />
-
                             <TextField
-                                name="phoneNumber"
-                                label="Phone Number *"
-                                placeholder="Enter phone number"
-                                type="tel"
+                                name="lastName"
+                                label="Last Name *"
+                                placeholder="Enter last name"
                             />
+                        </div>
 
-                            <SelectField
-                                name="roleId"
-                                label="Role *"
-                                options={roleOptions}
-                                placeholder="Select a role"
-                            />
+                        <TextField
+                            name="email"
+                            label="Email Address *"
+                            placeholder="Enter email address"
+                            type="email"
+                        />
 
+                        <TextField
+                            name="phoneNumber"
+                            label="Phone Number *"
+                            placeholder="Enter phone number"
+                            type="tel"
+                        />
+
+                        <SelectField
+                            name="roleId"
+                            label="Role *"
+                            options={roleOptions}
+                            placeholder="Select a role"
+                        />
+
+                        <TextField
+                            name="profileImageUrl"
+                            label="Profile Image URL"
+                            placeholder="Enter profile image URL (optional)"
+                            type="url"
+                        />
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <TextField
-                                name="profileImageUrl"
-                                label="Profile Image URL"
-                                placeholder="Enter profile image URL (optional)"
-                                type="url"
+                                name="password"
+                                label="Password *"
+                                placeholder="Enter password"
+                                type="password"
                             />
+                            <TextField
+                                name="confirmPassword"
+                                label="Confirm Password *"
+                                placeholder="Confirm password"
+                                type="password"
+                            />
+                        </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <TextField
-                                    name="password"
-                                    label="Password *"
-                                    placeholder="Enter password"
-                                    type="password"
-                                />
-                                <TextField
-                                    name="confirmPassword"
-                                    label="Confirm Password *"
-                                    placeholder="Confirm password"
-                                    type="password"
-                                />
-                            </div>
-
-                            <div className="flex justify-end gap-3 pt-4">
-                                <Button
-                                    type="button"
-                                    variant="outline"
-                                    onClick={onCancel}
-                                >
-                                    Cancel
-                                </Button>
-                                <Button
-                                    type="submit"
-                                    disabled={isPending}
-                                >
-                                    {form.formState.isSubmitting ? "Creating..." : "Create User"}
-                                </Button>
-                            </div>
-                        </>
-                    )}
-                </GenericForm>
-            </div>
+                        <div className="flex justify-end gap-3 pt-4">
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={onCancel}
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                type="submit"
+                                disabled={isPending}
+                            >
+                                {form.formState.isSubmitting ? "Creating..." : "Create User"}
+                            </Button>
+                        </div>
+                    </>
+                )}
+            </GenericForm>
+        </div>
     );
 }; 

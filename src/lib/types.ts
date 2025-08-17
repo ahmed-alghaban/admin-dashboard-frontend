@@ -2,6 +2,7 @@ import type { ColumnDef, SortingState } from "@tanstack/react-table";
 import type { DefaultValues, Mode } from "react-hook-form";
 import type { z } from "zod";
 
+
 export interface ConfirmDialogProps {
   title?: string;
   description?: string;
@@ -68,3 +69,10 @@ export interface UserCreateFormProps {
   onSuccess?: () => void;
   onCancel?: () => void;
 }
+
+export interface UserEditFormProps {
+  userId: string;
+  onSuccess?: () => void;
+  onCancel?: () => void;
+}
+

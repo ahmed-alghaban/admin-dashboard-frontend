@@ -1,17 +1,21 @@
 import { DataTable } from '@/components/ui/table/DataTable'
 import { useUsers } from '../hooks/useUser'
-import { columns } from './UserTableColumns'
+import { createColumns } from './UserTableColumns'
 import { useState } from 'react'
 import { SideDrawer } from '@/components/ui/sheet/SideDrawer'
 import { UserCreateForm } from './UserCreateForm'
+import UserEditForm from './UserEditForm'
 import { useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button/button'
 import { Plus } from 'lucide-react'
+import type { User } from '../userTypes'
 
 const UsersTable = () => {
     const { data: users, isLoading, error } = useUsers()
     const [isAddDrawerOpen, setIsAddDrawerOpen] = useState(false)
+    const [isEditDrawerOpen, setIsEditDrawerOpen] = useState(false)
+    const [selectedUserId, setSelectedUserId] = useState<string | null>(null)
     const queryClient = useQueryClient()
 
     if (error) {
@@ -35,6 +39,23 @@ const UsersTable = () => {
         setIsAddDrawerOpen(false)
     }
 
+    const handleEditUser = (user: User) => {
+        setSelectedUserId(user.userId)
+        setIsEditDrawerOpen(true)
+    }
+
+    const handleEditUserSuccess = () => {
+        setIsEditDrawerOpen(false)
+        setSelectedUserId(null)
+        queryClient.invalidateQueries({ queryKey: ['users'] })
+        toast.success('User updated successfully!')
+    }
+
+    const handleEditUserCancel = () => {
+        setIsEditDrawerOpen(false)
+        setSelectedUserId(null)
+    }
+
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
@@ -52,7 +73,7 @@ const UsersTable = () => {
 
             <div className="bg-card">
                 <DataTable
-                    columns={columns}
+                    columns={createColumns(handleEditUser)}
                     data={users || []}
                     loading={isLoading}
                     emptyMessage="No users found."
@@ -71,6 +92,23 @@ const UsersTable = () => {
                     onSuccess={handleAddUserSuccess}
                     onCancel={handleAddUserCancel}
                 />
+            </SideDrawer>
+
+            <SideDrawer
+                open={isEditDrawerOpen}
+                onOpenChange={setIsEditDrawerOpen}
+                title="Edit User"
+                description="Update user information"
+                side="right"
+                widthClassName="w-full sm:max-w-2xl"
+            >
+                {selectedUserId && (
+                    <UserEditForm
+                        userId={selectedUserId}
+                        onSuccess={handleEditUserSuccess}
+                        onCancel={handleEditUserCancel}
+                    />
+                )}
             </SideDrawer>
         </div>
     )
