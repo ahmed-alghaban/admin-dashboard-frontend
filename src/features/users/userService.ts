@@ -15,10 +15,6 @@ export const addUser = async (user: UserCreateDto) => {
 };
 
 export const editUser = async (userId: string, user: UserUpdateDto) => {
-  logger.log("editUser - userId:", userId);
-  logger.log("editUser - user data being sent:", user);
-
-  // The backend expects PUT /api/v1/users/{id} with UserUpdateDto in body
   const response = await api.put(`/users/${userId}`, user);
   logger.log("editUser - response:", response.data);
   return response.data;
@@ -29,4 +25,10 @@ export const getUserById = async (userId: string) => {
   logger.log("getUserById response:", response.data);
   // Try different possible response structures
   return response.data.result || response.data;
+};
+
+export const deleteUser = async (userId: string) => {
+  const response = await api.delete(`/users/${userId}`);
+  logger.log("deleteUser response:", response.data);
+  return response.data;
 };
