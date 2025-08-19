@@ -8,6 +8,13 @@ export type User = {
   phoneNumber: string;
   status: string;
   createdAt: Date;
+  role?: {
+    roleId: string;
+    name: string;
+    description: string;
+  };
+  profileImageUrl?: string;
+  passwordHash?: string;
 };
 
 export type UserCreateDto = {
@@ -40,3 +47,17 @@ export type UserUpdateDto = {
   passwordHash?: string;
   profileImageUrl?: string;
 };
+
+export interface UserUIStore {
+  // Drawer states
+  isAddDrawerOpen: boolean;
+  isEditDrawerOpen: boolean;
+  selectedUserId: string | null;
+
+  // Actions
+  openAddDrawer: () => void;
+  closeAddDrawer: () => void;
+  openEditDrawer: (userId: string) => void;
+  closeEditDrawer: () => void;
+  reset: () => void;
+}

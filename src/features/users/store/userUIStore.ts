@@ -1,19 +1,5 @@
 import { create } from "zustand";
-
-interface UserUIStore {
-  // Drawer states
-  isAddDrawerOpen: boolean;
-  isEditDrawerOpen: boolean;
-  selectedUserId: string | null;
-
-  // Actions
-  openAddDrawer: () => void;
-  closeAddDrawer: () => void;
-  openEditDrawer: (userId: string) => void;
-  closeEditDrawer: () => void;
-  reset: () => void;
-}
-
+import type { UserUIStore } from "../userTypes";
 export const useUserUIStore = create<UserUIStore>((set) => ({
   isAddDrawerOpen: false,
   isEditDrawerOpen: false,

@@ -29,9 +29,8 @@ const UserEditForm = ({ userId, onSuccess, onCancel }: UserEditFormProps) => {
     );
 
     // Include passwordHash from current user data
-    const currentUserData = userResponse?.result || userResponse;
-    if (currentUserData?.passwordHash) {
-      filteredData.passwordHash = currentUserData.passwordHash;
+    if (userResponse?.passwordHash) {
+      filteredData.passwordHash = userResponse.passwordHash;
     }
     await editUser(
       { userId, user: filteredData },
@@ -66,20 +65,12 @@ const UserEditForm = ({ userId, onSuccess, onCancel }: UserEditFormProps) => {
   // Transform the API response to match the form schema
   const userData = userResponse
     ? {
-        firstName:
-          userResponse.firstName || userResponse.result?.firstName || "",
-        lastName: userResponse.lastName || userResponse.result?.lastName || "",
-        email: userResponse.email || userResponse.result?.email || "",
-        phoneNumber:
-          userResponse.phoneNumber || userResponse.result?.phoneNumber || "",
-        roleId:
-          userResponse.role?.roleId ||
-          userResponse.result?.role?.roleId ||
-          null,
-        profileImageUrl:
-          userResponse.profileImageUrl ||
-          userResponse.result?.profileImageUrl ||
-          "",
+        firstName: userResponse.firstName || "",
+        lastName: userResponse.lastName || "",
+        email: userResponse.email || "",
+        phoneNumber: userResponse.phoneNumber || "",
+        roleId: userResponse.role?.roleId || null,
+        profileImageUrl: userResponse.profileImageUrl || "",
       }
     : {};
 

@@ -7,8 +7,7 @@ import { RoleGuard } from "@/guards/RoleGuard";
 import HomePage from "@/pages/HomePage";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import ForbiddenPage from "@/pages/ForbiddenPage";
-import UsersTable from "@/features/users/components/UsersTable";
-
+import { UserPage } from "@/features/users/pages";
 
 const Router = () => (
   <BrowserRouter>
@@ -39,7 +38,7 @@ const Router = () => (
           path="users"
           element={
             <RoleGuard roles={["Admin"]}>
-              <UsersTable />
+              <UserPage />
             </RoleGuard>
           }
         />
