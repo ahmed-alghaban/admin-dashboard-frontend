@@ -9,6 +9,7 @@ import LoginPage from "@/features/auth/pages/LoginPage";
 import ForbiddenPage from "@/pages/ForbiddenPage";
 import { UserPage } from "@/features/users/pages";
 import RolePage from "@/features/roles/pages/RolePage";
+import ProductPage from "@/features/products/pages/ProductPage";
 
 const Router = () => (
   <BrowserRouter>
@@ -74,8 +75,8 @@ const Router = () => (
         <Route
           path="products"
           element={
-            <RoleGuard roles={["Admin", "Manager", "Viewer"]}>
-              <div>Products List</div>
+            <RoleGuard roles={["Admin", "Manager"]}>
+              <ProductPage />
             </RoleGuard>
           }
         />

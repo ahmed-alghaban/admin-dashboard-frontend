@@ -2,7 +2,6 @@ import type { ColumnDef, SortingState } from "@tanstack/react-table";
 import type { DefaultValues, Mode } from "react-hook-form";
 import type { z } from "zod";
 
-
 export interface ConfirmDialogProps {
   title?: string;
   description?: string;
@@ -76,3 +75,13 @@ export interface UserEditFormProps {
   onCancel?: () => void;
 }
 
+// Pagination result for API responses
+export interface PaginationResult<T> {
+  items: T[];
+  totalCount: number;
+  pageNumber: number;
+  pageSize: number;
+  totalPages: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+}

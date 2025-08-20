@@ -1,23 +1,13 @@
 import api from "@/lib/axios";
-import type {
-  UserCreateDto,
-  UserUpdateDto,
-  PaginationResult,
-  User,
-} from "./userTypes";
+import type { UserCreateDto, UserUpdateDto, User } from "./userTypes";
+import type { PaginationResult } from "@/lib/types";
 import { logger } from "@/lib/logger";
 
-interface GetUsersParams {
-  pageNumber?: number;
-  pageSize?: number;
-  searchTerm?: string;
-}
-
 export const getUsers = async (
-  params: GetUsersParams = {}
+  pageNumber: number = 1,
+  pageSize: number = 10,
+  searchTerm?: string
 ): Promise<PaginationResult<User>> => {
-  const { pageNumber = 1, pageSize = 10, searchTerm } = params;
-
   const queryParams = new URLSearchParams();
   queryParams.append("pageNumber", pageNumber.toString());
   queryParams.append("pageSize", pageSize.toString());

@@ -74,7 +74,7 @@ export const useUserFilters = () => {
     setPageSize,
 
     // Computed values
-    totalCount: paginatedUsers?.totalCount || 0,
+    totalCount: filteredUsers.length,
     totalPages: paginatedUsers?.totalPages || 0,
     currentPage: filters.pageNumber,
     pageSize: filters.pageSize,

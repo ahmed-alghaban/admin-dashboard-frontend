@@ -1,0 +1,195 @@
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card/card";
+import { Skeleton } from "@/components/ui/skeleton/skeleton";
+import { useProductSelectionStore, useProductUIStore } from "../stores";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+
+// Components
+import {
+  ProductPageHeader,
+  ProductStatsCards,
+  ProductFilters,
+  ProductsTable,
+} from "../components";
+
+// Hooks
+import { useProductFilters } from "../hooks/useProductFilters";
+
+const ProductPage = () => {
+  const queryClient = useQueryClient();
+  const { selectedProducts, clearSelection } = useProductSelectionStore();
+  const { closeAddDrawer, closeEditDrawer } = useProductUIStore();
+  const {
+    products,
+    isLoading,
+    isFetching,
+    error,
+    filters,
+    updateFilters,
+    setPage,
+    setPageSize,
+    totalCount,
+    totalPages,
+    currentPage,
+  } = useProductFilters();
+
+  // Handle bulk operations
+  const handleBulkDelete = async () => {
+    if (selectedProducts.size === 0) return;
+    const productIds = Array.from(selectedProducts);
+    // You can implement bulk delete API call here
+    toast.info(
+      `Bulk delete ${productIds.length} products (not implemented yet)`
+    );
+    clearSelection();
+  };
+
+  const handleBulkExport = () => {
+    if (selectedProducts.size === 0) return;
+    // You can implement export functionality here
+    toast.info(
+      `Export ${selectedProducts.size} products (not implemented yet)`
+    );
+  };
+
+  const handleAddProductSuccess = () => {
+    queryClient.invalidateQueries({ queryKey: ["products"] });
+    toast.success("Product added successfully!");
+    closeAddDrawer();
+  };
+
+  const handleEditProductSuccess = () => {
+    queryClient.invalidateQueries({ queryKey: ["products"] });
+    toast.success("Product updated successfully!");
+    closeEditDrawer();
+  };
+
+  // Show full page skeleton only on initial load
+  if (isLoading && !products.length) {
+    return (
+      <div className="space-y-6">
+        {/* Header Skeleton */}
+        <div className="flex items-center justify-between">
+          <div className="space-y-2">
+            <Skeleton className="h-8 w-48" />
+            <Skeleton className="h-4 w-64" />
+          </div>
+          <div className="flex gap-2">
+            <Skeleton className="h-10 w-24" />
+            <Skeleton className="h-10 w-24" />
+          </div>
+        </div>
+
+        {/* Stats Cards Skeleton */}
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <Card key={i}>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-4 w-4" />
+              </CardHeader>
+              <CardContent>
+                <Skeleton className="h-8 w-16 mb-2" />
+                <Skeleton className="h-3 w-32" />
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* Filters Skeleton */}
+        <Card>
+          <CardHeader>
+            <Skeleton className="h-6 w-32" />
+          </CardHeader>
+          <CardContent>
+            <div className="flex gap-4">
+              <Skeleton className="h-10 w-64" />
+              <Skeleton className="h-10 w-32" />
+              <Skeleton className="h-10 w-24" />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Table Skeleton */}
+        <Card>
+          <CardHeader>
+            <Skeleton className="h-6 w-32" />
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="flex gap-4">
+                  <Skeleton className="h-4 w-32" />
+                  <Skeleton className="h-4 w-48" />
+                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-4 w-20" />
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-center">
+          <div className="text-destructive text-lg font-medium">
+            Error loading products
+          </div>
+          <div className="text-sm text-muted-foreground mt-1">
+            {error.message}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <ProductPageHeader
+        onBulkDelete={handleBulkDelete}
+        onBulkExport={handleBulkExport}
+      />
+
+      {/* Stats Cards */}
+      <ProductStatsCards products={products || []} />
+
+      {/* Filters and Search */}
+      <ProductFilters
+        filters={filters}
+        onFiltersChange={updateFilters}
+        onPageSizeChange={setPageSize}
+        isLoading={isFetching}
+      />
+
+      {/* Products Table */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Products ({totalCount})</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ProductsTable
+            products={products}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setPage}
+            isLoading={isFetching}
+          />
+        </CardContent>
+      </Card>
+
+      {/* TODO: Add ProductDrawers component for add/edit forms */}
+    </div>
+  );
+};
+
+export default ProductPage;
