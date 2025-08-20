@@ -2,130 +2,132 @@ import { GenericForm } from "@/components/ui/form/GenericForm";
 import { TextField } from "@/components/ui/form/fields/TextField";
 import { SelectField } from "@/components/ui/form/fields/SelectField";
 import { Button } from "@/components/ui/button/button";
-import { userCreateSchema, type UserCreateFormData } from "../schemas/userSchema";
+import {
+  userCreateSchema,
+  type UserCreateFormData,
+} from "../schemas/userSchema";
 import { toast } from "sonner";
 import { defaultValues } from "../userTypes";
 import { logger } from "@/lib/logger";
 import { useAddUser } from "../hooks/useAddUser";
+import { useRoles } from "@/features/roles/hooks/userRoles";
 import type { UserCreateFormProps } from "@/lib/types";
 
-// Mock roles - you can replace this with actual API call
-const roleOptions = [
-    { label: "Admin", value: "bd7a308d-ef14-4028-9706-1356dba8af56" },
-    { label: "Manager", value: "9e9542bb-c92e-48d5-bf6a-06d510f10aa7" },
-    { label: "Viewer", value: "test-role-id" },
-];
+export const UserCreateForm = ({
+  onSuccess,
+  onCancel,
+}: UserCreateFormProps) => {
+  const { mutate: addUser, isPending } = useAddUser();
+  const { data: roles } = useRoles();
 
+  // Create role options from API data
+  const roleOptions =
+    roles?.map((role: { roleId: string; name: string }) => ({
+      label: role.name,
+      value: role.roleId,
+    })) || [];
 
+  const handleSubmit = async (data: UserCreateFormData) => {
+    try {
+      if (data.password !== data.confirmPassword) {
+        toast.error("Passwords do not match");
+        return;
+      }
 
-export const UserCreateForm = ({ onSuccess, onCancel }: UserCreateFormProps) => {
-    const { mutate: addUser, isPending } = useAddUser();
-
-    const handleSubmit = async (data: UserCreateFormData) => {
-        try {
-            if (data.password !== data.confirmPassword) {
-                toast.error("Passwords do not match");
-                return;
-            }
-
-            await addUser({
-                ...data,
-                passwordHash: data.password, // Password hashing should be handled on the backend
-            }, {
-                onSuccess: () => {
-                    logger.log(data);
-                    onSuccess?.();
-                }
-            });
-        } catch (error) {
-            logger.error(error);
+      await addUser(
+        {
+          ...data,
+          passwordHash: data.password, // Password hashing should be handled on the backend
+        },
+        {
+          onSuccess: () => {
+            logger.log(data);
+            onSuccess?.();
+          },
         }
-    };
+      );
+    } catch (error) {
+      logger.error(error);
+    }
+  };
 
-    return (
-        <div className="w-full">
-            <GenericForm
-                schema={userCreateSchema}
-                defaultValues={defaultValues}
-                onSubmit={handleSubmit}
-                className="space-y-4"
-            >
-                {(form) => (
-                    <>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <TextField
-                                name="firstName"
-                                label="First Name *"
-                                placeholder="Enter first name"
-                            />
-                            <TextField
-                                name="lastName"
-                                label="Last Name *"
-                                placeholder="Enter last name"
-                            />
-                        </div>
+  return (
+    <div className="w-full">
+      <GenericForm
+        schema={userCreateSchema}
+        defaultValues={defaultValues}
+        onSubmit={handleSubmit}
+        className="space-y-4"
+      >
+        {(form) => (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <TextField
+                name="firstName"
+                label="First Name *"
+                placeholder="Enter first name"
+              />
+              <TextField
+                name="lastName"
+                label="Last Name *"
+                placeholder="Enter last name"
+              />
+            </div>
 
-                        <TextField
-                            name="email"
-                            label="Email Address *"
-                            placeholder="Enter email address"
-                            type="email"
-                        />
+            <TextField
+              name="email"
+              label="Email Address *"
+              placeholder="Enter email address"
+              type="email"
+            />
 
-                        <TextField
-                            name="phoneNumber"
-                            label="Phone Number *"
-                            placeholder="Enter phone number"
-                            type="tel"
-                        />
+            <TextField
+              name="phoneNumber"
+              label="Phone Number *"
+              placeholder="Enter phone number"
+              type="tel"
+            />
 
-                        <SelectField
-                            name="roleId"
-                            label="Role *"
-                            options={roleOptions}
-                            placeholder="Select a role"
-                        />
+            <SelectField
+              name="roleId"
+              label="Role *"
+              options={roleOptions}
+              placeholder="Select a role"
+            />
 
-                        <TextField
-                            name="profileImageUrl"
-                            label="Profile Image URL"
-                            placeholder="Enter profile image URL (optional)"
-                            type="url"
-                        />
+            <TextField
+              name="profileImageUrl"
+              label="Profile Image URL"
+              placeholder="Enter profile image URL (optional)"
+              type="url"
+            />
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <TextField
-                                name="password"
-                                label="Password *"
-                                placeholder="Enter password"
-                                type="password"
-                            />
-                            <TextField
-                                name="confirmPassword"
-                                label="Confirm Password *"
-                                placeholder="Confirm password"
-                                type="password"
-                            />
-                        </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <TextField
+                name="password"
+                label="Password *"
+                placeholder="Enter password"
+                type="password"
+              />
+              <TextField
+                name="confirmPassword"
+                label="Confirm Password *"
+                placeholder="Confirm password"
+                type="password"
+              />
+            </div>
 
-                        <div className="flex justify-end gap-3 pt-4">
-                            <Button
-                                type="button"
-                                variant="outline"
-                                onClick={onCancel}
-                            >
-                                Cancel
-                            </Button>
-                            <Button
-                                type="submit"
-                                disabled={isPending}
-                            >
-                                {form.formState.isSubmitting ? "Creating..." : "Create User"}
-                            </Button>
-                        </div>
-                    </>
-                )}
-            </GenericForm>
-        </div>
-    );
-}; 
+            <div className="flex justify-end gap-3 pt-4">
+              <Button type="button" variant="outline" onClick={onCancel}>
+                Cancel
+              </Button>
+              <Button type="submit" disabled={isPending}>
+                {form.formState.isSubmitting ? "Creating..." : "Create User"}
+              </Button>
+            </div>
+          </>
+        )}
+      </GenericForm>
+    </div>
+  );
+};

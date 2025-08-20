@@ -1,10 +1,9 @@
 import { create } from "zustand";
 
-interface UserSelectionStore {
+interface UserSelectionState {
   selectedUsers: Set<string>;
   isSelectMode: boolean;
 
-  // Actions
   toggleUser: (userId: string) => void;
   selectAll: (userIds: string[]) => void;
   clearSelection: () => void;
@@ -14,11 +13,11 @@ interface UserSelectionStore {
   getSelectedCount: () => number;
 }
 
-export const useUserSelectionStore = create<UserSelectionStore>((set, get) => ({
+export const useUserSelectionStore = create<UserSelectionState>((set, get) => ({
   selectedUsers: new Set(),
   isSelectMode: false,
 
-  toggleUser: (userId) =>
+  toggleUser: (userId: string) =>
     set((state) => {
       const newSelectedUsers = new Set(state.selectedUsers);
       if (newSelectedUsers.has(userId)) {
@@ -29,7 +28,7 @@ export const useUserSelectionStore = create<UserSelectionStore>((set, get) => ({
       return { selectedUsers: newSelectedUsers };
     }),
 
-  selectAll: (userIds) => set({ selectedUsers: new Set(userIds) }),
+  selectAll: (userIds: string[]) => set({ selectedUsers: new Set(userIds) }),
 
   clearSelection: () => set({ selectedUsers: new Set() }),
 
@@ -39,14 +38,14 @@ export const useUserSelectionStore = create<UserSelectionStore>((set, get) => ({
       selectedUsers: new Set(), // Clear selection when toggling mode
     })),
 
-  selectUser: (userId) =>
+  selectUser: (userId: string) =>
     set((state) => {
       const newSelectedUsers = new Set(state.selectedUsers);
       newSelectedUsers.add(userId);
       return { selectedUsers: newSelectedUsers };
     }),
 
-  deselectUser: (userId) =>
+  deselectUser: (userId: string) =>
     set((state) => {
       const newSelectedUsers = new Set(state.selectedUsers);
       newSelectedUsers.delete(userId);

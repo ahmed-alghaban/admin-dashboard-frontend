@@ -2,6 +2,7 @@ import { SideDrawer } from "@/components/ui/sheet/SideDrawer";
 import { UserCreateForm } from "./UserCreateForm";
 import UserEditForm from "./UserEditForm";
 import { useUserUIStore } from "../store";
+import { useUIStore } from "@/store/ui";
 
 interface UserDrawersProps {
   onAddSuccess: () => void;
@@ -9,30 +10,28 @@ interface UserDrawersProps {
 }
 
 const UserDrawers = ({ onAddSuccess, onEditSuccess }: UserDrawersProps) => {
-  const {
-    isAddDrawerOpen,
-    isEditDrawerOpen,
-    selectedUserId,
-    closeAddDrawer,
-    closeEditDrawer,
-  } = useUserUIStore();
+  const { selectedUserId } = useUserUIStore();
+  const { activeDrawer, closeDrawer } = useUIStore();
+
+  const isAddDrawerOpen = activeDrawer === "user-add";
+  const isEditDrawerOpen = activeDrawer === "user-edit";
 
   return (
     <>
       <SideDrawer
         open={isAddDrawerOpen}
-        onOpenChange={(open) => !open && closeAddDrawer()}
+        onOpenChange={(open) => !open && closeDrawer()}
         title="Add New User"
         description="Create a new user account"
         side="right"
         widthClassName="w-full sm:max-w-2xl"
       >
-        <UserCreateForm onSuccess={onAddSuccess} onCancel={closeAddDrawer} />
+        <UserCreateForm onSuccess={onAddSuccess} onCancel={closeDrawer} />
       </SideDrawer>
 
       <SideDrawer
         open={isEditDrawerOpen}
-        onOpenChange={(open) => !open && closeEditDrawer()}
+        onOpenChange={(open) => !open && closeDrawer()}
         title="Edit User"
         description="Update user information"
         side="right"
@@ -42,7 +41,7 @@ const UserDrawers = ({ onAddSuccess, onEditSuccess }: UserDrawersProps) => {
           <UserEditForm
             userId={selectedUserId}
             onSuccess={onEditSuccess}
-            onCancel={closeEditDrawer}
+            onCancel={closeDrawer}
           />
         )}
       </SideDrawer>

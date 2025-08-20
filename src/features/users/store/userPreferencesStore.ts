@@ -11,8 +11,7 @@ interface UserPreferences {
   showInactiveUsers: boolean;
 }
 
-interface UserPreferencesStore extends UserPreferences {
-  // Actions
+interface UserPreferencesState extends UserPreferences {
   updateSort: (field: string, direction: "asc" | "desc") => void;
   updateFilters: (filters: Record<string, string | number | boolean>) => void;
   setPageSize: (size: number) => void;
@@ -20,7 +19,7 @@ interface UserPreferencesStore extends UserPreferences {
   resetPreferences: () => void;
 }
 
-const defaultPreferences: UserPreferences = {
+const defaultUserPreferences: UserPreferences = {
   tableSort: {
     field: "createdAt",
     direction: "desc",
@@ -30,29 +29,29 @@ const defaultPreferences: UserPreferences = {
   showInactiveUsers: false,
 };
 
-export const useUserPreferencesStore = create<UserPreferencesStore>()(
+export const useUserPreferencesStore = create<UserPreferencesState>()(
   persist(
     (set, get) => ({
-      ...defaultPreferences,
+      ...defaultUserPreferences,
 
-      updateSort: (field, direction) =>
+      updateSort: (field: string, direction: "asc" | "desc") =>
         set({
           tableSort: { field, direction },
         }),
 
-      updateFilters: (filters) =>
+      updateFilters: (filters: Record<string, string | number | boolean>) =>
         set({
           tableFilters: { ...get().tableFilters, ...filters },
         }),
 
-      setPageSize: (size) => set({ pageSize: size }),
+      setPageSize: (size: number) => set({ pageSize: size }),
 
       toggleInactiveUsers: () =>
         set((state) => ({
           showInactiveUsers: !state.showInactiveUsers,
         })),
 
-      resetPreferences: () => set(defaultPreferences),
+      resetPreferences: () => set(defaultUserPreferences),
     }),
     {
       name: "user-preferences",

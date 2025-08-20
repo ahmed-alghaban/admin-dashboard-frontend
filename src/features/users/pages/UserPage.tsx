@@ -4,7 +4,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card/card";
-import { useUsers } from "../hooks/useUser";
+import { Skeleton } from "@/components/ui/skeleton/skeleton";
 import { useUserSelectionStore, useUserUIStore } from "../store";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -22,11 +22,22 @@ import {
 import { useUserFilters } from "../hooks/useUserFilters";
 
 const UserPage = () => {
-  const { data: users, error } = useUsers();
   const queryClient = useQueryClient();
   const { selectedUsers, clearSelection } = useUserSelectionStore();
   const { closeAddDrawer, closeEditDrawer } = useUserUIStore();
-  const { filteredUsers, updateFilters } = useUserFilters(users);
+  const {
+    users,
+    isLoading,
+    isFetching,
+    error,
+    filters,
+    updateFilters,
+    setPage,
+    setPageSize,
+    totalCount,
+    totalPages,
+    currentPage,
+  } = useUserFilters();
 
   // Handle bulk operations
   const handleBulkDelete = async () => {
@@ -55,6 +66,74 @@ const UserPage = () => {
     closeEditDrawer();
   };
 
+  // Show full page skeleton only on initial load
+  if (isLoading && !users.length) {
+    return (
+      <div className="space-y-6">
+        {/* Header Skeleton */}
+        <div className="flex items-center justify-between">
+          <div className="space-y-2">
+            <Skeleton className="h-8 w-48" />
+            <Skeleton className="h-4 w-64" />
+          </div>
+          <div className="flex gap-2">
+            <Skeleton className="h-10 w-24" />
+            <Skeleton className="h-10 w-24" />
+          </div>
+        </div>
+
+        {/* Stats Cards Skeleton */}
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <Card key={i}>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-4 w-4" />
+              </CardHeader>
+              <CardContent>
+                <Skeleton className="h-8 w-16 mb-2" />
+                <Skeleton className="h-3 w-32" />
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* Filters Skeleton */}
+        <Card>
+          <CardHeader>
+            <Skeleton className="h-6 w-32" />
+          </CardHeader>
+          <CardContent>
+            <div className="flex gap-4">
+              <Skeleton className="h-10 w-64" />
+              <Skeleton className="h-10 w-32" />
+              <Skeleton className="h-10 w-24" />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Table Skeleton */}
+        <Card>
+          <CardHeader>
+            <Skeleton className="h-6 w-32" />
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="flex gap-4">
+                  <Skeleton className="h-4 w-32" />
+                  <Skeleton className="h-4 w-48" />
+                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-4 w-20" />
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   if (error) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -82,15 +161,26 @@ const UserPage = () => {
       <UserStatsCards users={users || []} />
 
       {/* Filters and Search */}
-      <UserFilters onFiltersChange={updateFilters} />
+      <UserFilters
+        filters={filters}
+        onFiltersChange={updateFilters}
+        onPageSizeChange={setPageSize}
+        isLoading={isFetching}
+      />
 
       {/* Users Table */}
       <Card>
         <CardHeader>
-          <CardTitle>Users ({filteredUsers.length})</CardTitle>
+          <CardTitle>Users ({totalCount})</CardTitle>
         </CardHeader>
         <CardContent>
-          <UsersTable />
+          <UsersTable
+            users={users}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setPage}
+            isLoading={isFetching}
+          />
         </CardContent>
       </Card>
 

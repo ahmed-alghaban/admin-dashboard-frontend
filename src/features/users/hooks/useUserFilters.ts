@@ -1,39 +1,82 @@
-import { useState, useMemo } from "react";
+import { useState, useCallback } from "react";
 import { useUserPreferencesStore } from "../store";
-import type { User } from "../userTypes";
+import { useUsers } from "./useUser";
 
-export const useUserFilters = (users: User[] = []) => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState<string>("all");
+interface UserFilters {
+  searchTerm: string;
+  statusFilter: string;
+  pageNumber: number;
+  pageSize: number;
+}
+
+export const useUserFilters = () => {
+  const [filters, setFilters] = useState<UserFilters>({
+    searchTerm: "",
+    statusFilter: "all",
+    pageNumber: 1,
+    pageSize: 10,
+  });
+
   const { showInactiveUsers } = useUserPreferencesStore();
 
-  const filteredUsers = useMemo(() => {
-    return users.filter((user) => {
-      const matchesSearch =
-        user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.email.toLowerCase().includes(searchTerm.toLowerCase());
+  // Get users from backend with filters
+  const {
+    data: paginatedUsers,
+    isLoading,
+    error,
+    isFetching,
+  } = useUsers({
+    pageNumber: filters.pageNumber,
+    pageSize: filters.pageSize,
+    searchTerm: filters.searchTerm || undefined,
+  });
 
+  // Apply client-side status filtering since backend doesn't support it
+  const filteredUsers =
+    paginatedUsers?.items.filter((user) => {
       const matchesStatus =
-        statusFilter === "all" || user.status === statusFilter;
+        filters.statusFilter === "all" || user.status === filters.statusFilter;
       const matchesActiveFilter = showInactiveUsers || user.status === "Active";
+      return matchesStatus && matchesActiveFilter;
+    }) || [];
 
-      return matchesSearch && matchesStatus && matchesActiveFilter;
-    });
-  }, [users, searchTerm, statusFilter, showInactiveUsers]);
+  const updateFilters = useCallback((newFilters: Partial<UserFilters>) => {
+    setFilters((prev) => ({
+      ...prev,
+      ...newFilters,
+      // Reset to page 1 when search term changes
+      pageNumber: newFilters.searchTerm !== undefined ? 1 : prev.pageNumber,
+    }));
+  }, []);
 
-  const updateFilters = (filters: {
-    searchTerm: string;
-    statusFilter: string;
-  }) => {
-    setSearchTerm(filters.searchTerm);
-    setStatusFilter(filters.statusFilter);
-  };
+  const setPage = useCallback((page: number) => {
+    setFilters((prev) => ({ ...prev, pageNumber: page }));
+  }, []);
+
+  const setPageSize = useCallback((size: number) => {
+    setFilters((prev) => ({ ...prev, pageSize: size, pageNumber: 1 }));
+  }, []);
 
   return {
-    filteredUsers,
-    searchTerm,
-    statusFilter,
+    // Data
+    users: filteredUsers,
+    paginatedUsers,
+    isLoading,
+    isFetching,
+    error,
+
+    // Filters
+    filters,
     updateFilters,
+
+    // Pagination
+    setPage,
+    setPageSize,
+
+    // Computed values
+    totalCount: paginatedUsers?.totalCount || 0,
+    totalPages: paginatedUsers?.totalPages || 0,
+    currentPage: filters.pageNumber,
+    pageSize: filters.pageSize,
   };
 };

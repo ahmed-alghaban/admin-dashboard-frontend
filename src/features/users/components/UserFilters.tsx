@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -18,27 +18,60 @@ import { Filter, Search } from "lucide-react";
 import { useUserPreferencesStore } from "../store";
 
 interface UserFiltersProps {
-  onFiltersChange: (filters: {
+  filters: {
     searchTerm: string;
     statusFilter: string;
-  }) => void;
+    pageNumber: number;
+    pageSize: number;
+  };
+  onFiltersChange: (
+    filters: Partial<{
+      searchTerm: string;
+      statusFilter: string;
+      pageNumber: number;
+      pageSize: number;
+    }>
+  ) => void;
+  onPageSizeChange: (size: number) => void;
+  isLoading?: boolean;
 }
 
-const UserFilters = ({ onFiltersChange }: UserFiltersProps) => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState<string>("all");
+const UserFilters = ({
+  filters,
+  onFiltersChange,
+  onPageSizeChange,
+  isLoading = false,
+}: UserFiltersProps) => {
+  const { showInactiveUsers, toggleInactiveUsers } = useUserPreferencesStore();
 
-  const { pageSize, showInactiveUsers, setPageSize, toggleInactiveUsers } =
-    useUserPreferencesStore();
+  const [localSearchTerm, setLocalSearchTerm] = useState(filters.searchTerm);
+
+  // Sync local search term when filters change from outside
+  useEffect(() => {
+    setLocalSearchTerm(filters.searchTerm);
+  }, [filters.searchTerm]);
 
   const handleSearchChange = (value: string) => {
-    setSearchTerm(value);
-    onFiltersChange({ searchTerm: value, statusFilter });
+    setLocalSearchTerm(value);
+  };
+
+  const handleSearchSubmit = () => {
+    onFiltersChange({ searchTerm: localSearchTerm });
+  };
+
+  const handleClearSearch = () => {
+    setLocalSearchTerm("");
+    onFiltersChange({ searchTerm: "" });
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      handleSearchSubmit();
+    }
   };
 
   const handleStatusChange = (value: string) => {
-    setStatusFilter(value);
-    onFiltersChange({ searchTerm, statusFilter: value });
+    onFiltersChange({ statusFilter: value });
   };
 
   return (
@@ -52,20 +85,51 @@ const UserFilters = ({ onFiltersChange }: UserFiltersProps) => {
       <CardContent className="pt-0">
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-1.5">
-            <label className="text-sm font-medium">Search</label>
+            <label className="text-sm font-medium">
+              Search
+              {filters.searchTerm && (
+                <span className="ml-2 text-xs text-muted-foreground">
+                  (Active: "{filters.searchTerm}")
+                </span>
+              )}
+            </label>
             <div className="relative">
               <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search users..."
-                value={searchTerm}
+                value={localSearchTerm}
                 onChange={(e) => handleSearchChange(e.target.value)}
-                className="pl-10"
+                onKeyPress={handleKeyPress}
+                className="pl-10 pr-20"
               />
+              <div className="absolute right-1 top-1 flex gap-1">
+                <Button
+                  onClick={handleSearchSubmit}
+                  size="sm"
+                  disabled={isLoading}
+                  className="h-7 px-2 text-xs"
+                >
+                  {isLoading ? "..." : "Go"}
+                </Button>
+                {filters.searchTerm && (
+                  <Button
+                    onClick={handleClearSearch}
+                    size="sm"
+                    variant="outline"
+                    className="h-7 px-2 text-xs"
+                  >
+                    ×
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
           <div className="space-y-1.5">
             <label className="text-sm font-medium">Status</label>
-            <Select value={statusFilter} onValueChange={handleStatusChange}>
+            <Select
+              value={filters.statusFilter}
+              onValueChange={handleStatusChange}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="All statuses" />
               </SelectTrigger>
@@ -79,8 +143,8 @@ const UserFilters = ({ onFiltersChange }: UserFiltersProps) => {
           <div className="space-y-1.5">
             <label className="text-sm font-medium">Page Size</label>
             <Select
-              value={pageSize.toString()}
-              onValueChange={(value) => setPageSize(Number(value))}
+              value={filters.pageSize.toString()}
+              onValueChange={(value) => onPageSizeChange(Number(value))}
             >
               <SelectTrigger>
                 <SelectValue />

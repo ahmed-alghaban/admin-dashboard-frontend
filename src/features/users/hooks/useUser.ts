@@ -1,12 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import { getUsers, getUserById } from "../userService";
-import type { User } from "../userTypes";
+import type { User, PaginationResult } from "../userTypes";
 
-export const useUsers = () => {
-  return useQuery<User[], AxiosError>({
-    queryKey: ["users"],
-    queryFn: getUsers,
+interface UseUsersParams {
+  pageNumber?: number;
+  pageSize?: number;
+  searchTerm?: string;
+}
+
+export const useUsers = (params: UseUsersParams = {}) => {
+  return useQuery<PaginationResult<User>, AxiosError>({
+    queryKey: ["users", params],
+    queryFn: () => getUsers(params),
   });
 };
 

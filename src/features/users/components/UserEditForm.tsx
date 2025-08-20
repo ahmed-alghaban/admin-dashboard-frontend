@@ -7,18 +7,38 @@ import { TextField } from "@/components/ui/form/fields/TextField";
 import { SelectField } from "@/components/ui/form/fields/SelectField";
 import { useEditUser } from "../hooks/useEditUser";
 import { useGetUserById } from "../hooks/useUser";
+import { useRoles } from "@/features/roles/hooks/userRoles";
 import type { UserEditFormProps } from "@/lib/types";
-
-// Mock roles - you can replace this with actual API call
-const roleOptions = [
-  { label: "Admin", value: "bd7a308d-ef14-4028-9706-1356dba8af56" },
-  { label: "Manager", value: "9e9542bb-c92e-48d5-bf6a-06d510f10aa7" },
-  { label: "Viewer", value: "test-role-id" },
-];
 
 const UserEditForm = ({ userId, onSuccess, onCancel }: UserEditFormProps) => {
   const { mutate: editUser, isPending } = useEditUser();
   const { data: userResponse, isLoading, error } = useGetUserById(userId);
+  const { data: roles } = useRoles();
+
+  // Create role options from API data, filtering out the current user's role
+  const currentUserRoleId = userResponse?.role?.roleId;
+  const currentUserRoleName = userResponse?.role?.name;
+
+  // Create role options excluding the current user's role
+  const roleOptions =
+    roles
+      ?.filter(
+        (role: { roleId: string; name: string }) =>
+          role.roleId !== currentUserRoleId
+      )
+      .map((role: { roleId: string; name: string }) => ({
+        label: role.name,
+        value: role.roleId,
+      })) || [];
+
+  // Add current user's role as the first option if it exists
+  const allRoleOptions =
+    currentUserRoleId && currentUserRoleName
+      ? [
+          { label: currentUserRoleName, value: currentUserRoleId },
+          ...roleOptions,
+        ]
+      : roleOptions;
 
   const handleSubmit = async (data: z.infer<typeof userEditSchema>) => {
     // Filter out empty values and send only changed data
@@ -114,7 +134,7 @@ const UserEditForm = ({ userId, onSuccess, onCancel }: UserEditFormProps) => {
             <SelectField
               name="roleId"
               label="Role"
-              options={roleOptions}
+              options={allRoleOptions}
               placeholder="Select a role (optional)"
             />
 

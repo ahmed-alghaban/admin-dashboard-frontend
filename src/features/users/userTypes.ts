@@ -1,5 +1,16 @@
 import type { UserCreateFormData } from "./schemas/userSchema";
 
+// Pagination result type to match backend response
+export interface PaginationResult<T> {
+  items: T[];
+  totalCount: number;
+  pageNumber: number;
+  pageSize: number;
+  totalPages: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+}
+
 export type User = {
   userId: string;
   firstName: string;
