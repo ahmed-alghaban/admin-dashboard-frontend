@@ -14,7 +14,6 @@ export interface ProductCreateDto {
   quantityInStock: number;
   categoryId: string; // Guid maps to string
   imageUrl?: string;
-  inventoryId: string; // Guid maps to string
 }
 
 // Product DTO (response from API)
@@ -40,3 +39,17 @@ export interface ProductUpdateDto {
   categoryId: string; // Guid maps to string
   imageUrl?: string;
 }
+
+// Import form data type
+import type { ProductCreateFormData } from "./Schemas/productSchema";
+
+// Default values for product creation form
+export const defaultValues: ProductCreateFormData = {
+  productName: "",
+  description: "",
+  sku: "",
+  price: 0,
+  quantityInStock: 0,
+  categoryId: "",
+  imageUrl: "",
+};

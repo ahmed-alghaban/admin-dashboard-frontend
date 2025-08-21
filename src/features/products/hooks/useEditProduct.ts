@@ -1,22 +1,23 @@
 import { useMutation } from "@tanstack/react-query";
-import { editUser } from "../userService";
-import type { UserUpdateDto } from "../userTypes";
+import { updateProduct } from "../productService";
+import type { ProductUpdateDto } from "../productTypes";
 import { queryClient } from "@/lib/queryClient";
 import { logger } from "@/lib/logger";
 import { toast } from "sonner";
 import type { AxiosError } from "axios";
-import { z } from "zod";
-import { userEditSchema } from "../schemas/userEditSchema";
 
-export type UserEditFormData = z.infer<typeof userEditSchema>;
-
-export const useEditUser = () => {
+export const useEditProduct = () => {
   return useMutation({
-    mutationFn: ({ userId, user }: { userId: string; user: UserUpdateDto }) =>
-      editUser(userId, user),
+    mutationFn: ({
+      productId,
+      product,
+    }: {
+      productId: string;
+      product: ProductUpdateDto;
+    }) => updateProduct(productId, product),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
-      toast.success("User updated successfully");
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      toast.success("Product updated successfully");
     },
     onError: (error: AxiosError) => {
       logger.error(error);
@@ -41,7 +42,7 @@ export const useEditUser = () => {
           errorData?.title ||
           errorData?.message ||
           error.message ||
-          "Failed to add user";
+          "Failed to update product";
         toast.error(message);
       }
     },

@@ -56,13 +56,11 @@ const UserPage = () => {
 
   const handleAddUserSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ["users"] });
-    toast.success("User added successfully!");
     closeAddDrawer();
   };
 
   const handleEditUserSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ["users"] });
-    toast.success("User updated successfully!");
     closeEditDrawer();
   };
 

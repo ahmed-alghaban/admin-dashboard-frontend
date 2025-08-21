@@ -10,12 +10,11 @@ import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 // Components
-import {
-  ProductPageHeader,
-  ProductStatsCards,
-  ProductFilters,
-  ProductsTable,
-} from "../components";
+import ProductPageHeader from "../components/ProductPageHeader";
+import ProductStatsCards from "../components/ProductStatsCards";
+import ProductFilters from "../components/ProductFilters";
+import ProductsTable from "../components/ProductsTable";
+import ProductDrawers from "../components/ProductDrawers";
 
 // Hooks
 import { useProductFilters } from "../hooks/useProductFilters";
@@ -59,13 +58,11 @@ const ProductPage = () => {
 
   const handleAddProductSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ["products"] });
-    toast.success("Product added successfully!");
     closeAddDrawer();
   };
 
   const handleEditProductSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ["products"] });
-    toast.success("Product updated successfully!");
     closeEditDrawer();
   };
 
@@ -187,7 +184,11 @@ const ProductPage = () => {
         </CardContent>
       </Card>
 
-      {/* TODO: Add ProductDrawers component for add/edit forms */}
+      {/* Product Drawers for add/edit forms */}
+      <ProductDrawers
+        onAddSuccess={handleAddProductSuccess}
+        onEditSuccess={handleEditProductSuccess}
+      />
     </div>
   );
 };

@@ -14,6 +14,7 @@ type NumberFieldProps = {
   label: string;
   placeholder?: string;
   step?: number;
+  min?: number;
 };
 
 export const NumberField: React.FC<NumberFieldProps> = ({
@@ -21,6 +22,7 @@ export const NumberField: React.FC<NumberFieldProps> = ({
   label,
   placeholder,
   step = 0.01,
+  min,
 }) => {
   const form = useFormContext();
   return (
@@ -37,6 +39,7 @@ export const NumberField: React.FC<NumberFieldProps> = ({
               inputMode="decimal"
               placeholder={placeholder}
               step={step}
+              min={min}
               onChange={(e) =>
                 field.onChange(
                   e.target.value === "" ? "" : Number(e.target.value)

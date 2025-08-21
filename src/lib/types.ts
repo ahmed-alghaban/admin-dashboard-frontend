@@ -75,6 +75,12 @@ export interface UserEditFormProps {
   onCancel?: () => void;
 }
 
+export interface ProductEditFormProps {
+  productId: string;
+  onSuccess?: () => void;
+  onCancel?: () => void;
+}
+
 // Pagination result for API responses
 export interface PaginationResult<T> {
   items: T[];
