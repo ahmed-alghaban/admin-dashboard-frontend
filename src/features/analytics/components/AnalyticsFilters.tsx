@@ -63,11 +63,11 @@ const AnalyticsFilters = ({
   };
 
   return (
-    <Card>
+    <Card className="backdrop-blur-sm bg-white/80 dark:bg-slate-900/80 border-white/20 dark:border-slate-700/50 shadow-xl">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div className="flex items-center gap-2">
-          <Filter className="h-5 w-5 text-muted-foreground" />
-          <CardTitle className="text-lg font-semibold">
+          <Filter className="h-5 w-5 text-slate-600 dark:text-slate-400" />
+          <CardTitle className="text-lg font-semibold text-slate-800 dark:text-slate-200">
             Analytics Filters
           </CardTitle>
         </div>
@@ -76,11 +76,13 @@ const AnalyticsFilters = ({
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {/* Timeframe Selector */}
           <div className="space-y-2">
-            <label className="text-sm font-medium">Timeframe</label>
+            <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
+              Timeframe
+            </label>
             <select
               value={timeframe}
               onChange={(e) => setTimeframe(e.target.value)}
-              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+              className="w-full rounded-md border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 px-3 py-2 text-sm text-slate-700 dark:text-slate-300 ring-offset-background focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               disabled={isLoading}
             >
               <option value="daily">Daily</option>
@@ -91,14 +93,16 @@ const AnalyticsFilters = ({
 
           {/* Start Date */}
           <div className="space-y-2">
-            <label className="text-sm font-medium">Start Date</label>
+            <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
+              Start Date
+            </label>
             <div className="relative">
-              <Calendar className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Calendar className="absolute left-3 top-2.5 h-4 w-4 text-slate-400 dark:text-slate-500" />
               <input
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="w-full rounded-md border border-input bg-background pl-10 pr-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                className="w-full rounded-md border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 pl-10 pr-3 py-2 text-sm text-slate-700 dark:text-slate-300 ring-offset-background focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 disabled={isLoading}
               />
             </div>
@@ -106,14 +110,16 @@ const AnalyticsFilters = ({
 
           {/* End Date */}
           <div className="space-y-2">
-            <label className="text-sm font-medium">End Date</label>
+            <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
+              End Date
+            </label>
             <div className="relative">
-              <Calendar className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Calendar className="absolute left-3 top-2.5 h-4 w-4 text-slate-400 dark:text-slate-500" />
               <input
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="w-full rounded-md border border-input bg-background pl-10 pr-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                className="w-full rounded-md border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 pl-10 pr-3 py-2 text-sm text-slate-700 dark:text-slate-300 ring-offset-background focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 disabled={isLoading}
               />
             </div>
@@ -125,7 +131,7 @@ const AnalyticsFilters = ({
             <Button
               onClick={handleApplyFilters}
               disabled={isLoading}
-              className="w-full"
+              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-300"
             >
               Apply Filters
             </Button>
@@ -133,8 +139,8 @@ const AnalyticsFilters = ({
         </div>
 
         {/* Quick Filters */}
-        <div className="mt-4 pt-4 border-t">
-          <label className="text-sm font-medium mb-2 block">
+        <div className="mt-4 pt-4 border-t border-white/20 dark:border-slate-700/50">
+          <label className="text-sm font-medium mb-2 block text-slate-700 dark:text-slate-300">
             Quick Filters
           </label>
           <div className="flex flex-wrap gap-2">

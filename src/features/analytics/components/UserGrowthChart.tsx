@@ -51,15 +51,15 @@ const UserGrowthChart = ({
   }
 
   return (
-    <Card>
+    <Card className="backdrop-blur-sm bg-white/80 dark:bg-slate-900/80 border-white/20 dark:border-slate-700/50 shadow-xl">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div>
-          <CardTitle className="text-lg font-semibold">User Growth</CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <CardTitle className="text-lg font-semibold text-slate-800 dark:text-slate-200">User Growth</CardTitle>
+          <p className="text-sm text-slate-600 dark:text-slate-400">
             New user registrations over time
           </p>
         </div>
-        <Users className="h-5 w-5 text-muted-foreground" />
+        <Users className="h-5 w-5 text-slate-600 dark:text-slate-400" />
       </CardHeader>
       <CardContent>
         <div className="h-80">

@@ -174,9 +174,11 @@ const OrderPage = () => {
       />
 
       {/* Orders Table */}
-      <Card>
+      <Card className="backdrop-blur-sm bg-white/80 dark:bg-slate-900/80 border-white/20 dark:border-slate-700/50 shadow-xl">
         <CardHeader>
-          <CardTitle>Orders ({totalCount})</CardTitle>
+          <CardTitle className="text-slate-800 dark:text-slate-200">
+            Orders ({totalCount})
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <OrdersTable

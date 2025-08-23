@@ -97,10 +97,10 @@ const DashboardPage = () => {
       <div className="space-y-6">
         {/* Page Header */}
         <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-bold tracking-tight">
+          <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-200 bg-clip-text text-transparent">
             Analytics Dashboard
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-slate-600 dark:text-slate-400">
             Get real-time insights into your business performance and trends
           </p>
         </div>

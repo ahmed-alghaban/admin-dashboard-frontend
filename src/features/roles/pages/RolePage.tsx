@@ -72,14 +72,14 @@ const RolePage = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">
+          <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-200 bg-clip-text text-transparent">
             Roles Management
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-slate-600 dark:text-slate-400">
             Manage system roles and permissions
           </p>
         </div>
-        <Button className="flex items-center gap-2">
+        <Button className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-300">
           <Plus className="h-4 w-4" />
           Add Role
         </Button>
@@ -87,44 +87,64 @@ const RolePage = () => {
 
       {/* Stats Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <Card>
+        <Card className="backdrop-blur-sm bg-white/80 dark:bg-slate-900/80 border-white/20 dark:border-slate-700/50 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Roles</CardTitle>
-            <Shield className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">
+              Total Roles
+            </CardTitle>
+            <Shield className="h-4 w-4 text-slate-600 dark:text-slate-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{totalRoles}</div>
-            <p className="text-xs text-muted-foreground">System-wide roles</p>
+            <div className="text-2xl font-bold text-slate-800 dark:text-slate-200">
+              {totalRoles}
+            </div>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              System-wide roles
+            </p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="backdrop-blur-sm bg-white/80 dark:bg-slate-900/80 border-white/20 dark:border-slate-700/50 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Roles</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">
+              Active Roles
+            </CardTitle>
+            <Users className="h-4 w-4 text-slate-600 dark:text-slate-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{activeRoles}</div>
-            <p className="text-xs text-muted-foreground">Currently in use</p>
+            <div className="text-2xl font-bold text-slate-800 dark:text-slate-200">
+              {activeRoles}
+            </div>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Currently in use
+            </p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="backdrop-blur-sm bg-white/80 dark:bg-slate-900/80 border-white/20 dark:border-slate-700/50 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Permissions</CardTitle>
-            <Settings className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">
+              Permissions
+            </CardTitle>
+            <Settings className="h-4 w-4 text-slate-600 dark:text-slate-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">3</div>
-            <p className="text-xs text-muted-foreground">Permission levels</p>
+            <div className="text-2xl font-bold text-slate-800 dark:text-slate-200">
+              3
+            </div>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Permission levels
+            </p>
           </CardContent>
         </Card>
       </div>
 
       {/* Roles Table */}
-      <Card>
+      <Card className="backdrop-blur-sm bg-white/80 dark:bg-slate-900/80 border-white/20 dark:border-slate-700/50 shadow-xl">
         <CardHeader>
-          <CardTitle>System Roles</CardTitle>
+          <CardTitle className="text-slate-800 dark:text-slate-200">
+            System Roles
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <RolesTable />

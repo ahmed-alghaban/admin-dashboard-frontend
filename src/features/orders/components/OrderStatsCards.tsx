@@ -63,51 +63,71 @@ const OrderStatsCards = ({
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-      <Card>
+      <Card className="backdrop-blur-sm bg-white/80 dark:bg-slate-900/80 border-white/20 dark:border-slate-700/50 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Total Orders</CardTitle>
-          <Package className="h-4 w-4 text-muted-foreground" />
+          <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">
+            Total Orders
+          </CardTitle>
+          <Package className="h-4 w-4 text-blue-600 dark:text-blue-400" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{totalOrders}</div>
-          <p className="text-xs text-muted-foreground">All time orders</p>
+          <div className="text-2xl font-bold text-slate-800 dark:text-slate-200">
+            {totalOrders}
+          </div>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            All time orders
+          </p>
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="backdrop-blur-sm bg-white/80 dark:bg-slate-900/80 border-white/20 dark:border-slate-700/50 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-          <DollarSign className="h-4 w-4 text-muted-foreground" />
+          <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">
+            Total Revenue
+          </CardTitle>
+          <DollarSign className="h-4 w-4 text-green-600 dark:text-green-400" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">
+          <div className="text-2xl font-bold text-slate-800 dark:text-slate-200">
             ${totalRevenue.toLocaleString()}
           </div>
-          <p className="text-xs text-muted-foreground">All time revenue</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            All time revenue
+          </p>
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="backdrop-blur-sm bg-white/80 dark:bg-slate-900/80 border-white/20 dark:border-slate-700/50 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Pending Orders</CardTitle>
-          <Clock className="h-4 w-4 text-muted-foreground" />
+          <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">
+            Pending Orders
+          </CardTitle>
+          <Clock className="h-4 w-4 text-orange-600 dark:text-orange-400" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{pendingOrders}</div>
-          <p className="text-xs text-muted-foreground">Awaiting processing</p>
+          <div className="text-2xl font-bold text-slate-800 dark:text-slate-200">
+            {pendingOrders}
+          </div>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            Awaiting processing
+          </p>
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="backdrop-blur-sm bg-white/80 dark:bg-slate-900/80 border-white/20 dark:border-slate-700/50 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">
+          <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">
             Average Order Value
           </CardTitle>
-          <TrendingUp className="h-4 w-4 text-muted-foreground" />
+          <TrendingUp className="h-4 w-4 text-purple-600 dark:text-purple-400" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">${avgOrderValue.toFixed(2)}</div>
-          <p className="text-xs text-muted-foreground">Per order average</p>
+          <div className="text-2xl font-bold text-slate-800 dark:text-slate-200">
+            ${avgOrderValue.toFixed(2)}
+          </div>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            Per order average
+          </p>
         </CardContent>
       </Card>
     </div>

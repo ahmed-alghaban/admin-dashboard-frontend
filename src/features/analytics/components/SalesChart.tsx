@@ -55,15 +55,15 @@ const SalesChart = ({ data = [], isLoading = false, timeframe = "daily" }: Sales
   }
 
   return (
-    <Card>
+    <Card className="backdrop-blur-sm bg-white/80 dark:bg-slate-900/80 border-white/20 dark:border-slate-700/50 shadow-xl">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div>
-          <CardTitle className="text-lg font-semibold">Sales Overview</CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <CardTitle className="text-lg font-semibold text-slate-800 dark:text-slate-200">Sales Overview</CardTitle>
+          <p className="text-sm text-slate-600 dark:text-slate-400">
             Revenue and order trends over time
           </p>
         </div>
-        <TrendingUp className="h-5 w-5 text-muted-foreground" />
+        <TrendingUp className="h-5 w-5 text-slate-600 dark:text-slate-400" />
       </CardHeader>
       <CardContent>
         <div className="h-80">
@@ -92,21 +92,21 @@ const SalesChart = ({ data = [], isLoading = false, timeframe = "daily" }: Sales
                 content={({ active, payload }) => {
                   if (active && payload && payload.length) {
                     return (
-                      <div className="rounded-lg border bg-background p-2 shadow-sm">
+                      <div className="rounded-lg border border-white/20 dark:border-slate-700/50 backdrop-blur-md bg-white/90 dark:bg-slate-900/90 p-2 shadow-xl">
                         <div className="grid grid-cols-2 gap-2">
                           <div className="flex flex-col">
-                            <span className="text-[0.70rem] uppercase text-muted-foreground">
+                            <span className="text-[0.70rem] uppercase text-slate-500 dark:text-slate-400">
                               Revenue
                             </span>
-                            <span className="font-bold text-muted-foreground">
+                            <span className="font-bold text-slate-700 dark:text-slate-300">
                               ${payload[0]?.value?.toLocaleString()}
                             </span>
                           </div>
                           <div className="flex flex-col">
-                            <span className="text-[0.70rem] uppercase text-muted-foreground">
+                            <span className="text-[0.70rem] uppercase text-slate-500 dark:text-slate-400">
                               Orders
                             </span>
-                            <span className="font-bold text-muted-foreground">
+                            <span className="font-bold text-slate-700 dark:text-slate-300">
                               {payload[1]?.value}
                             </span>
                           </div>

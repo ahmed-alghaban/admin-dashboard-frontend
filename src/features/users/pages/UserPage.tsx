@@ -168,9 +168,11 @@ const UserPage = () => {
       />
 
       {/* Users Table */}
-      <Card>
+      <Card className="backdrop-blur-sm bg-white/80 dark:bg-slate-900/80 border-white/20 dark:border-slate-700/50 shadow-xl">
         <CardHeader>
-          <CardTitle>Users ({totalCount})</CardTitle>
+          <CardTitle className="text-slate-800 dark:text-slate-200">
+            Users ({totalCount})
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <UsersTable
