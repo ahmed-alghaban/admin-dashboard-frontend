@@ -37,6 +37,7 @@ const UserPage = () => {
     totalCount,
     totalPages,
     currentPage,
+    pageSize,
   } = useUserFilters();
 
   // Handle bulk operations
@@ -175,7 +176,9 @@ const UserPage = () => {
           <UsersTable
             users={users}
             currentPage={currentPage}
+            totalCount={totalCount}
             totalPages={totalPages}
+            pageSize={pageSize}
             onPageChange={setPage}
             isLoading={isFetching}
           />

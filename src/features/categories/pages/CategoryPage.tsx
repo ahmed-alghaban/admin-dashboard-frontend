@@ -26,15 +26,14 @@ const CategoryPage = () => {
   const {
     categories,
     isLoading,
-    isFetching,
     error,
     filters,
     updateFilters,
     setPage,
-    setPageSize,
     totalCount,
     totalPages,
     currentPage,
+    pageSize,
   } = useCategoryFilters();
 
   // Handle bulk operations
@@ -178,7 +177,9 @@ const CategoryPage = () => {
           <CategoriesTable
             categories={categories}
             currentPage={currentPage}
+            totalCount={totalCount}
             totalPages={totalPages}
+            pageSize={pageSize}
             onPageChange={setPage}
             isLoading={isLoading}
           />

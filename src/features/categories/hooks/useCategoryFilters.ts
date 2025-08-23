@@ -112,9 +112,9 @@ export const useCategoryFilters = () => {
     if (
       categoriesResponse &&
       typeof categoriesResponse === "object" &&
-      "totalCount" in categoriesResponse
+      "totalItems" in categoriesResponse
     ) {
-      return categoriesResponse.totalCount || 0;
+      return categoriesResponse.totalItems || 0;
     }
 
     // If it's a direct array or other structure, use the filtered length

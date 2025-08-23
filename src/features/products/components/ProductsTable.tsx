@@ -6,7 +6,9 @@ import type { Product } from "../productTypes";
 interface ProductsTableProps {
   products: Product[];
   currentPage: number;
+  totalCount: number;
   totalPages: number;
+  pageSize: number;
   onPageChange: (page: number) => void;
   isLoading?: boolean;
 }
@@ -14,7 +16,9 @@ interface ProductsTableProps {
 const ProductsTable = ({
   products,
   currentPage,
+  totalCount,
   totalPages,
+  pageSize,
   onPageChange,
   isLoading = false,
 }: ProductsTableProps) => {
@@ -37,7 +41,9 @@ const ProductsTable = ({
       emptyMessage="No products found."
       manualPagination={true}
       page={currentPage}
-      total={totalPages}
+      pageSize={pageSize}
+      total={totalCount}
+      totalPages={totalPages}
       onPageChange={onPageChange}
     />
   );

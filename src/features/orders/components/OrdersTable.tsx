@@ -6,7 +6,9 @@ import type { Order } from "../orderTypes";
 interface OrdersTableProps {
   orders: Order[];
   currentPage: number;
+  totalCount: number;
   totalPages: number;
+  pageSize: number;
   onPageChange: (page: number) => void;
   isLoading?: boolean;
 }
@@ -14,7 +16,9 @@ interface OrdersTableProps {
 const OrdersTable = ({
   orders,
   currentPage,
+  totalCount,
   totalPages,
+  pageSize,
   onPageChange,
   isLoading = false,
 }: OrdersTableProps) => {
@@ -33,7 +37,9 @@ const OrdersTable = ({
       emptyMessage="No orders found."
       manualPagination={true}
       page={currentPage}
-      total={totalPages}
+      pageSize={pageSize}
+      total={totalCount}
+      totalPages={totalPages}
       onPageChange={onPageChange}
     />
   );

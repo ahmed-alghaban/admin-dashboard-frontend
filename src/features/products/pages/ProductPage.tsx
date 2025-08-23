@@ -35,6 +35,7 @@ const ProductPage = () => {
     totalCount,
     totalPages,
     currentPage,
+    pageSize,
   } = useProductFilters();
 
   // Handle bulk operations
@@ -177,7 +178,9 @@ const ProductPage = () => {
           <ProductsTable
             products={products}
             currentPage={currentPage}
+            totalCount={totalCount}
             totalPages={totalPages}
+            pageSize={pageSize}
             onPageChange={setPage}
             isLoading={isFetching}
           />

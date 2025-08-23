@@ -50,6 +50,7 @@ export type DataTableProps<TData, TValue> = {
   page?: number; // 1-based
   pageSize?: number;
   total?: number; // total items
+  totalPages?: number; // total pages (optional, will be calculated from total/pageSize if not provided)
   onPageChange?: (page: number) => void;
 
   className?: string;
@@ -84,7 +85,7 @@ export interface ProductEditFormProps {
 // Pagination result for API responses
 export interface PaginationResult<T> {
   items: T[];
-  totalCount: number;
+  totalItems: number; // API returns totalItems, not totalCount
   pageNumber: number;
   pageSize: number;
   totalPages: number;

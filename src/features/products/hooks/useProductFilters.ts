@@ -42,6 +42,10 @@ export const useProductFilters = () => {
       return matchesCategory && matchesStatus;
     }) || [];
 
+  // Check if client-side filters are applied
+  const hasClientFilters =
+    filters.categoryFilter !== "all" || filters.statusFilter !== "all";
+
   const updateFilters = useCallback((newFilters: Partial<ProductFilters>) => {
     setFilters((prev) => ({
       ...prev,
@@ -76,8 +80,10 @@ export const useProductFilters = () => {
     setPageSize,
 
     // Computed values
-    totalCount: filteredProducts.length,
-    totalPages: paginatedProducts?.totalPages || 0,
+    totalCount: hasClientFilters
+      ? filteredProducts.length
+      : paginatedProducts?.totalItems || 0,
+    totalPages: hasClientFilters ? 1 : paginatedProducts?.totalPages || 0,
     currentPage: filters.pageNumber,
     pageSize: filters.pageSize,
   };

@@ -37,6 +37,7 @@ const OrderPage = () => {
     totalCount,
     totalPages,
     currentPage,
+    pageSize,
   } = useOrderFilters();
 
   // Handle bulk operations
@@ -181,7 +182,9 @@ const OrderPage = () => {
           <OrdersTable
             orders={orders}
             currentPage={currentPage}
+            totalCount={totalCount}
             totalPages={totalPages}
+            pageSize={pageSize}
             onPageChange={setPage}
             isLoading={isFetching}
           />

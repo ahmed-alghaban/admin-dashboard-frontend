@@ -8,7 +8,9 @@ import { toast } from "sonner";
 interface CategoriesTableProps {
   categories: Category[];
   currentPage: number;
+  totalCount: number;
   totalPages: number;
+  pageSize: number;
   onPageChange: (page: number) => void;
   isLoading?: boolean;
 }
@@ -16,7 +18,9 @@ interface CategoriesTableProps {
 const CategoriesTable = ({
   categories,
   currentPage,
+  totalCount,
   totalPages,
+  pageSize,
   onPageChange,
   isLoading = false,
 }: CategoriesTableProps) => {
@@ -54,7 +58,9 @@ const CategoriesTable = ({
       emptyMessage="No categories found."
       manualPagination={true}
       page={currentPage}
-      total={totalPages}
+      pageSize={pageSize}
+      total={totalCount}
+      totalPages={totalPages}
       onPageChange={onPageChange}
     />
   );

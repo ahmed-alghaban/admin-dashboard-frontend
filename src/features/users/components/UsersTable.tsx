@@ -7,7 +7,9 @@ import { useDeleteUser } from "../hooks/useDeleteUser";
 interface UsersTableProps {
   users: User[];
   currentPage: number;
+  totalCount: number;
   totalPages: number;
+  pageSize: number;
   onPageChange: (page: number) => void;
   isLoading?: boolean;
 }
@@ -15,7 +17,9 @@ interface UsersTableProps {
 const UsersTable = ({
   users,
   currentPage,
+  totalCount,
   totalPages,
+  pageSize,
   onPageChange,
   isLoading = false,
 }: UsersTableProps) => {
@@ -40,7 +44,9 @@ const UsersTable = ({
       emptyMessage="No users found."
       manualPagination={true}
       page={currentPage}
-      total={totalPages}
+      pageSize={pageSize}
+      total={totalCount}
+      totalPages={totalPages}
       onPageChange={onPageChange}
     />
   );

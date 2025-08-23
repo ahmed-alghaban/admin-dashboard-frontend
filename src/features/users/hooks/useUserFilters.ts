@@ -33,12 +33,15 @@ export const useUserFilters = () => {
 
   // Apply client-side status filtering since backend doesn't support it
   const filteredUsers =
-    paginatedUsers?.items.filter((user) => {
+    paginatedUsers?.items?.filter((user) => {
       const matchesStatus =
         filters.statusFilter === "all" || user.status === filters.statusFilter;
       const matchesActiveFilter = showInactiveUsers || user.status === "Active";
       return matchesStatus && matchesActiveFilter;
     }) || [];
+
+  // Check if client-side filters are applied (only status filter, not inactive users filter)
+  const hasClientFilters = filters.statusFilter !== "all";
 
   const updateFilters = useCallback((newFilters: Partial<UserFilters>) => {
     setFilters((prev) => ({
@@ -59,7 +62,7 @@ export const useUserFilters = () => {
 
   return {
     // Data
-    users: filteredUsers,
+    users: filteredUsers, // Always use filtered users to respect inactive users preference
     paginatedUsers,
     isLoading,
     isFetching,
@@ -74,8 +77,10 @@ export const useUserFilters = () => {
     setPageSize,
 
     // Computed values
-    totalCount: filteredUsers.length,
-    totalPages: paginatedUsers?.totalPages || 0,
+    totalCount: hasClientFilters
+      ? filteredUsers.length
+      : paginatedUsers?.totalItems || 0,
+    totalPages: hasClientFilters ? 1 : paginatedUsers?.totalPages || 0,
     currentPage: filters.pageNumber,
     pageSize: filters.pageSize,
   };
