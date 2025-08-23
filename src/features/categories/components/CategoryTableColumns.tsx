@@ -11,7 +11,8 @@ import { MoreHorizontal, Edit, Folder, Trash } from "lucide-react";
 
 export const createColumns = (
   onEdit: (category: Category) => void,
-  onDelete: (category: Category) => void
+  onDelete: (category: Category) => void,
+  onViewDetails: (category: Category) => void
 ): ColumnDef<Category>[] => [
   {
     accessorKey: "name",
@@ -20,15 +21,7 @@ export const createColumns = (
       <div className="font-medium">{row.getValue("name")}</div>
     ),
   },
-  {
-    accessorKey: "description",
-    header: "Description",
-    cell: ({ row }) => (
-      <div className="text-sm text-muted-foreground max-w-md truncate">
-        {row.getValue("description")}
-      </div>
-    ),
-  },
+
   {
     id: "actions",
     header: "Actions",
@@ -48,7 +41,7 @@ export const createColumns = (
               <Edit className="mr-2 h-4 w-4" />
               Edit
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onViewDetails(category)}>
               <Folder className="mr-2 h-4 w-4" />
               View Details
             </DropdownMenuItem>

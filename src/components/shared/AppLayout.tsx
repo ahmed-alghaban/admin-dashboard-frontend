@@ -64,11 +64,11 @@ const AppLayout = () => {
       <AppSidebar />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center justify-between gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b border-white/20 dark:border-slate-700/50 shadow-lg">
-          <div className="flex items-center gap-2 px-6">
+          <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1 hover:bg-white/20 dark:hover:bg-slate-800/50 rounded-lg p-1 transition-colors duration-200" />
             <Separator
               orientation="vertical"
-              className="mr-4 data-[orientation=vertical]:h-6 bg-white/20 dark:bg-slate-700/50"
+              className="mr-3 data-[orientation=vertical]:h-6 bg-white/20 dark:bg-slate-700/50"
             />
             <Breadcrumb>
               <BreadcrumbList className="text-sm">
@@ -76,11 +76,11 @@ const AppLayout = () => {
               </BreadcrumbList>
             </Breadcrumb>
           </div>
-          <div className="flex items-center px-6">
+          <div className="flex items-center px-4">
             <ThemeToggle />
           </div>
         </header>
-        <div className="routes-container flex flex-1 flex-col gap-6 p-6 pt-0 min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+        <div className="routes-container flex flex-1 flex-col gap-2 p-6 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
           <div
             key={location.pathname}
             className="animate-in fade-in-0 slide-in-from-bottom-4 duration-300 ease-out"

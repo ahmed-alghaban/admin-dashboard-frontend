@@ -9,7 +9,7 @@ const MainLayout = () => {
       <LandingNavbar />
       <div
         key={location.pathname}
-        className="animate-in fade-in-0 slide-in-from-bottom-4 duration-300 ease-out"
+        className="flex flex-1 flex-col gap-4 p-6 animate-in fade-in-0 slide-in-from-bottom-4 duration-300 ease-out"
       >
         <Outlet />
       </div>

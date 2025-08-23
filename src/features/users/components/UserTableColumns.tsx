@@ -11,7 +11,8 @@ import { MoreHorizontal, Edit, User as UserIcon, Trash } from "lucide-react";
 
 export const createColumns = (
   onEdit: (user: User) => void,
-  onDelete: (user: User) => void
+  onDelete: (user: User) => void,
+  onViewDetails: (user: User) => void
 ): ColumnDef<User>[] => [
   {
     accessorKey: "firstName",
@@ -37,13 +38,6 @@ export const createColumns = (
     ),
   },
   {
-    accessorKey: "phoneNumber",
-    header: "Phone",
-    cell: ({ row }) => (
-      <div className="text-sm">{row.getValue("phoneNumber")}</div>
-    ),
-  },
-  {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
@@ -57,18 +51,6 @@ export const createColumns = (
           }`}
         >
           {status}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "createdAt",
-    header: "Created At",
-    cell: ({ row }) => {
-      const date = new Date(row.getValue("createdAt"));
-      return (
-        <div className="text-sm text-muted-foreground">
-          {date.toLocaleDateString()}
         </div>
       );
     },
@@ -92,7 +74,7 @@ export const createColumns = (
               <Edit className="mr-2 h-4 w-4" />
               Edit
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onViewDetails(user)}>
               <UserIcon className="mr-2 h-4 w-4" />
               View Details
             </DropdownMenuItem>

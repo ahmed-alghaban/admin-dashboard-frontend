@@ -1,5 +1,5 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import type { Order, OrderItem } from "../orderTypes";
+import type { Order } from "../orderTypes";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +10,8 @@ import { Button } from "@/components/ui/button/button";
 import { MoreHorizontal, Edit, Eye } from "lucide-react";
 
 export const createColumns = (
-  onEdit: (order: Order) => void
+  onEdit: (order: Order) => void,
+  onViewDetails: (order: Order) => void
 ): ColumnDef<Order>[] => [
   {
     accessorKey: "orderId",
@@ -29,18 +30,6 @@ export const createColumns = (
         {row.getValue("userFullName") as string}
       </div>
     ),
-  },
-  {
-    accessorKey: "orderDate",
-    header: "Order Date",
-    cell: ({ row }) => {
-      const date = new Date(row.getValue("orderDate") as string);
-      return (
-        <div className="text-sm text-muted-foreground">
-          {date.toLocaleDateString()}
-        </div>
-      );
-    },
   },
   {
     accessorKey: "totalAmount",
@@ -87,25 +76,7 @@ export const createColumns = (
       );
     },
   },
-  {
-    accessorKey: "paymentMethod",
-    header: "Payment",
-    cell: ({ row }) => (
-      <div className="text-sm">{row.getValue("paymentMethod") as string}</div>
-    ),
-  },
-  {
-    accessorKey: "orderItems",
-    header: "Items",
-    cell: ({ row }) => {
-      const items = row.getValue("orderItems") as OrderItem[];
-      return (
-        <div className="text-sm text-muted-foreground">
-          {items.length} item{items.length !== 1 ? "s" : ""}
-        </div>
-      );
-    },
-  },
+
   {
     id: "actions",
     header: "Actions",
@@ -125,7 +96,7 @@ export const createColumns = (
               <Edit className="mr-2 h-4 w-4" />
               Update Status
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onViewDetails(order)}>
               <Eye className="mr-2 h-4 w-4" />
               View Details
             </DropdownMenuItem>

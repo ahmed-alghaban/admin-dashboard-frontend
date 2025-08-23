@@ -26,7 +26,7 @@ export const updateCategory = async (
 ) => {
   const response = await api.put(`/categories/${categoryId}`, category);
   logger.log(response.data);
-  return response.data.result;  
+  return response.data.result;
 };
 
 export const deleteCategory = async (categoryId: string) => {

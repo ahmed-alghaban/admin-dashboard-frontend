@@ -3,6 +3,8 @@ import { createColumns } from "./UserTableColumns";
 import { useUserUIStore } from "../store";
 import type { User } from "../userTypes";
 import { useDeleteUser } from "../hooks/useDeleteUser";
+import UserDetailModal from "./UserDetailModal";
+import { useState } from "react";
 
 interface UsersTableProps {
   users: User[];
@@ -24,6 +26,8 @@ const UsersTable = ({
   isLoading = false,
 }: UsersTableProps) => {
   const { mutate: deleteUser, isPending: isDeleting } = useDeleteUser();
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
   // Zustand store for UI state
   const { openEditDrawer } = useUserUIStore();
@@ -36,19 +40,48 @@ const UsersTable = ({
     await deleteUser(user.userId);
   };
 
+  const handleViewDetails = (user: User) => {
+    setSelectedUser(user);
+    setIsDetailModalOpen(true);
+  };
+
   return (
-    <DataTable
-      columns={createColumns(handleEditUser, handleDeleteUser)}
-      data={users}
-      loading={isLoading || isDeleting}
-      emptyMessage="No users found."
-      manualPagination={true}
-      page={currentPage}
-      pageSize={pageSize}
-      total={totalCount}
-      totalPages={totalPages}
-      onPageChange={onPageChange}
-    />
+    <>
+      <DataTable
+        columns={createColumns(
+          handleEditUser,
+          handleDeleteUser,
+          handleViewDetails
+        )}
+        data={users}
+        loading={isLoading || isDeleting}
+        emptyMessage="No users found."
+        manualPagination={true}
+        page={currentPage}
+        pageSize={pageSize}
+        total={totalCount}
+        totalPages={totalPages}
+        onPageChange={onPageChange}
+      />
+
+      <UserDetailModal
+        user={selectedUser}
+        open={isDetailModalOpen}
+        onOpenChange={setIsDetailModalOpen}
+        onEdit={() => {
+          if (selectedUser) {
+            handleEditUser(selectedUser);
+            setIsDetailModalOpen(false);
+          }
+        }}
+        onDelete={() => {
+          if (selectedUser) {
+            handleDeleteUser(selectedUser);
+            setIsDetailModalOpen(false);
+          }
+        }}
+      />
+    </>
   );
 };
 

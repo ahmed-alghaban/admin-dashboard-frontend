@@ -20,12 +20,16 @@ export const LoginForm = ({
   ...props
 }: React.ComponentProps<"div">) => {
   const [showPassword, setShowPassword] = useState(false);
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginInput>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginInput>();
   const { mutate: login, isPending: isLoading } = useLogin();
 
   const onSubmit: SubmitHandler<LoginInput> = async (data) => {
     await login(data);
-  }
+  };
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -45,10 +49,12 @@ export const LoginForm = ({
         </CardHeader>
         <CardContent className="p-6 sm:p-8">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            
             {/* Email Field */}
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
+              <Label
+                htmlFor="email"
+                className="text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2"
+              >
                 <Mail className="w-4 h-4" />
                 Email Address
               </Label>
@@ -61,8 +67,8 @@ export const LoginForm = ({
                     required: "Email is required",
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: "Please enter a valid email address"
-                    }
+                      message: "Please enter a valid email address",
+                    },
                   })}
                   className={cn(
                     "pl-10 pr-4 py-3 text-base transition-all duration-300 ease-in-out",
@@ -70,7 +76,8 @@ export const LoginForm = ({
                     "hover:border-blue-300 dark:hover:border-blue-600",
                     "focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/20",
                     "placeholder:text-slate-400 dark:placeholder:text-slate-500",
-                    errors.email && "border-red-500 dark:border-red-400 focus:border-red-500 focus:ring-red-500/20"
+                    errors.email &&
+                      "border-red-500 dark:border-red-400 focus:border-red-500 focus:ring-red-500/20"
                   )}
                 />
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -86,7 +93,10 @@ export const LoginForm = ({
             {/* Password Field */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password" className="text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                <Label
+                  htmlFor="password"
+                  className="text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2"
+                >
                   <Lock className="w-4 h-4" />
                   Password
                 </Label>
@@ -106,8 +116,8 @@ export const LoginForm = ({
                     required: "Password is required",
                     minLength: {
                       value: 6,
-                      message: "Password must be at least 6 characters"
-                    }
+                      message: "Password must be at least 6 characters",
+                    },
                   })}
                   className={cn(
                     "pl-10 pr-12 py-3 text-base transition-all duration-300 ease-in-out",
@@ -115,7 +125,8 @@ export const LoginForm = ({
                     "hover:border-blue-300 dark:hover:border-blue-600",
                     "focus:border-blue-500 dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-500/20",
                     "placeholder:text-slate-400 dark:placeholder:text-slate-500",
-                    errors.password && "border-red-500 dark:border-red-400 focus:border-red-500 focus:ring-red-500/20"
+                    errors.password &&
+                      "border-red-500 dark:border-red-400 focus:border-red-500 focus:ring-red-500/20"
                   )}
                 />
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -178,4 +189,3 @@ export const LoginForm = ({
     </div>
   );
 };
-

@@ -1,11 +1,9 @@
 import * as React from "react";
 import {
   BookOpen,
-  Settings2,
   Users,
   Package,
   FolderOpen,
-  BarChart3,
   FileText,
   Shield,
   LayoutDashboard,
@@ -39,17 +37,6 @@ const navMain = [
     items: [],
   },
   {
-    title: "Roles & Permissions",
-    url: "/app/roles",
-    icon: Shield,
-    items: [
-      {
-        title: "All Roles",
-        url: "/app/roles",
-      },
-    ],
-  },
-  {
     title: "Products",
     url: "/app/products",
     icon: Package,
@@ -62,12 +49,6 @@ const navMain = [
     items: [],
   },
   {
-    title: "Inventory",
-    url: "/app/inventory",
-    icon: BarChart3,
-    items: [],
-  },
-  {
     title: "Orders",
     url: "/app/orders",
     icon: FileText,
@@ -77,12 +58,6 @@ const navMain = [
     title: "Audit Logs",
     url: "/app/audit-logs",
     icon: BookOpen,
-    items: [],
-  },
-  {
-    title: "Settings",
-    url: "/app/settings",
-    icon: Settings2,
     items: [],
   },
 ];

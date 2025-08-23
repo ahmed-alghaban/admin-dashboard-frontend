@@ -4,6 +4,8 @@ import { useCategoryUIStore } from "../stores";
 import { useDeleteCategory } from "../hooks/useDeleteCategory";
 import type { Category } from "../categoryTypes";
 import { toast } from "sonner";
+import CategoryDetailModal from "./CategoryDetailModal";
+import { useState } from "react";
 
 interface CategoriesTableProps {
   categories: Category[];
@@ -25,6 +27,10 @@ const CategoriesTable = ({
   isLoading = false,
 }: CategoriesTableProps) => {
   const { mutate: deleteCategory, isPending: isDeleting } = useDeleteCategory();
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
+    null
+  );
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
   // Zustand store for UI state
   const { openEditDrawer } = useCategoryUIStore();
@@ -44,25 +50,54 @@ const CategoriesTable = ({
         toast.success(
           `Category "${category.name}" has been deleted successfully`
         );
-      } catch (error) {
+      } catch {
         toast.error(`Failed to delete category "${category.name}"`);
       }
     }
   };
 
+  const handleViewDetails = (category: Category) => {
+    setSelectedCategory(category);
+    setIsDetailModalOpen(true);
+  };
+
   return (
-    <DataTable
-      columns={createColumns(handleEditCategory, handleDeleteCategory)}
-      data={categories}
-      loading={isLoading || isDeleting}
-      emptyMessage="No categories found."
-      manualPagination={true}
-      page={currentPage}
-      pageSize={pageSize}
-      total={totalCount}
-      totalPages={totalPages}
-      onPageChange={onPageChange}
-    />
+    <>
+      <DataTable
+        columns={createColumns(
+          handleEditCategory,
+          handleDeleteCategory,
+          handleViewDetails
+        )}
+        data={categories}
+        loading={isLoading || isDeleting}
+        emptyMessage="No categories found."
+        manualPagination={true}
+        page={currentPage}
+        pageSize={pageSize}
+        total={totalCount}
+        totalPages={totalPages}
+        onPageChange={onPageChange}
+      />
+
+      <CategoryDetailModal
+        category={selectedCategory}
+        open={isDetailModalOpen}
+        onOpenChange={setIsDetailModalOpen}
+        onEdit={() => {
+          if (selectedCategory) {
+            handleEditCategory(selectedCategory);
+            setIsDetailModalOpen(false);
+          }
+        }}
+        onDelete={() => {
+          if (selectedCategory) {
+            handleDeleteCategory(selectedCategory);
+            setIsDetailModalOpen(false);
+          }
+        }}
+      />
+    </>
   );
 };
 

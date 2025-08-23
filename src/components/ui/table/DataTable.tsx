@@ -61,7 +61,12 @@ export const DataTable = <TData, TValue>({
   const totalPages = propTotalPages || Math.max(1, Math.ceil(total / pageSize));
 
   return (
-    <div className={cn("rounded-2xl border", className)}>
+    <div
+      className={cn(
+        "rounded-2xl border border-white/20 dark:border-slate-700/50 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm",
+        className
+      )}
+    >
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((hg) => (
@@ -84,7 +89,7 @@ export const DataTable = <TData, TValue>({
                           header.column.columnDef.header,
                           header.getContext()
                         )}
-                        <span className="text-xs text-muted-foreground">
+                        <span className="text-xs text-slate-500 dark:text-slate-400">
                           {sortDir === "asc"
                             ? "▲"
                             : sortDir === "desc"
@@ -121,7 +126,7 @@ export const DataTable = <TData, TValue>({
             <TableRow>
               <TableCell
                 colSpan={columns.length}
-                className="h-24 text-center text-sm text-muted-foreground"
+                className="h-24 text-center text-sm text-slate-500 dark:text-slate-400"
               >
                 {emptyMessage}
               </TableCell>
@@ -143,23 +148,23 @@ export const DataTable = <TData, TValue>({
       {/* Pagination footer (server-side friendly) */}
       {manualPagination && (
         <div className="flex items-center justify-between px-3 py-2">
-          <span className="text-sm text-muted-foreground">
+          <span className="text-sm text-slate-600 dark:text-slate-400">
             Showing {(page - 1) * pageSize + 1} to{" "}
             {Math.min(page * pageSize, total)} of {total} results
           </span>
           <div className="flex items-center gap-2">
             <button
-              className="px-2 py-1 text-sm rounded border disabled:opacity-50 hover:bg-muted"
+              className="px-3 py-1.5 text-sm rounded-lg border border-white/20 dark:border-slate-700/50 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm disabled:opacity-50 hover:bg-white/70 dark:hover:bg-slate-700/50 transition-colors"
               disabled={page <= 1}
               onClick={() => onPageChange?.(page - 1)}
             >
               Previous
             </button>
-            <span className="text-sm text-muted-foreground">
+            <span className="text-sm text-slate-600 dark:text-slate-400">
               Page {page} of {totalPages}
             </span>
             <button
-              className="px-2 py-1 text-sm rounded border disabled:opacity-50 hover:bg-muted"
+              className="px-3 py-1.5 text-sm rounded-lg border border-white/20 dark:border-slate-700/50 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm disabled:opacity-50 hover:bg-white/70 dark:hover:bg-slate-700/50 transition-colors"
               disabled={page >= totalPages}
               onClick={() => onPageChange?.(page + 1)}
             >

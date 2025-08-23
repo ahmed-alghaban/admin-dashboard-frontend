@@ -8,12 +8,11 @@ import HomePage from "@/pages/HomePage";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import ForbiddenPage from "@/pages/ForbiddenPage";
 import { UserPage } from "@/features/users/pages";
-import RolePage from "@/features/roles/pages/RolePage";
 import ProductPage from "@/features/products/pages/ProductPage";
 import CategoryPage from "@/features/categories/pages/CategoryPage";
 import { OrderPage } from "@/features/orders/pages";
 import { DashboardPage } from "@/features/analytics";
-import InventoryPage from "@/features/inventory/pages/InventoryPage";
+import AuditLogPage from "@/features/audit-logs/pages/AuditLogPage";
 
 const Router = () => (
   <BrowserRouter>
@@ -57,24 +56,6 @@ const Router = () => (
           }
         />
 
-        {/* Roles & Permissions (Admin only) */}
-        <Route
-          path="roles"
-          element={
-            <RoleGuard roles={["Admin"]}>
-              <RolePage />
-            </RoleGuard>
-          }
-        />
-        <Route
-          path="roles/:id/edit"
-          element={
-            <RoleGuard roles={["Admin"]}>
-              <div>Edit Role Page</div>
-            </RoleGuard>
-          }
-        />
-
         {/* Products */}
         <Route
           path="products"
@@ -103,16 +84,6 @@ const Router = () => (
           }
         />
 
-        {/* Inventory */}
-        <Route
-          path="inventory"
-          element={
-            <RoleGuard roles={["Admin", "Manager", "Viewer"]}>
-              <InventoryPage />
-            </RoleGuard>
-          }
-        />
-
         {/* Orders */}
         <Route
           path="orders"
@@ -136,17 +107,7 @@ const Router = () => (
           path="audit-logs"
           element={
             <RoleGuard roles={["Admin"]}>
-              <div>Audit Logs</div>
-            </RoleGuard>
-          }
-        />
-
-        {/* Settings */}
-        <Route
-          path="settings"
-          element={
-            <RoleGuard roles={["Admin"]}>
-              <div>Settings Page</div>
+              <AuditLogPage />
             </RoleGuard>
           }
         />

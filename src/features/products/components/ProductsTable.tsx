@@ -2,6 +2,8 @@ import { DataTable } from "@/components/ui/table/DataTable";
 import { createColumns } from "./ProductTableColumns";
 import { useProductUIStore } from "../stores";
 import type { Product } from "../productTypes";
+import ProductDetailModal from "./ProductDetailModal";
+import { useState } from "react";
 
 interface ProductsTableProps {
   products: Product[];
@@ -23,6 +25,8 @@ const ProductsTable = ({
   isLoading = false,
 }: ProductsTableProps) => {
   const { openEditDrawer } = useProductUIStore();
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
   const handleEditProduct = (product: Product) => {
     openEditDrawer(product.productId);
@@ -33,19 +37,48 @@ const ProductsTable = ({
     console.log("Delete product:", product.productId);
   };
 
+  const handleViewDetails = (product: Product) => {
+    setSelectedProduct(product);
+    setIsDetailModalOpen(true);
+  };
+
   return (
-    <DataTable
-      columns={createColumns(handleEditProduct, handleDeleteProduct)}
-      data={products}
-      loading={isLoading}
-      emptyMessage="No products found."
-      manualPagination={true}
-      page={currentPage}
-      pageSize={pageSize}
-      total={totalCount}
-      totalPages={totalPages}
-      onPageChange={onPageChange}
-    />
+    <>
+      <DataTable
+        columns={createColumns(
+          handleEditProduct,
+          handleDeleteProduct,
+          handleViewDetails
+        )}
+        data={products}
+        loading={isLoading}
+        emptyMessage="No products found."
+        manualPagination={true}
+        page={currentPage}
+        pageSize={pageSize}
+        total={totalCount}
+        totalPages={totalPages}
+        onPageChange={onPageChange}
+      />
+
+      <ProductDetailModal
+        product={selectedProduct}
+        open={isDetailModalOpen}
+        onOpenChange={setIsDetailModalOpen}
+        onEdit={() => {
+          if (selectedProduct) {
+            handleEditProduct(selectedProduct);
+            setIsDetailModalOpen(false);
+          }
+        }}
+        onDelete={() => {
+          if (selectedProduct) {
+            handleDeleteProduct(selectedProduct);
+            setIsDetailModalOpen(false);
+          }
+        }}
+      />
+    </>
   );
 };
 

@@ -5,61 +5,50 @@ import {
   CardTitle,
 } from "@/components/ui/card/card";
 import { Skeleton } from "@/components/ui/skeleton/skeleton";
-import { useInventorySelectionStore, useInventoryUIStore } from "../stores";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 // Components
 import {
-  InventoryPageHeader,
-  InventoryStatsCards,
-  InventoriesTable,
-  InventoryDrawers,
+  AuditLogPageHeader,
+  AuditLogStatsCards,
+  AuditLogsTable,
 } from "../components";
 
 // Hooks
-import { useInventoryFilters } from "../hooks/useInventoryFilters";
+import { useAuditLogFilters } from "../hooks/useAuditLogFilters";
 
-const InventoryPage = () => {
+const AuditLogPage = () => {
   const queryClient = useQueryClient();
-  const { selectedInventories, clearSelection } = useInventorySelectionStore();
-  const { closeEditDrawer } = useInventoryUIStore();
   const {
-    inventories,
+    auditLogs,
     isLoading,
     isFetching,
     error,
-    filters,
-    updateFilters,
     setPage,
-    setPageSize,
     totalCount,
     totalPages,
     currentPage,
     pageSize,
-  } = useInventoryFilters();
+  } = useAuditLogFilters();
 
-  // Handle bulk operations
-  const handleBulkExport = () => {
-    if (selectedInventories.size === 0) return;
+  const handleExport = () => {
     // You can implement export functionality here
-    toast.info(
-      `Export ${selectedInventories.size} inventory items (not implemented yet)`
-    );
+    toast.info("Export functionality (not implemented yet)");
   };
 
   const handleRefresh = () => {
-    queryClient.invalidateQueries({ queryKey: ["inventories"] });
-    toast.success("Inventory data refreshed");
+    queryClient.invalidateQueries({ queryKey: ["audit-logs"] });
+    toast.success("Audit logs refreshed");
   };
 
-  const handleEditInventorySuccess = () => {
-    queryClient.invalidateQueries({ queryKey: ["inventories"] });
-    closeEditDrawer();
+  const handleShowFilters = () => {
+    // You can implement filter drawer functionality here
+    toast.info("Filter functionality (not implemented yet)");
   };
 
   // Show full page skeleton only on initial load
-  if (isLoading && !inventories.length) {
+  if (isLoading && !auditLogs.length) {
     return (
       <div className="space-y-6">
         <div className="flex items-center justify-between">
@@ -67,7 +56,11 @@ const InventoryPage = () => {
             <Skeleton className="h-8 w-32" />
             <Skeleton className="h-4 w-64" />
           </div>
-          <Skeleton className="h-10 w-32" />
+          <div className="flex gap-2">
+            <Skeleton className="h-10 w-20" />
+            <Skeleton className="h-10 w-20" />
+            <Skeleton className="h-10 w-20" />
+          </div>
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {Array.from({ length: 4 }).map((_, i) => (
@@ -100,12 +93,10 @@ const InventoryPage = () => {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
-          <div className="text-destructive mb-2">
-            Error loading inventory data
-          </div>
+          <div className="text-destructive mb-2">Error loading audit logs</div>
           <button
             onClick={() =>
-              queryClient.invalidateQueries({ queryKey: ["inventories"] })
+              queryClient.invalidateQueries({ queryKey: ["audit-logs"] })
             }
             className="text-sm text-blue-600 hover:underline"
           >
@@ -118,22 +109,23 @@ const InventoryPage = () => {
 
   return (
     <div className="space-y-6">
-      <InventoryPageHeader
-        onBulkExport={handleBulkExport}
+      <AuditLogPageHeader
+        onExport={handleExport}
         onRefresh={handleRefresh}
+        onShowFilters={handleShowFilters}
       />
 
-      <InventoryStatsCards inventories={inventories} />
+      <AuditLogStatsCards auditLogs={auditLogs} />
 
       <Card className="backdrop-blur-sm bg-white/80 dark:bg-slate-900/80 border-white/20 dark:border-slate-700/50 shadow-xl">
         <CardHeader>
           <CardTitle className="text-slate-800 dark:text-slate-200">
-            Inventory Items ({totalCount})
+            Audit Logs ({totalCount})
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <InventoriesTable
-            inventories={inventories}
+          <AuditLogsTable
+            auditLogs={auditLogs}
             currentPage={currentPage}
             totalCount={totalCount}
             totalPages={totalPages}
@@ -143,10 +135,8 @@ const InventoryPage = () => {
           />
         </CardContent>
       </Card>
-
-      <InventoryDrawers onEditSuccess={handleEditInventorySuccess} />
     </div>
   );
 };
 
-export default InventoryPage;
+export default AuditLogPage;

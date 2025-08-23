@@ -20,7 +20,8 @@ export const updateInventoryQuantity = async (
   id: string,
   quantity: number
 ): Promise<Inventory> => {
-  const response = await api.put(`/inventory/${id}`, { quantity });
+  // Send quantity as query parameter to match C# controller signature
+  const response = await api.put(`/inventory/${id}?quantity=${quantity}`);
   logger.log("updateInventoryQuantity response:", response.data);
   return response.data.result;
 };

@@ -11,7 +11,8 @@ import type { Product } from "../productTypes";
 
 export const createColumns = (
   onEdit: (product: Product) => void,
-  onDelete: (product: Product) => void
+  onDelete: (product: Product) => void,
+  onViewDetails: (product: Product) => void
 ): ColumnDef<Product>[] => [
   {
     accessorKey: "productName",
@@ -27,14 +28,7 @@ export const createColumns = (
       <div className="font-mono text-sm">{row.getValue("sku")}</div>
     ),
   },
-  {
-    accessorKey: "category",
-    header: "Category",
-    cell: ({ row }) => {
-      const category = row.original.category;
-      return <div className="text-sm">{category?.name || "No Category"}</div>;
-    },
-  },
+
   {
     accessorKey: "price",
     header: "Price",
@@ -104,7 +98,7 @@ export const createColumns = (
               <Edit className="mr-2 h-4 w-4" />
               Edit
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onViewDetails(product)}>
               <Eye className="mr-2 h-4 w-4" />
               View Details
             </DropdownMenuItem>
