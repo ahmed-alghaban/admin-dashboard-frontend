@@ -28,34 +28,28 @@ const ProductPageHeader = ({
       <div className="flex items-center gap-2">
         {selectedCount > 0 && (
           <>
-            <span className="text-sm text-muted-foreground">
-              {selectedCount} selected
-            </span>
             <Button
               variant="outline"
               size="sm"
               onClick={onBulkExport}
-              className="flex items-center gap-2"
+              className="hidden sm:flex"
             >
-              <Download className="h-4 w-4" />
-              Export
+              <Download className="mr-2 h-4 w-4" />
+              Export ({selectedCount})
             </Button>
             <Button
-              variant="destructive"
+              variant="outline"
               size="sm"
               onClick={onBulkDelete}
-              className="flex items-center gap-2"
+              className="hidden sm:flex"
             >
-              <Trash2 className="h-4 w-4" />
-              Delete
-            </Button>
-            <Button variant="ghost" size="sm" onClick={clearSelection}>
-              Clear
+              <Trash2 className="mr-2 h-4 w-4" />
+              Delete ({selectedCount})
             </Button>
           </>
         )}
-        <Button onClick={openAddDrawer} className="flex items-center gap-2">
-          <Plus className="h-4 w-4" />
+        <Button onClick={openAddDrawer}>
+          <Plus className="mr-2 h-4 w-4" />
           Add Product
         </Button>
       </div>

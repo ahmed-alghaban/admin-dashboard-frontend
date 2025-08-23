@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button/button";
 import {
   productCreateSchema,
   type ProductCreateFormData,
-} from "../Schemas/productSchema";
+} from "../schemas/productSchema";
 import { defaultValues } from "../productTypes";
 import { logger } from "@/lib/logger";
 import { useCreateProduct } from "../hooks/useCreateProducts";

@@ -8,12 +8,15 @@ import {
   FormMessage,
 } from "../../form";
 import { Input } from "@/components/ui/form/input";
+import { Textarea } from "@/components/ui/form/input";
 
 type TextFieldProps = {
   name: string;
   label: string;
   placeholder?: string;
   type?: React.InputHTMLAttributes<HTMLInputElement>["type"];
+  multiline?: boolean;
+  rows?: number;
 };
 
 export const TextField: React.FC<TextFieldProps> = ({
@@ -21,10 +24,12 @@ export const TextField: React.FC<TextFieldProps> = ({
   label,
   placeholder,
   type = "text",
+  multiline = false,
+  rows = 3,
 }) => {
   const form = useFormContext();
   const id = `field-${name}`;
-  
+
   return (
     <FormField
       control={form.control}
@@ -33,7 +38,17 @@ export const TextField: React.FC<TextFieldProps> = ({
         <FormItem>
           <FormLabel htmlFor={id}>{label}</FormLabel>
           <FormControl>
-            <Input {...field} id={id} placeholder={placeholder} type={type} />
+            {multiline ? (
+              <Textarea
+                {...field}
+                id={id}
+                placeholder={placeholder}
+                rows={rows}
+                className="resize-none"
+              />
+            ) : (
+              <Input {...field} id={id} placeholder={placeholder} type={type} />
+            )}
           </FormControl>
           <FormMessage />
         </FormItem>

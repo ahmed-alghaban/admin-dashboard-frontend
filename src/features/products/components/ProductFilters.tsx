@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/form/select";
-import { Search } from "lucide-react";
+import { Search, X, SlidersHorizontal, Package, Tag } from "lucide-react";
 
 interface ProductFiltersProps {
   filters: {
@@ -77,107 +77,217 @@ const ProductFilters = ({
     onFiltersChange({ categoryFilter: value });
   };
 
+  const activeFiltersCount = [
+    filters.searchTerm,
+    filters.categoryFilter !== "all" ? filters.categoryFilter : null,
+    filters.statusFilter !== "all" ? filters.statusFilter : null,
+  ].filter(Boolean).length;
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Filters</CardTitle>
+    <Card className="border-2 border-muted/50 bg-gradient-to-r from-background to-muted/5">
+      <CardHeader className="pb-4">
+        <div className="flex items-center justify-between">
+          <CardTitle className="flex items-center gap-2 text-lg font-semibold">
+            <SlidersHorizontal className="h-5 w-5 text-primary" />
+            Filters & Search
+            {activeFiltersCount > 0 && (
+              <span className="inline-flex items-center rounded-full bg-primary px-2 py-1 text-xs font-medium text-primary-foreground">
+                {activeFiltersCount}
+              </span>
+            )}
+          </CardTitle>
+          {activeFiltersCount > 0 && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                setLocalSearchTerm("");
+                onFiltersChange({
+                  searchTerm: "",
+                  categoryFilter: "all",
+                  statusFilter: "all",
+                });
+              }}
+              className="text-muted-foreground hover:text-foreground"
+            >
+              <X className="h-4 w-4 mr-1" />
+              Clear All
+            </Button>
+          )}
+        </div>
       </CardHeader>
       <CardContent className="pt-0">
-        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">
-              Search
-              {filters.searchTerm && (
-                <span className="ml-2 text-xs text-muted-foreground">
-                  (Active: "{filters.searchTerm}")
-                </span>
-              )}
+        <div className="space-y-6">
+          {/* Search Section */}
+          <div className="space-y-3">
+            <label className="text-sm font-semibold text-foreground">
+              Search Products
             </label>
             <div className="relative">
-              <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
-                placeholder="Search products..."
+                placeholder="Search by name, SKU, or description..."
                 value={localSearchTerm}
                 onChange={(e) => handleSearchChange(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="pl-10 pr-20"
+                className="pl-10 h-12 text-base border-2 focus:border-primary transition-colors"
               />
-              <div className="absolute right-1 top-1 flex gap-1">
+              {localSearchTerm && (
                 <Button
-                  onClick={handleSearchSubmit}
+                  onClick={handleClearSearch}
                   size="sm"
-                  disabled={isLoading}
-                  className="h-7 px-2 text-xs"
+                  variant="ghost"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 p-0 hover:bg-muted"
                 >
-                  {isLoading ? "..." : "Go"}
+                  <X className="h-4 w-4" />
                 </Button>
-                {filters.searchTerm && (
-                  <Button
-                    onClick={handleClearSearch}
-                    size="sm"
-                    variant="outline"
-                    className="h-7 px-2 text-xs"
-                  >
-                    ×
-                  </Button>
-                )}
-              </div>
+              )}
+            </div>
+            {localSearchTerm !== filters.searchTerm && (
+              <Button
+                onClick={handleSearchSubmit}
+                disabled={isLoading}
+                className="w-full sm:w-auto"
+              >
+                {isLoading ? "Searching..." : "Apply Search"}
+              </Button>
+            )}
+          </div>
+
+          {/* Filters Grid */}
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">
+                Category Filter
+              </label>
+              <Select
+                value={filters.categoryFilter}
+                onValueChange={handleCategoryChange}
+              >
+                <SelectTrigger className="h-11 border-2 focus:border-primary">
+                  <SelectValue placeholder="Select category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Categories</SelectItem>
+                  <SelectItem value="electronics">
+                    <div className="flex items-center gap-2">
+                      <Package className="h-4 w-4" />
+                      Electronics
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="clothing">
+                    <div className="flex items-center gap-2">
+                      <Tag className="h-4 w-4" />
+                      Clothing
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="books">
+                    <div className="flex items-center gap-2">
+                      <Package className="h-4 w-4" />
+                      Books
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">
+                Status Filter
+              </label>
+              <Select
+                value={filters.statusFilter}
+                onValueChange={handleStatusChange}
+              >
+                <SelectTrigger className="h-11 border-2 focus:border-primary">
+                  <SelectValue placeholder="Select status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Statuses</SelectItem>
+                  <SelectItem value="active">
+                    <div className="flex items-center gap-2">
+                      <div className="h-2 w-2 rounded-full bg-green-500" />
+                      Active
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="inactive">
+                    <div className="flex items-center gap-2">
+                      <div className="h-2 w-2 rounded-full bg-red-500" />
+                      Inactive
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">
+                Items per Page
+              </label>
+              <Select
+                value={filters.pageSize.toString()}
+                onValueChange={(value) => onPageSizeChange(Number(value))}
+              >
+                <SelectTrigger className="h-11 border-2 focus:border-primary">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="5">5 items</SelectItem>
+                  <SelectItem value="10">10 items</SelectItem>
+                  <SelectItem value="20">20 items</SelectItem>
+                  <SelectItem value="50">50 items</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">Category</label>
-            <Select
-              value={filters.categoryFilter}
-              onValueChange={handleCategoryChange}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="All categories" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Categories</SelectItem>
-                {/* TODO: Add dynamic categories from API */}
-                <SelectItem value="electronics">Electronics</SelectItem>
-                <SelectItem value="clothing">Clothing</SelectItem>
-                <SelectItem value="books">Books</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">Status</label>
-            <Select
-              value={filters.statusFilter}
-              onValueChange={handleStatusChange}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="All statuses" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="active">Active</SelectItem>
-                <SelectItem value="inactive">Inactive</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">Page Size</label>
-            <Select
-              value={filters.pageSize.toString()}
-              onValueChange={(value) => onPageSizeChange(Number(value))}
-            >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="5">5 per page</SelectItem>
-                <SelectItem value="10">10 per page</SelectItem>
-                <SelectItem value="20">20 per page</SelectItem>
-                <SelectItem value="50">50 per page</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          {/* Active Filters Display */}
+          {activeFiltersCount > 0 && (
+            <div className="flex flex-wrap gap-2 pt-2 border-t">
+              <span className="text-sm font-medium text-muted-foreground">
+                Active filters:
+              </span>
+              {filters.searchTerm && (
+                <span className="inline-flex items-center gap-1 rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary">
+                  Search: "{filters.searchTerm}"
+                  <Button
+                    onClick={handleClearSearch}
+                    size="sm"
+                    variant="ghost"
+                    className="h-4 w-4 p-0 hover:bg-primary/20"
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                </span>
+              )}
+              {filters.categoryFilter !== "all" && (
+                <span className="inline-flex items-center gap-1 rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary">
+                  Category: {filters.categoryFilter}
+                  <Button
+                    onClick={() => handleCategoryChange("all")}
+                    size="sm"
+                    variant="ghost"
+                    className="h-4 w-4 p-0 hover:bg-primary/20"
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                </span>
+              )}
+              {filters.statusFilter !== "all" && (
+                <span className="inline-flex items-center gap-1 rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary">
+                  Status: {filters.statusFilter}
+                  <Button
+                    onClick={() => handleStatusChange("all")}
+                    size="sm"
+                    variant="ghost"
+                    className="h-4 w-4 p-0 hover:bg-primary/20"
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                </span>
+              )}
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>

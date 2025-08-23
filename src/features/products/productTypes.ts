@@ -1,10 +1,3 @@
-// Category type (referenced in ProductDto)
-export interface Category {
-  categoryId: string;
-  name: string;
-  description?: string;
-}
-
 // Product Create DTO
 export interface ProductCreateDto {
   productName: string;
@@ -40,8 +33,9 @@ export interface ProductUpdateDto {
   imageUrl?: string;
 }
 
+import type { Category } from "../categories/categoryTypes";
 // Import form data type
-import type { ProductCreateFormData } from "./Schemas/productSchema";
+import type { ProductCreateFormData } from "./schemas/productSchema";
 
 // Default values for product creation form
 export const defaultValues: ProductCreateFormData = {

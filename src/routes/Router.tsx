@@ -10,6 +10,9 @@ import ForbiddenPage from "@/pages/ForbiddenPage";
 import { UserPage } from "@/features/users/pages";
 import RolePage from "@/features/roles/pages/RolePage";
 import ProductPage from "@/features/products/pages/ProductPage";
+import CategoryPage from "@/features/categories/pages/CategoryPage";
+import { OrderPage } from "@/features/orders/pages";
+import { DashboardPage } from "@/features/analytics";
 
 const Router = () => (
   <BrowserRouter>
@@ -30,7 +33,7 @@ const Router = () => (
           path="dashboard"
           element={
             <RoleGuard roles={["Admin", "Manager", "Viewer"]}>
-              <div>Dashboard Page</div>
+              <DashboardPage />
             </RoleGuard>
           }
         />
@@ -94,7 +97,7 @@ const Router = () => (
           path="categories"
           element={
             <RoleGuard roles={["Admin", "Manager", "Viewer"]}>
-              <div>Categories List</div>
+              <CategoryPage />
             </RoleGuard>
           }
         />
@@ -121,8 +124,8 @@ const Router = () => (
         <Route
           path="orders"
           element={
-            <RoleGuard roles={["Admin", "Manager", "Viewer"]}>
-              <div>Orders List</div>
+            <RoleGuard roles={["Admin", "Manager"]}>
+              <OrderPage />
             </RoleGuard>
           }
         />

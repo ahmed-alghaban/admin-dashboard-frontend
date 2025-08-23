@@ -136,12 +136,12 @@ const ProductPage = () => {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="text-center">
-          <div className="text-destructive text-lg font-medium">
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center space-y-2">
+          <div className="text-destructive text-xl font-semibold">
             Error loading products
           </div>
-          <div className="text-sm text-muted-foreground mt-1">
+          <div className="text-sm text-muted-foreground max-w-md">
             {error.message}
           </div>
         </div>

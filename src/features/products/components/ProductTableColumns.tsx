@@ -1,6 +1,6 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button/button";
-import { MoreHorizontal, Edit, Trash2 } from "lucide-react";
+import { MoreHorizontal, Edit, Trash2, Eye } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -54,7 +54,13 @@ export const createColumns = (
       const quantity = row.getValue("quantityInStock") as number;
       return (
         <div
-          className={`font-medium ${quantity === 0 ? "text-red-600" : quantity < 10 ? "text-orange-600" : "text-green-600"}`}
+          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+            quantity === 0
+              ? "bg-destructive/10 text-destructive border border-destructive/20"
+              : quantity < 10
+                ? "bg-orange-100 text-orange-800 border border-orange-200"
+                : "bg-primary/10 text-primary border border-primary/20"
+          }`}
         >
           {quantity}
         </div>
@@ -69,7 +75,9 @@ export const createColumns = (
       return (
         <div
           className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-            isActive ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+            isActive
+              ? "bg-primary/10 text-primary border border-primary/20"
+              : "bg-destructive/10 text-destructive border border-destructive/20"
           }`}
         >
           {isActive ? "Active" : "Inactive"}
@@ -95,6 +103,10 @@ export const createColumns = (
             <DropdownMenuItem onClick={() => onEdit(product)}>
               <Edit className="mr-2 h-4 w-4" />
               Edit
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Eye className="mr-2 h-4 w-4" />
+              View Details
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => onDelete(product)}

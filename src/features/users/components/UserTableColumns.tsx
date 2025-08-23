@@ -90,7 +90,7 @@ export const createColumns = (
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={() => onEdit(user)}>
               <Edit className="mr-2 h-4 w-4" />
-              Edit User
+              Edit
             </DropdownMenuItem>
             <DropdownMenuItem>
               <UserIcon className="mr-2 h-4 w-4" />
@@ -98,7 +98,7 @@ export const createColumns = (
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => onDelete(user)}>
               <Trash className="mr-2 h-4 w-4" />
-              Delete User
+              Delete
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

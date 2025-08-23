@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/form/select";
 import { Button } from "@/components/ui/button/button";
-import { Filter, Search } from "lucide-react";
+import { Filter, Search, X, SlidersHorizontal } from "lucide-react";
 import { useUserPreferencesStore } from "../store";
 
 interface UserFiltersProps {
@@ -74,100 +74,196 @@ const UserFilters = ({
     onFiltersChange({ statusFilter: value });
   };
 
+  const activeFiltersCount = [
+    filters.searchTerm,
+    filters.statusFilter !== "all" ? filters.statusFilter : null,
+    showInactiveUsers ? "inactive-visible" : null,
+  ].filter(Boolean).length;
+
   return (
-    <Card>
-      <CardHeader className="pb-3">
-        <CardTitle className="flex items-center gap-2 text-lg">
-          <Filter className="h-4 w-4" />
-          Filters & Search
-        </CardTitle>
+    <Card className="border-2 border-muted/50 bg-gradient-to-r from-background to-muted/5">
+      <CardHeader className="pb-4">
+        <div className="flex items-center justify-between">
+          <CardTitle className="flex items-center gap-2 text-lg font-semibold">
+            <SlidersHorizontal className="h-5 w-5 text-primary" />
+            Filters & Search
+            {activeFiltersCount > 0 && (
+              <span className="inline-flex items-center rounded-full bg-primary px-2 py-1 text-xs font-medium text-primary-foreground">
+                {activeFiltersCount}
+              </span>
+            )}
+          </CardTitle>
+          {activeFiltersCount > 0 && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                setLocalSearchTerm("");
+                onFiltersChange({ searchTerm: "", statusFilter: "all" });
+              }}
+              className="text-muted-foreground hover:text-foreground"
+            >
+              <X className="h-4 w-4 mr-1" />
+              Clear All
+            </Button>
+          )}
+        </div>
       </CardHeader>
       <CardContent className="pt-0">
-        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">
-              Search
-              {filters.searchTerm && (
-                <span className="ml-2 text-xs text-muted-foreground">
-                  (Active: "{filters.searchTerm}")
-                </span>
-              )}
+        <div className="space-y-6">
+          {/* Search Section */}
+          <div className="space-y-3">
+            <label className="text-sm font-semibold text-foreground">
+              Search Users
             </label>
             <div className="relative">
-              <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
-                placeholder="Search users..."
+                placeholder="Search by name, email, or phone..."
                 value={localSearchTerm}
                 onChange={(e) => handleSearchChange(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="pl-10 pr-20"
+                className="pl-10 h-12 text-base border-2 focus:border-primary transition-colors"
               />
-              <div className="absolute right-1 top-1 flex gap-1">
+              {localSearchTerm && (
                 <Button
-                  onClick={handleSearchSubmit}
+                  onClick={handleClearSearch}
                   size="sm"
-                  disabled={isLoading}
-                  className="h-7 px-2 text-xs"
+                  variant="ghost"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 p-0 hover:bg-muted"
                 >
-                  {isLoading ? "..." : "Go"}
+                  <X className="h-4 w-4" />
                 </Button>
-                {filters.searchTerm && (
+              )}
+            </div>
+            {localSearchTerm !== filters.searchTerm && (
+              <Button
+                onClick={handleSearchSubmit}
+                disabled={isLoading}
+                className="w-full sm:w-auto"
+              >
+                {isLoading ? "Searching..." : "Apply Search"}
+              </Button>
+            )}
+          </div>
+
+          {/* Filters Grid */}
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">
+                Status Filter
+              </label>
+              <Select
+                value={filters.statusFilter}
+                onValueChange={handleStatusChange}
+              >
+                <SelectTrigger className="h-11 border-2 focus:border-primary">
+                  <SelectValue placeholder="Select status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Statuses</SelectItem>
+                  <SelectItem value="Active">
+                    <div className="flex items-center gap-2">
+                      <div className="h-2 w-2 rounded-full bg-green-500" />
+                      Active
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="Inactive">
+                    <div className="flex items-center gap-2">
+                      <div className="h-2 w-2 rounded-full bg-red-500" />
+                      Inactive
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">
+                Items per Page
+              </label>
+              <Select
+                value={filters.pageSize.toString()}
+                onValueChange={(value) => onPageSizeChange(Number(value))}
+              >
+                <SelectTrigger className="h-11 border-2 focus:border-primary">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="10">10 items</SelectItem>
+                  <SelectItem value="25">25 items</SelectItem>
+                  <SelectItem value="50">50 items</SelectItem>
+                  <SelectItem value="100">100 items</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">
+                View Options
+              </label>
+              <Button
+                variant={showInactiveUsers ? "default" : "outline"}
+                onClick={toggleInactiveUsers}
+                className="w-full h-11 justify-start border-2"
+              >
+                <div className="flex items-center gap-2">
+                  <div
+                    className={`h-2 w-2 rounded-full ${showInactiveUsers ? "bg-primary-foreground" : "bg-muted-foreground"}`}
+                  />
+                  {showInactiveUsers ? "Hide" : "Show"} Inactive Users
+                </div>
+              </Button>
+            </div>
+          </div>
+
+          {/* Active Filters Display */}
+          {activeFiltersCount > 0 && (
+            <div className="flex flex-wrap gap-2 pt-2 border-t">
+              <span className="text-sm font-medium text-muted-foreground">
+                Active filters:
+              </span>
+              {filters.searchTerm && (
+                <span className="inline-flex items-center gap-1 rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary">
+                  Search: "{filters.searchTerm}"
                   <Button
                     onClick={handleClearSearch}
                     size="sm"
-                    variant="outline"
-                    className="h-7 px-2 text-xs"
+                    variant="ghost"
+                    className="h-4 w-4 p-0 hover:bg-primary/20"
                   >
-                    ×
+                    <X className="h-3 w-3" />
                   </Button>
-                )}
-              </div>
+                </span>
+              )}
+              {filters.statusFilter !== "all" && (
+                <span className="inline-flex items-center gap-1 rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary">
+                  Status: {filters.statusFilter}
+                  <Button
+                    onClick={() => handleStatusChange("all")}
+                    size="sm"
+                    variant="ghost"
+                    className="h-4 w-4 p-0 hover:bg-primary/20"
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                </span>
+              )}
+              {showInactiveUsers && (
+                <span className="inline-flex items-center gap-1 rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary">
+                  Showing Inactive
+                  <Button
+                    onClick={toggleInactiveUsers}
+                    size="sm"
+                    variant="ghost"
+                    className="h-4 w-4 p-0 hover:bg-primary/20"
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                </span>
+              )}
             </div>
-          </div>
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">Status</label>
-            <Select
-              value={filters.statusFilter}
-              onValueChange={handleStatusChange}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="All statuses" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Statuses</SelectItem>
-                <SelectItem value="Active">Active</SelectItem>
-                <SelectItem value="Inactive">Inactive</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">Page Size</label>
-            <Select
-              value={filters.pageSize.toString()}
-              onValueChange={(value) => onPageSizeChange(Number(value))}
-            >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="10">10 per page</SelectItem>
-                <SelectItem value="25">25 per page</SelectItem>
-                <SelectItem value="50">50 per page</SelectItem>
-                <SelectItem value="100">100 per page</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">Show Inactive</label>
-            <Button
-              variant={showInactiveUsers ? "default" : "outline"}
-              size="sm"
-              onClick={toggleInactiveUsers}
-              className="w-full"
-            >
-              {showInactiveUsers ? "Hide" : "Show"} Inactive
-            </Button>
-          </div>
+          )}
         </div>
       </CardContent>
     </Card>
