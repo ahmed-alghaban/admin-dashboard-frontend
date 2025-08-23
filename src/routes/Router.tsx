@@ -13,6 +13,7 @@ import ProductPage from "@/features/products/pages/ProductPage";
 import CategoryPage from "@/features/categories/pages/CategoryPage";
 import { OrderPage } from "@/features/orders/pages";
 import { DashboardPage } from "@/features/analytics";
+import InventoryPage from "@/features/inventory/pages/InventoryPage";
 
 const Router = () => (
   <BrowserRouter>
@@ -107,15 +108,7 @@ const Router = () => (
           path="inventory"
           element={
             <RoleGuard roles={["Admin", "Manager", "Viewer"]}>
-              <div>Inventory List</div>
-            </RoleGuard>
-          }
-        />
-        <Route
-          path="inventory/:productId"
-          element={
-            <RoleGuard roles={["Admin", "Manager", "Viewer"]}>
-              <div>Inventory Detail</div>
+              <InventoryPage />
             </RoleGuard>
           }
         />
