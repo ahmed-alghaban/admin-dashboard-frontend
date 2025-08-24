@@ -2,6 +2,14 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button/button";
 import { TextField } from "@/components/ui/form/fields/TextField";
 import { GenericForm } from "@/components/ui/form/GenericForm";
+import { Input } from "@/components/ui/form/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/form/select";
 import {
   orderCreateSchema,
   type OrderCreateFormData,
@@ -137,11 +145,11 @@ const OrderCreateForm = ({ onSuccess, onCancel }: OrderCreateFormProps) => {
             </div>
 
             {/* Order Items Section */}
-            <Card>
+            <Card className="backdrop-blur-sm bg-white/80 dark:bg-slate-900/80 border-white/20 dark:border-slate-700/50 shadow-xl">
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle className="flex items-center gap-2">
-                    <Package className="h-5 w-5" />
+                  <CardTitle className="flex items-center gap-2 text-slate-800 dark:text-slate-200">
+                    <Package className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                     Order Items
                   </CardTitle>
                   <Button
@@ -166,7 +174,7 @@ const OrderCreateForm = ({ onSuccess, onCancel }: OrderCreateFormProps) => {
                   orderItems.map((item, index) => (
                     <div
                       key={index}
-                      className="border rounded-lg p-4 space-y-3"
+                      className="border border-white/20 dark:border-slate-700/50 rounded-lg p-4 space-y-3 bg-white/50 dark:bg-slate-800/50"
                     >
                       <div className="flex items-center justify-between">
                         <h4 className="font-medium">Item {index + 1}</h4>
@@ -184,11 +192,9 @@ const OrderCreateForm = ({ onSuccess, onCancel }: OrderCreateFormProps) => {
                       <div className="grid grid-cols-2 gap-3">
                         <div>
                           <label className="text-sm font-medium">Product</label>
-                          <select
-                            className="w-full p-2 border rounded-md bg-background text-foreground dark:bg-background dark:text-foreground dark:border-input"
+                          <Select
                             value={item.productId}
-                            onChange={(e) => {
-                              const selectedProductId = e.target.value;
+                            onValueChange={(selectedProductId) => {
                               const product = products.find(
                                 (p) => p.productId === selectedProductId
                               );
@@ -208,25 +214,30 @@ const OrderCreateForm = ({ onSuccess, onCancel }: OrderCreateFormProps) => {
                               setOrderItems(updatedItems);
                             }}
                           >
-                            <option value="">Select a product</option>
-                            {products.map((product) => (
-                              <option
-                                key={product.productId}
-                                value={product.productId}
-                              >
-                                {product.productName}
-                              </option>
-                            ))}
-                          </select>
+                            <SelectTrigger className="h-11 border-2 focus:border-primary transition-colors">
+                              <SelectValue placeholder="Select a product" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="">Select a product</SelectItem>
+                              {products.map((product) => (
+                                <SelectItem
+                                  key={product.productId}
+                                  value={product.productId}
+                                >
+                                  {product.productName}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
                         </div>
 
                         <div>
                           <label className="text-sm font-medium">
                             Quantity
                           </label>
-                          <input
+                          <Input
                             type="number"
-                            className="w-full p-2 border rounded-md bg-background text-foreground dark:bg-background dark:text-foreground dark:border-input"
+                            className="h-11 border-2 focus:border-primary transition-colors"
                             value={item.quantity}
                             onChange={(e) =>
                               updateOrderItem(
@@ -236,6 +247,8 @@ const OrderCreateForm = ({ onSuccess, onCancel }: OrderCreateFormProps) => {
                               )
                             }
                             min={1}
+                            step={1}
+                            placeholder="1"
                           />
                         </div>
 
@@ -243,9 +256,9 @@ const OrderCreateForm = ({ onSuccess, onCancel }: OrderCreateFormProps) => {
                           <label className="text-sm font-medium">
                             Unit Price
                           </label>
-                          <input
+                          <Input
                             type="number"
-                            className="w-full p-2 border rounded-md bg-background text-foreground dark:bg-background dark:text-foreground dark:border-input"
+                            className="h-11 border-2 focus:border-primary transition-colors"
                             value={item.unitPrice}
                             onChange={(e) =>
                               updateOrderItem(
@@ -256,6 +269,7 @@ const OrderCreateForm = ({ onSuccess, onCancel }: OrderCreateFormProps) => {
                             }
                             step={0.01}
                             min={0}
+                            placeholder="0.00"
                           />
                         </div>
 

@@ -7,14 +7,11 @@ import type {
 
 const ORDERS_BASE_URL = "/orders";
 
-// Get all orders with pagination and filters
+// Get all orders with pagination and search
 export const getOrders = async (
   pageNumber: number = 1,
   pageSize: number = 10,
-  searchTerm?: string,
-  statusFilter?: string,
-  startDate?: string,
-  endDate?: string
+  searchTerm?: string
 ): Promise<PaginatedOrdersResponse> => {
   const params = new URLSearchParams({
     pageNumber: pageNumber.toString(),
@@ -22,10 +19,6 @@ export const getOrders = async (
   });
 
   if (searchTerm) params.append("searchTerm", searchTerm);
-  if (statusFilter && statusFilter !== "all")
-    params.append("status", statusFilter);
-  if (startDate) params.append("startDate", startDate);
-  if (endDate) params.append("endDate", endDate);
 
   const response = await api.get(`${ORDERS_BASE_URL}?${params}`);
   return response.data.result;

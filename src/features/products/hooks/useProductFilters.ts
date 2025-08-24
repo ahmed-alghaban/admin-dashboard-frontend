@@ -38,7 +38,7 @@ export const useProductFilters = () => {
         product.category?.categoryId === filters.categoryFilter;
       const matchesStatus =
         filters.statusFilter === "all" ||
-        product.isActive === (filters.statusFilter === "active");
+        product.isActive === (filters.statusFilter === "Active");
       return matchesCategory && matchesStatus;
     }) || [];
 

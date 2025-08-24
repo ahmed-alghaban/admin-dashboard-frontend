@@ -5,30 +5,11 @@ import type { PaginatedOrdersResponse } from "../orderTypes";
 export const useOrders = (
   pageNumber: number = 1,
   pageSize: number = 10,
-  searchTerm?: string,
-  statusFilter?: string,
-  startDate?: string,
-  endDate?: string
+  searchTerm?: string
 ) => {
   return useQuery<PaginatedOrdersResponse>({
-    queryKey: [
-      "orders",
-      pageNumber,
-      pageSize,
-      searchTerm,
-      statusFilter,
-      startDate,
-      endDate,
-    ],
-    queryFn: () =>
-      getOrders(
-        pageNumber,
-        pageSize,
-        searchTerm,
-        statusFilter,
-        startDate,
-        endDate
-      ),
+    queryKey: ["orders", pageNumber, pageSize, searchTerm],
+    queryFn: () => getOrders(pageNumber, pageSize, searchTerm),
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
 };

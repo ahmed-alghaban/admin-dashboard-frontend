@@ -14,7 +14,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/form/select";
-import { Search, X, SlidersHorizontal, Package, Tag } from "lucide-react";
+import { Search, X, SlidersHorizontal, Package } from "lucide-react";
+import { useCategories } from "../hooks/useCategories";
 
 interface ProductFiltersProps {
   filters: {
@@ -44,6 +45,7 @@ const ProductFilters = ({
   isLoading = false,
 }: ProductFiltersProps) => {
   const [localSearchTerm, setLocalSearchTerm] = useState(filters.searchTerm);
+  const { data: categoriesResponse } = useCategories();
 
   // Sync local search term when filters change from outside
   useEffect(() => {
@@ -84,11 +86,11 @@ const ProductFilters = ({
   ].filter(Boolean).length;
 
   return (
-    <Card className="border-2 border-muted/50 bg-gradient-to-r from-background to-muted/5">
+    <Card className="backdrop-blur-sm bg-white/80 dark:bg-slate-900/80 border-white/20 dark:border-slate-700/50 shadow-xl">
       <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-lg font-semibold">
-            <SlidersHorizontal className="h-5 w-5 text-primary" />
+          <CardTitle className="flex items-center gap-2 text-lg font-semibold text-slate-800 dark:text-slate-200">
+            <SlidersHorizontal className="h-5 w-5 text-blue-600 dark:text-blue-400" />
             Filters & Search
             {activeFiltersCount > 0 && (
               <span className="inline-flex items-center rounded-full bg-primary px-2 py-1 text-xs font-medium text-primary-foreground">
@@ -169,24 +171,17 @@ const ProductFilters = ({
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Categories</SelectItem>
-                  <SelectItem value="electronics">
-                    <div className="flex items-center gap-2">
-                      <Package className="h-4 w-4" />
-                      Electronics
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="clothing">
-                    <div className="flex items-center gap-2">
-                      <Tag className="h-4 w-4" />
-                      Clothing
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="books">
-                    <div className="flex items-center gap-2">
-                      <Package className="h-4 w-4" />
-                      Books
-                    </div>
-                  </SelectItem>
+                  {categoriesResponse?.items?.map((category) => (
+                    <SelectItem
+                      key={category.categoryId}
+                      value={category.categoryId}
+                    >
+                      <div className="flex items-center gap-2">
+                        <Package className="h-4 w-4" />
+                        {category.name}
+                      </div>
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>

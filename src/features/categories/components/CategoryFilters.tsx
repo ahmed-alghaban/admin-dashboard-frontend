@@ -72,11 +72,11 @@ const CategoryFilters = ({
   ].filter(Boolean).length;
 
   return (
-    <Card className="border-2 border-muted/50 bg-gradient-to-r from-background to-muted/5">
+    <Card className="backdrop-blur-sm bg-white/80 dark:bg-slate-900/80 border-white/20 dark:border-slate-700/50 shadow-xl">
       <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-lg font-semibold">
-            <SlidersHorizontal className="h-5 w-5 text-primary" />
+          <CardTitle className="flex items-center gap-2 text-lg font-semibold text-slate-800 dark:text-slate-200">
+            <SlidersHorizontal className="h-5 w-5 text-blue-600 dark:text-blue-400" />
             Filters & Search
             {activeFiltersCount > 0 && (
               <span className="inline-flex items-center rounded-full bg-primary px-2 py-1 text-xs font-medium text-primary-foreground">
