@@ -10,15 +10,12 @@ frontend:
         - 'echo "Current directory:"'
         - pwd
         - 'echo "Installing dependencies..."'
-        - npm ci --no-audit --prefer-offline
+        - npm ci --no-audit --prefer-offline --ignore-engines
     build:
       commands:
         - 'echo "Starting build..."'
-        - 'echo "Running build step by step..."'
-        - 'echo "Step 1: TypeScript compilation"'
-        - npx tsc -b
-        - 'echo "Step 2: Vite build"'
-        - npx vite build
+        - 'echo "Running build with npm script..."'
+        - npm run build --ignore-engines
         - 'echo "Build completed successfully!"'
         - 'echo "Checking build output..."'
         - ls -la dist/
