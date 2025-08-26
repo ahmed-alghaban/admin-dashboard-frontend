@@ -7,13 +7,21 @@ frontend:
         - node --version
         - echo "npm version:"
         - npm --version
+        - echo "Current directory:"
+        - pwd
         - echo "Installing dependencies..."
         - npm ci --no-audit --prefer-offline
     build:
       commands:
         - echo "Starting build..."
-        - npm run build
+        - echo "Running build step by step..."
+        - echo "Step 1: TypeScript compilation"
+        - npx tsc -b
+        - echo "Step 2: Vite build"
+        - npx vite build
         - echo "Build completed successfully!"
+        - echo "Checking build output..."
+        - ls -la dist/
   artifacts:
     baseDirectory: dist
     files:
