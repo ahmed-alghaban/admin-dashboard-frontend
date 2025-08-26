@@ -1,0 +1,23 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "Node.js version:"
+        - node --version
+        - echo "npm version:"
+        - npm --version
+        - echo "Installing dependencies..."
+        - npm ci --no-audit --prefer-offline
+    build:
+      commands:
+        - echo "Starting build..."
+        - npm run build
+        - echo "Build completed successfully!"
+  artifacts:
+    baseDirectory: dist
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - node_modules/**/*
