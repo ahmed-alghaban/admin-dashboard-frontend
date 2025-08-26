@@ -12,7 +12,7 @@ interface CategorySelectionState {
 }
 
 export const useCategorySelectionStore = create<CategorySelectionState>(
-  (set, get) => ({
+  (set) => ({
     selectedCategories: new Set(),
     isAllSelected: false,
 

@@ -22,17 +22,14 @@ import { useInventoryFilters } from "../hooks/useInventoryFilters";
 
 const InventoryPage = () => {
   const queryClient = useQueryClient();
-  const { selectedInventories, clearSelection } = useInventorySelectionStore();
+  const { selectedInventories } = useInventorySelectionStore();
   const { closeEditDrawer } = useInventoryUIStore();
   const {
     inventories,
     isLoading,
     isFetching,
     error,
-    filters,
-    updateFilters,
     setPage,
-    setPageSize,
     totalCount,
     totalPages,
     currentPage,

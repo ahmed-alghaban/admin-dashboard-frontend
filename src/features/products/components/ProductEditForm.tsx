@@ -52,12 +52,21 @@ const ProductEditForm = ({
       : categoryOptions;
 
   const handleSubmit = async (data: z.infer<typeof productEditSchema>) => {
-    // Filter out empty values and send only changed data
-    const filteredData = Object.fromEntries(
-      Object.entries(data).filter(
-        ([, value]) => value !== undefined && value !== null && value !== ""
-      )
-    );
+    // Ensure required fields are included and filter out empty values for optional fields
+    const filteredData = {
+      price: data.price || 0,
+      categoryId: data.categoryId || "",
+      ...Object.fromEntries(
+        Object.entries(data).filter(
+          ([key, value]) =>
+            key !== "price" &&
+            key !== "categoryId" &&
+            value !== undefined &&
+            value !== null &&
+            value !== ""
+        )
+      ),
+    };
 
     await editProduct(
       { productId, product: filteredData },

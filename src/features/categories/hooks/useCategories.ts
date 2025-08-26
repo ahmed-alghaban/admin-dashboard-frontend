@@ -2,19 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import { getCategories, getCategory } from "../categoryService";
 import type { Category } from "../categoryTypes";
-import type { PaginationResult } from "@/lib/types";
 
-interface UseCategoriesParams {
-  pageNumber?: number;
-  pageSize?: number;
-  searchTerm?: string;
-}
-
-export const useCategories = (params: UseCategoriesParams = {}) => {
-  const { pageNumber = 1, pageSize = 10, searchTerm } = params;
-
-  return useQuery<any, AxiosError>({
-    queryKey: ["categories", params],
+export const useCategories = () => {
+  return useQuery<Category[], AxiosError>({
+    queryKey: ["categories"],
     queryFn: () => getCategories(),
   });
 };

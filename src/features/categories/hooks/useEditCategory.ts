@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { updateCategory } from "../categoryService";
 import type { CategoryUpdateDto } from "../categoryTypes";
+import type { AxiosError } from "axios";
 
 interface EditCategoryParams {
   categoryId: string;
@@ -18,8 +19,11 @@ export const useEditCategory = () => {
       toast.success("Category updated successfully");
       queryClient.invalidateQueries({ queryKey: ["categories"] });
     },
-    onError: (error: any) => {
-      toast.error(error.response?.data?.message || "Failed to update category");
+    onError: (error: AxiosError) => {
+      const errorData = error.response?.data as
+        | { message?: string }
+        | undefined;
+      toast.error(errorData?.message || "Failed to update category");
     },
   });
 };

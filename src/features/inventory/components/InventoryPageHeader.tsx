@@ -11,7 +11,7 @@ const InventoryPageHeader = ({
   onBulkExport,
   onRefresh,
 }: InventoryPageHeaderProps) => {
-  const { selectedInventories, clearSelection } = useInventorySelectionStore();
+  const { selectedInventories } = useInventorySelectionStore();
 
   const selectedCount = selectedInventories.size;
 

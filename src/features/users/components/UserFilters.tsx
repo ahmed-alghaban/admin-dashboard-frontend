@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/form/select";
 import { Button } from "@/components/ui/button/button";
-import { Filter, Search, X, SlidersHorizontal } from "lucide-react";
+import { Search, X, SlidersHorizontal } from "lucide-react";
 import { useUserPreferencesStore } from "../store";
 
 interface UserFiltersProps {

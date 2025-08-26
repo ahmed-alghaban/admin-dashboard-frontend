@@ -150,7 +150,10 @@ const CategoryPage = () => {
       />
 
       {/* Stats Cards */}
-      <CategoryStatsCards totalCategories={totalCount} isLoading={isLoading} />
+      <CategoryStatsCards
+        totalCategories={totalCount || 0}
+        isLoading={isLoading}
+      />
 
       {/* Filters and Search */}
       <CategoryFilters
@@ -163,15 +166,15 @@ const CategoryPage = () => {
       <Card className="backdrop-blur-sm bg-white/80 dark:bg-slate-900/80 border-white/20 dark:border-slate-700/50 shadow-xl">
         <CardHeader>
           <CardTitle className="text-slate-800 dark:text-slate-200">
-            Categories ({totalCount})
+            Categories ({totalCount || 0})
           </CardTitle>
         </CardHeader>
         <CardContent>
           <CategoriesTable
             categories={categories}
             currentPage={currentPage}
-            totalCount={totalCount}
-            totalPages={totalPages}
+            totalCount={totalCount || 0}
+            totalPages={totalPages || 0}
             pageSize={pageSize}
             onPageChange={setPage}
             isLoading={isLoading}

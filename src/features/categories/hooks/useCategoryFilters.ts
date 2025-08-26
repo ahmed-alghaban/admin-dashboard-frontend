@@ -24,45 +24,16 @@ export const useCategoryFilters = () => {
     isLoading,
     isFetching,
     error,
-  } = useCategories({
-    pageNumber: currentPage,
-    pageSize,
-    searchTerm: filters.searchTerm,
-  });
+  } = useCategories();
 
-  // Handle both paginated and non-paginated responses
+  // Handle categories response
   const categories = useMemo(() => {
     if (!categoriesResponse) return [];
-
-    // If it's a paginated result (has items property)
-    if (
-      categoriesResponse &&
-      typeof categoriesResponse === "object" &&
-      "items" in categoriesResponse
-    ) {
-      return categoriesResponse.items || [];
-    }
-
-    // If it's a direct array
-    if (Array.isArray(categoriesResponse)) {
-      return categoriesResponse;
-    }
-
-    // If it's an object with a result property that might be an array
-    if (
-      categoriesResponse &&
-      typeof categoriesResponse === "object" &&
-      "result" in categoriesResponse
-    ) {
-      const result = categoriesResponse.result;
-      return Array.isArray(result) ? result : [];
-    }
-
-    return [];
+    return Array.isArray(categoriesResponse) ? categoriesResponse : [];
   }, [categoriesResponse]);
 
   const filteredAndSortedCategories = useMemo(() => {
-    let result = [...categories];
+    let result = [...(categories || [])];
 
     // Apply search filter
     if (filters.searchTerm) {
@@ -104,38 +75,14 @@ export const useCategoryFilters = () => {
     setCurrentPage(1);
   };
 
-  // Calculate total count and pages based on response structure
+  // Calculate total count and pages
   const totalCount = useMemo(() => {
-    if (!categoriesResponse) return 0;
-
-    // If it's a paginated result
-    if (
-      categoriesResponse &&
-      typeof categoriesResponse === "object" &&
-      "totalItems" in categoriesResponse
-    ) {
-      return categoriesResponse.totalItems || 0;
-    }
-
-    // If it's a direct array or other structure, use the filtered length
     return filteredAndSortedCategories.length;
-  }, [categoriesResponse, filteredAndSortedCategories.length]);
+  }, [filteredAndSortedCategories.length]);
 
   const totalPages = useMemo(() => {
-    if (!categoriesResponse) return 1;
-
-    // If it's a paginated result
-    if (
-      categoriesResponse &&
-      typeof categoriesResponse === "object" &&
-      "totalPages" in categoriesResponse
-    ) {
-      return categoriesResponse.totalPages || 1;
-    }
-
-    // Calculate based on filtered results
     return Math.ceil(filteredAndSortedCategories.length / pageSize);
-  }, [categoriesResponse, filteredAndSortedCategories.length, pageSize]);
+  }, [filteredAndSortedCategories.length, pageSize]);
 
   return {
     categories: filteredAndSortedCategories,

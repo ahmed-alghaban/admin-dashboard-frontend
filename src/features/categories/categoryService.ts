@@ -1,6 +1,6 @@
 import api from "@/lib/axios";
 import { logger } from "@/lib/logger";
-import type { Category } from "./categoryTypes";
+import type { CategoryCreateDto, CategoryUpdateDto } from "./categoryTypes";
 
 export const getCategories = async () => {
   const response = await api.get("/categories");
@@ -14,7 +14,7 @@ export const getCategory = async (categoryId: string) => {
   return response.data.result;
 };
 
-export const addCategory = async (category: Category) => {
+export const addCategory = async (category: CategoryCreateDto) => {
   const response = await api.post("/categories", category);
   logger.log(response.data);
   return response.data.result;
@@ -22,7 +22,7 @@ export const addCategory = async (category: Category) => {
 
 export const updateCategory = async (
   categoryId: string,
-  category: Category
+  category: CategoryUpdateDto
 ) => {
   const response = await api.put(`/categories/${categoryId}`, category);
   logger.log(response.data);

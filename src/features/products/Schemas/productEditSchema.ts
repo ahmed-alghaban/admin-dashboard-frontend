@@ -1,5 +1,4 @@
 import z from "zod";
-import { validate as validateUUID } from "uuid";
 
 export const productEditSchema = z.object({
   productName: z
@@ -27,10 +26,19 @@ export const productEditSchema = z.object({
     .optional(),
   categoryId: z
     .string()
-    .refine((val) => !val || validateUUID(val), {
-      message: "Invalid UUID format for category ID",
-    })
-    .nullable()
+    .refine(
+      (val) => {
+        // Allow empty string for optional categories
+        if (val === "") return true;
+        // Allow any string that looks like a UUID (basic format check)
+        const uuidRegex =
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+        return uuidRegex.test(val);
+      },
+      {
+        message: "Invalid UUID format for category ID",
+      }
+    )
     .optional(),
   imageUrl: z.string().optional(),
 });
