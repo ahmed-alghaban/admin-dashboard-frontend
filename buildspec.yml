@@ -5,7 +5,9 @@ phases:
     runtime-versions:
       nodejs: 20
     commands:
-      - npm ci
+      - node --version
+      - npm --version
+      - npm ci --no-audit
   build:
     commands:
       - npm run build
