@@ -49,12 +49,6 @@ const UserPage = () => {
     clearSelection();
   };
 
-  const handleBulkExport = () => {
-    if (selectedUsers.size === 0) return;
-    // You can implement export functionality here
-    toast.info(`Export ${selectedUsers.size} users (not implemented yet)`);
-  };
-
   const handleAddUserSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ["users"] });
     closeAddDrawer();
@@ -151,10 +145,7 @@ const UserPage = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <UserPageHeader
-        onBulkDelete={handleBulkDelete}
-        onBulkExport={handleBulkExport}
-      />
+      <UserPageHeader onBulkDelete={handleBulkDelete} users={users || []} />
 
       {/* Stats Cards */}
       <UserStatsCards users={users || []} />

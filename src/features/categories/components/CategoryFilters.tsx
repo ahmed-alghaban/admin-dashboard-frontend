@@ -86,7 +86,7 @@ const CategoryFilters = ({
           </CardTitle>
           {activeFiltersCount > 0 && (
             <Button
-              variant="ghost"
+              variant="outline"
               size="sm"
               onClick={() => {
                 setLocalSearchTerm("");
@@ -133,6 +133,7 @@ const CategoryFilters = ({
             </div>
             {localSearchTerm !== filters.searchTerm && (
               <Button
+                variant="outline"
                 onClick={handleSearchSubmit}
                 disabled={isLoading}
                 className="w-full sm:w-auto"

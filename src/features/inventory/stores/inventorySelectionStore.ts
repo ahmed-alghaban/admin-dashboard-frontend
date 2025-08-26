@@ -12,7 +12,7 @@ interface InventorySelectionState {
 }
 
 export const useInventorySelectionStore = create<InventorySelectionState>(
-  (set, get) => ({
+  (set) => ({
     selectedInventories: new Set(),
     isSelectMode: false,
 
@@ -30,6 +30,7 @@ export const useInventorySelectionStore = create<InventorySelectionState>(
     selectAll: (inventoryIds) =>
       set((state) => {
         const newSelected = new Set(inventoryIds);
+        state.selectedInventories.forEach((id) => newSelected.add(id));
         return { selectedInventories: newSelected };
       }),
 

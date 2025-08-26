@@ -49,14 +49,6 @@ const ProductPage = () => {
     clearSelection();
   };
 
-  const handleBulkExport = () => {
-    if (selectedProducts.size === 0) return;
-    // You can implement export functionality here
-    toast.info(
-      `Export ${selectedProducts.size} products (not implemented yet)`
-    );
-  };
-
   const handleAddProductSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ["products"] });
     closeAddDrawer();
@@ -155,7 +147,7 @@ const ProductPage = () => {
       {/* Header */}
       <ProductPageHeader
         onBulkDelete={handleBulkDelete}
-        onBulkExport={handleBulkExport}
+        products={products || []}
       />
 
       {/* Stats Cards */}

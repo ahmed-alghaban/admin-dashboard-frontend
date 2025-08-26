@@ -1,19 +1,48 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import { Button } from "@/components/ui/button/button";
-import { MoreHorizontal, Edit, Trash2, Eye } from "lucide-react";
+import type { Product } from "../productTypes";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown/dropdown-menu";
-import type { Product } from "../productTypes";
+import { Button } from "@/components/ui/button/button";
+import { MoreHorizontal, Edit, Eye, Trash2 } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export const createColumns = (
   onEdit: (product: Product) => void,
   onDelete: (product: Product) => void,
-  onViewDetails: (product: Product) => void
+  onViewDetails: (product: Product) => void,
+  selectedProducts: Set<string>,
+  onToggleProduct: (productId: string) => void,
+  onSelectAll: (productIds: string[]) => void,
+  allProductIds: string[]
 ): ColumnDef<Product>[] => [
+  {
+    id: "select",
+    header: () => (
+      <Checkbox
+        checked={
+          allProductIds.length > 0 &&
+          selectedProducts.size === allProductIds.length
+        }
+        onCheckedChange={(checked) => {
+          onSelectAll(checked ? allProductIds : []);
+        }}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={selectedProducts.has(row.original.productId)}
+        onCheckedChange={() => onToggleProduct(row.original.productId)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
   {
     accessorKey: "productName",
     header: "Product Name",
@@ -22,44 +51,33 @@ export const createColumns = (
     ),
   },
   {
-    accessorKey: "sku",
-    header: "SKU",
-    cell: ({ row }) => (
-      <div className="font-mono text-sm">{row.getValue("sku")}</div>
-    ),
-  },
-
-  {
     accessorKey: "price",
     header: "Price",
     cell: ({ row }) => {
-      const price = parseFloat(row.getValue("price"));
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(price);
-      return <div className="font-medium">{formatted}</div>;
+      const price = row.getValue("price") as number;
+      return <div className="font-medium">${price?.toFixed(2) || "0.00"}</div>;
     },
   },
   {
-    accessorKey: "quantityInStock",
-    header: "Stock",
+    accessorKey: "category",
+    header: "Category",
     cell: ({ row }) => {
-      const quantity = row.getValue("quantityInStock") as number;
+      const category = row.original.category;
       return (
-        <div
-          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-            quantity === 0
-              ? "bg-destructive/10 text-destructive border border-destructive/20"
-              : quantity < 10
-                ? "bg-orange-100 text-orange-800 border border-orange-200"
-                : "bg-primary/10 text-primary border border-primary/20"
-          }`}
-        >
-          {quantity}
+        <div className="text-sm text-muted-foreground">
+          {category?.name || "No Category"}
         </div>
       );
     },
+  },
+  {
+    accessorKey: "sku",
+    header: "SKU",
+    cell: ({ row }) => (
+      <div className="text-sm text-muted-foreground">
+        {row.getValue("sku") || "N/A"}
+      </div>
+    ),
   },
   {
     accessorKey: "isActive",
@@ -81,7 +99,7 @@ export const createColumns = (
   },
   {
     id: "actions",
-    enableHiding: false,
+    header: "Actions",
     cell: ({ row }) => {
       const product = row.original;
 
@@ -102,10 +120,7 @@ export const createColumns = (
               <Eye className="mr-2 h-4 w-4" />
               View Details
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => onDelete(product)}
-              className="text-red-600"
-            >
+            <DropdownMenuItem onClick={() => onDelete(product)}>
               <Trash2 className="mr-2 h-4 w-4" />
               Delete
             </DropdownMenuItem>

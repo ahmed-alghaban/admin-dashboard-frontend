@@ -49,12 +49,6 @@ const OrderPage = () => {
     clearSelection();
   };
 
-  const handleBulkExport = () => {
-    if (selectedOrders.size === 0) return;
-    // You can implement export functionality here
-    toast.info(`Export ${selectedOrders.size} orders (not implemented yet)`);
-  };
-
   const handleAddOrderSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ["orders"] });
     closeAddDrawer();
@@ -156,10 +150,9 @@ const OrderPage = () => {
     <div className="space-y-6">
       {/* Header */}
       <OrderPageHeader
-        selectedCount={selectedOrders.size}
         onBulkDelete={handleBulkDelete}
-        onBulkExport={handleBulkExport}
         onAddOrder={handleAddOrder}
+        orders={orders || []}
       />
 
       {/* Stats Cards */}

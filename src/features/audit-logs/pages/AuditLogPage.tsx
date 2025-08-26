@@ -32,14 +32,8 @@ const AuditLogPage = () => {
     pageSize,
   } = useAuditLogFilters();
 
-  const handleExport = () => {
-    // You can implement export functionality here
-    toast.info("Export functionality (not implemented yet)");
-  };
-
   const handleRefresh = () => {
     queryClient.invalidateQueries({ queryKey: ["audit-logs"] });
-    toast.success("Audit logs refreshed");
   };
 
   const handleShowFilters = () => {
@@ -110,9 +104,9 @@ const AuditLogPage = () => {
   return (
     <div className="space-y-6">
       <AuditLogPageHeader
-        onExport={handleExport}
         onRefresh={handleRefresh}
         onShowFilters={handleShowFilters}
+        auditLogs={auditLogs}
       />
 
       <AuditLogStatsCards auditLogs={auditLogs} />

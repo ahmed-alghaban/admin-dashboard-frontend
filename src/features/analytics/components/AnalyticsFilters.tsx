@@ -129,9 +129,10 @@ const AnalyticsFilters = ({
           <div className="space-y-2">
             <label className="text-sm font-medium">&nbsp;</label>
             <Button
+              variant="outline"
               onClick={handleApplyFilters}
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+              className="w-full"
             >
               Apply Filters
             </Button>

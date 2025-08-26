@@ -1,6 +1,6 @@
 import { DataTable } from "@/components/ui/table/DataTable";
 import { createColumns } from "./UserTableColumns";
-import { useUserUIStore } from "../store";
+import { useUserUIStore, useUserSelectionStore } from "../store";
 import type { User } from "../userTypes";
 import { useDeleteUser } from "../hooks/useDeleteUser";
 import UserDetailModal from "./UserDetailModal";
@@ -31,6 +31,7 @@ const UsersTable = ({
 
   // Zustand store for UI state
   const { openEditDrawer } = useUserUIStore();
+  const { selectedUsers, toggleUser, selectAll } = useUserSelectionStore();
 
   const handleEditUser = (user: User) => {
     openEditDrawer(user.userId);
@@ -45,13 +46,19 @@ const UsersTable = ({
     setIsDetailModalOpen(true);
   };
 
+  const allUserIds = users.map(user => user.userId);
+
   return (
     <>
       <DataTable
         columns={createColumns(
           handleEditUser,
           handleDeleteUser,
-          handleViewDetails
+          handleViewDetails,
+          selectedUsers,
+          toggleUser,
+          selectAll,
+          allUserIds
         )}
         data={users}
         loading={isLoading || isDeleting}

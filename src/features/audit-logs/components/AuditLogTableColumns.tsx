@@ -1,10 +1,39 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Activity, Eye } from "lucide-react";
 import type { AuditLog } from "../auditLogTypes";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export const createColumns = (
-  onViewDetails: (auditLog: AuditLog) => void
+  onViewDetails: (auditLog: AuditLog) => void,
+  selectedAuditLogs: Set<string>,
+  onToggleAuditLog: (auditLogId: string) => void,
+  onSelectAll: (auditLogIds: string[]) => void,
+  allAuditLogIds: string[]
 ): ColumnDef<AuditLog>[] => [
+  {
+    id: "select",
+    header: () => (
+      <Checkbox
+        checked={
+          allAuditLogIds.length > 0 &&
+          selectedAuditLogs.size === allAuditLogIds.length
+        }
+        onCheckedChange={(checked) => {
+          onSelectAll(checked ? allAuditLogIds : []);
+        }}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={selectedAuditLogs.has(row.original.auditLogId)}
+        onCheckedChange={() => onToggleAuditLog(row.original.auditLogId)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
   {
     accessorKey: "actionType",
     header: "Action",
@@ -51,39 +80,50 @@ export const createColumns = (
       <div className="font-medium">{row.getValue("entityName")}</div>
     ),
   },
-
+  {
+    accessorKey: "description",
+    header: "Description",
+    cell: ({ row }) => (
+      <div className="text-sm text-muted-foreground">
+        {row.getValue("description")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "ipAddress",
+    header: "IP Address",
+    cell: ({ row }) => (
+      <div className="text-sm text-muted-foreground">
+        {row.getValue("ipAddress")}
+      </div>
+    ),
+  },
   {
     accessorKey: "timestamp",
     header: "Timestamp",
     cell: ({ row }) => {
       const timestamp = row.getValue("timestamp") as string;
       return (
-        <div className="text-sm">
-          <div>{new Date(timestamp).toLocaleDateString()}</div>
-          <div className="text-xs text-gray-500">
-            {new Date(timestamp).toLocaleTimeString()}
-          </div>
+        <div className="text-sm text-muted-foreground">
+          {timestamp ? new Date(timestamp).toLocaleString() : ""}
         </div>
       );
     },
   },
   {
     id: "actions",
+    header: "Actions",
+    cell: ({ row }) => (
+      <div className="flex items-center gap-2">
+        <button
+          onClick={() => onViewDetails(row.original)}
+          className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8"
+        >
+          <Eye className="h-4 w-4" />
+        </button>
+      </div>
+    ),
+    enableSorting: false,
     enableHiding: false,
-    cell: ({ row }) => {
-      const auditLog = row.original;
-
-      return (
-        <div className="flex items-center gap-2">
-          <button
-            className="p-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-            title="View Details"
-            onClick={() => onViewDetails(auditLog)}
-          >
-            <Eye className="h-4 w-4" />
-          </button>
-        </div>
-      );
-    },
   },
 ];

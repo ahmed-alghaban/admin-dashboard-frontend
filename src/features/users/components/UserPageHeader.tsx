@@ -1,57 +1,75 @@
 import { Button } from "@/components/ui/button/button";
-import { Download, Plus, UserCheck, UserX } from "lucide-react";
+import { Plus, Download, UserX } from "lucide-react";
 import { useUserUIStore, useUserSelectionStore } from "../store";
+import { exportToExcel, formatUserDataForExport } from "@/lib/utils";
+import { toast } from "sonner";
+import type { User } from "../userTypes";
 
 interface UserPageHeaderProps {
   onBulkDelete: () => void;
-  onBulkExport: () => void;
+  users: User[];
 }
 
-const UserPageHeader = ({
-  onBulkDelete,
-  onBulkExport,
-}: UserPageHeaderProps) => {
+const UserPageHeader = ({ onBulkDelete, users }: UserPageHeaderProps) => {
   const { openAddDrawer } = useUserUIStore();
-  const {
-    selectedUsers,
-    isSelectMode,
-    toggleSelectMode,
-    clearSelection,
-    getSelectedCount,
-  } = useUserSelectionStore();
+  const { selectedUsers, getSelectedCount, clearSelection } =
+    useUserSelectionStore();
+
+  const handleExport = () => {
+    try {
+      let dataToExport: User[];
+      let filename: string;
+
+      if (selectedUsers.size > 0) {
+        // Export selected users
+        dataToExport = users.filter((user) => selectedUsers.has(user.userId));
+        filename = `selected-users-${new Date().toISOString().split("T")[0]}`;
+        toast.success(`${dataToExport.length} users exported successfully!`);
+      } else {
+        // Export all users
+        dataToExport = users;
+        filename = `users-${new Date().toISOString().split("T")[0]}`;
+        toast.success("All users exported successfully!");
+      }
+
+      const formattedData = formatUserDataForExport(dataToExport);
+      exportToExcel(formattedData, filename);
+    } catch (error) {
+      toast.error("Failed to export users");
+      console.error("Export error:", error);
+    }
+  };
 
   return (
     <div className="flex items-center justify-between">
       <div className="space-y-1">
         <h1 className="text-3xl font-bold tracking-tight">Users</h1>
         <p className="text-muted-foreground">
-          Manage your users and their permissions
+          Manage user accounts and permissions
         </p>
       </div>
       <div className="flex items-center gap-2">
-        {isSelectMode && (
+        {selectedUsers.size > 0 && (
           <>
             <div className="inline-flex items-center rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground">
               {getSelectedCount()} selected
             </div>
-            <Button variant="outline" size="sm" onClick={onBulkExport}>
-              <Download className="mr-2 h-4 w-4" />
-              Export
-            </Button>
             <Button variant="destructive" size="sm" onClick={onBulkDelete}>
               <UserX className="mr-2 h-4 w-4" />
-              Delete
+              Delete Selected
             </Button>
             <Button variant="outline" size="sm" onClick={clearSelection}>
-              Clear
+              Clear Selection
             </Button>
           </>
         )}
-        <Button variant="outline" size="sm" onClick={toggleSelectMode}>
-          <UserCheck className="mr-2 h-4 w-4" />
-          {isSelectMode ? "Cancel" : "Select"}
+        <Button variant="outline" size="sm" onClick={handleExport}>
+          <Download className="mr-2 h-4 w-4" />
+          {selectedUsers.size > 0
+            ? `Export Selected (${selectedUsers.size})`
+            : "Export All"}
         </Button>
-        <Button onClick={openAddDrawer}>
+        <Button variant="outline" onClick={openAddDrawer}>
           <Plus className="mr-2 h-4 w-4" />
           Add User
         </Button>

@@ -33,7 +33,8 @@ export const LandingNavbar = () => {
           <ThemeToggle />
           <Link to={token ? "/app/dashboard" : "/login"}>
             <Button
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              variant="outline"
+              className="shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
               size="sm"
             >
               {token ? "Dashboard" : "Login"}

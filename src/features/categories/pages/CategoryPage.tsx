@@ -47,14 +47,6 @@ const CategoryPage = () => {
     clearSelection();
   };
 
-  const handleBulkExport = () => {
-    if (selectedCategories.size === 0) return;
-    // You can implement export functionality here
-    toast.info(
-      `Export ${selectedCategories.size} categories (not implemented yet)`
-    );
-  };
-
   const handleAddCategorySuccess = () => {
     queryClient.invalidateQueries({ queryKey: ["categories"] });
     closeAddDrawer();
@@ -153,9 +145,8 @@ const CategoryPage = () => {
     <div className="space-y-6">
       {/* Header */}
       <CategoryPageHeader
-        selectedCount={selectedCategories.size}
         onBulkDelete={handleBulkDelete}
-        onBulkExport={handleBulkExport}
+        categories={categories}
       />
 
       {/* Stats Cards */}

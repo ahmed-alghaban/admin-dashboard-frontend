@@ -1,21 +1,49 @@
 import { Button } from "@/components/ui/button/button";
 import { Plus, Download, Trash2 } from "lucide-react";
 import { useProductUIStore, useProductSelectionStore } from "../stores";
+import { exportToExcel, formatProductDataForExport } from "@/lib/utils";
+import { toast } from "sonner";
+import type { Product } from "../productTypes";
 
 interface ProductPageHeaderProps {
   onBulkDelete: () => void;
-  onBulkExport: () => void;
+  products: Product[];
 }
 
 const ProductPageHeader = ({
   onBulkDelete,
-  onBulkExport,
+  products,
 }: ProductPageHeaderProps) => {
   const { openAddDrawer } = useProductUIStore();
   const { selectedProducts, getSelectedCount, clearSelection } =
     useProductSelectionStore();
 
-  const selectedCount = getSelectedCount();
+  const handleExport = () => {
+    try {
+      let dataToExport: Product[];
+      let filename: string;
+
+      if (selectedProducts.size > 0) {
+        // Export selected products
+        dataToExport = products.filter((product) =>
+          selectedProducts.has(product.productId)
+        );
+        filename = `selected-products-${new Date().toISOString().split("T")[0]}`;
+        toast.success(`${dataToExport.length} products exported successfully!`);
+      } else {
+        // Export all products
+        dataToExport = products;
+        filename = `products-${new Date().toISOString().split("T")[0]}`;
+        toast.success("All products exported successfully!");
+      }
+
+      const formattedData = formatProductDataForExport(dataToExport);
+      exportToExcel(formattedData, filename);
+    } catch (error) {
+      toast.error("Failed to export products");
+      console.error("Export error:", error);
+    }
+  };
 
   return (
     <div className="flex items-center justify-between">
@@ -26,29 +54,27 @@ const ProductPageHeader = ({
         </p>
       </div>
       <div className="flex items-center gap-2">
-        {selectedCount > 0 && (
+        {selectedProducts.size > 0 && (
           <>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onBulkExport}
-              className="hidden sm:flex"
-            >
-              <Download className="mr-2 h-4 w-4" />
-              Export ({selectedCount})
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onBulkDelete}
-              className="hidden sm:flex"
-            >
+            <div className="inline-flex items-center rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground">
+              {getSelectedCount()} selected
+            </div>
+            <Button variant="destructive" size="sm" onClick={onBulkDelete}>
               <Trash2 className="mr-2 h-4 w-4" />
-              Delete ({selectedCount})
+              Delete Selected
+            </Button>
+            <Button variant="outline" size="sm" onClick={clearSelection}>
+              Clear Selection
             </Button>
           </>
         )}
-        <Button onClick={openAddDrawer}>
+        <Button variant="outline" size="sm" onClick={handleExport}>
+          <Download className="mr-2 h-4 w-4" />
+          {selectedProducts.size > 0
+            ? `Export Selected (${selectedProducts.size})`
+            : "Export All"}
+        </Button>
+        <Button variant="outline" onClick={openAddDrawer}>
           <Plus className="mr-2 h-4 w-4" />
           Add Product
         </Button>

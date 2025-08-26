@@ -3,6 +3,7 @@ import { createColumns } from "./AuditLogTableColumns";
 import type { AuditLog } from "../auditLogTypes";
 import AuditLogDetailModal from "./AuditLogDetailModal";
 import { useState } from "react";
+import { useAuditLogSelectionStore } from "../stores";
 
 interface AuditLogsTableProps {
   auditLogs: AuditLog[];
@@ -28,15 +29,27 @@ const AuditLogsTable = ({
   );
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
+  // Selection store
+  const { selectedAuditLogs, toggleAuditLog, selectAll } =
+    useAuditLogSelectionStore();
+
   const handleViewDetails = (auditLog: AuditLog) => {
     setSelectedAuditLog(auditLog);
     setIsDetailModalOpen(true);
   };
 
+  const allAuditLogIds = auditLogs.map((auditLog) => auditLog.auditLogId);
+
   return (
     <>
       <DataTable
-        columns={createColumns(handleViewDetails)}
+        columns={createColumns(
+          handleViewDetails,
+          selectedAuditLogs,
+          toggleAuditLog,
+          selectAll,
+          allAuditLogIds
+        )}
         data={auditLogs}
         loading={isLoading}
         emptyMessage="No audit logs found."

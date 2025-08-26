@@ -1,9 +1,7 @@
 import { DataTable } from "@/components/ui/table/DataTable";
 import { createColumns } from "./CategoryTableColumns";
-import { useCategoryUIStore } from "../stores";
-import { useDeleteCategory } from "../hooks/useDeleteCategory";
+import { useCategoryUIStore, useCategorySelectionStore } from "../stores";
 import type { Category } from "../categoryTypes";
-import { toast } from "sonner";
 import CategoryDetailModal from "./CategoryDetailModal";
 import { useState } from "react";
 
@@ -26,7 +24,6 @@ const CategoriesTable = ({
   onPageChange,
   isLoading = false,
 }: CategoriesTableProps) => {
-  const { mutate: deleteCategory, isPending: isDeleting } = useDeleteCategory();
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     null
   );
@@ -34,31 +31,31 @@ const CategoriesTable = ({
 
   // Zustand store for UI state
   const { openEditDrawer } = useCategoryUIStore();
+  const { selectedCategories, toggleSelection, selectAll } =
+    useCategorySelectionStore();
 
   const handleEditCategory = (category: Category) => {
     openEditDrawer(category.categoryId);
   };
 
   const handleDeleteCategory = async (category: Category) => {
-    if (
-      window.confirm(
-        `Are you sure you want to delete the category "${category.name}"? This action cannot be undone.`
-      )
-    ) {
-      try {
-        await deleteCategory(category.categoryId);
-        toast.success(
-          `Category "${category.name}" has been deleted successfully`
-        );
-      } catch {
-        toast.error(`Failed to delete category "${category.name}"`);
-      }
-    }
+    // TODO: Implement delete functionality
+    console.log("Delete category:", category.categoryId);
   };
 
   const handleViewDetails = (category: Category) => {
     setSelectedCategory(category);
     setIsDetailModalOpen(true);
+  };
+
+  const allCategoryIds = categories.map((category) => category.categoryId);
+
+  const handleSelectAll = (categoryIds: string[]) => {
+    if (categoryIds.length > 0) {
+      selectAll(categories);
+    } else {
+      selectAll([]);
+    }
   };
 
   return (
@@ -67,10 +64,14 @@ const CategoriesTable = ({
         columns={createColumns(
           handleEditCategory,
           handleDeleteCategory,
-          handleViewDetails
+          handleViewDetails,
+          selectedCategories,
+          toggleSelection,
+          handleSelectAll,
+          allCategoryIds
         )}
         data={categories}
-        loading={isLoading || isDeleting}
+        loading={isLoading}
         emptyMessage="No categories found."
         manualPagination={true}
         page={currentPage}

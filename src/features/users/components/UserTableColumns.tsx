@@ -8,12 +8,40 @@ import {
 } from "@/components/ui/dropdown/dropdown-menu";
 import { Button } from "@/components/ui/button/button";
 import { MoreHorizontal, Edit, User as UserIcon, Trash } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export const createColumns = (
   onEdit: (user: User) => void,
   onDelete: (user: User) => void,
-  onViewDetails: (user: User) => void
+  onViewDetails: (user: User) => void,
+  selectedUsers: Set<string>,
+  onToggleUser: (userId: string) => void,
+  onSelectAll: (userIds: string[]) => void,
+  allUserIds: string[]
 ): ColumnDef<User>[] => [
+  {
+    id: "select",
+    header: () => (
+      <Checkbox
+        checked={
+          allUserIds.length > 0 && selectedUsers.size === allUserIds.length
+        }
+        onCheckedChange={(checked) => {
+          onSelectAll(checked ? allUserIds : []);
+        }}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={selectedUsers.has(row.original.userId)}
+        onCheckedChange={() => onToggleUser(row.original.userId)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
   {
     accessorKey: "firstName",
     header: "First Name",
