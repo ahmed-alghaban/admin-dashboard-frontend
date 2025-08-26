@@ -3,24 +3,24 @@ frontend:
   phases:
     preBuild:
       commands:
-        - echo "Node.js version:"
+        - 'echo "Node.js version:"'
         - node --version
-        - echo "npm version:"
+        - 'echo "npm version:"'
         - npm --version
-        - echo "Current directory:"
+        - 'echo "Current directory:"'
         - pwd
-        - echo "Installing dependencies..."
+        - 'echo "Installing dependencies..."'
         - npm ci --no-audit --prefer-offline
     build:
       commands:
-        - echo "Starting build..."
-        - echo "Running build step by step..."
-        - echo "Step 1: TypeScript compilation"
+        - 'echo "Starting build..."'
+        - 'echo "Running build step by step..."'
+        - 'echo "Step 1: TypeScript compilation"'
         - npx tsc -b
-        - echo "Step 2: Vite build"
+        - 'echo "Step 2: Vite build"'
         - npx vite build
-        - echo "Build completed successfully!"
-        - echo "Checking build output..."
+        - 'echo "Build completed successfully!"'
+        - 'echo "Checking build output..."'
         - ls -la dist/
   artifacts:
     baseDirectory: dist
