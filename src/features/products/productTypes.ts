@@ -1,3 +1,6 @@
+import type { Category } from "../categories/categoryTypes";
+import type { ProductCreateFormData } from "./schemas/productSchema";
+
 // Product Create DTO
 export interface ProductCreateDto {
   productName: string;
@@ -32,10 +35,6 @@ export interface ProductUpdateDto {
   categoryId: string; // Guid maps to string
   imageUrl?: string;
 }
-
-import type { Category } from "../categories/categoryTypes";
-// Import form data type
-import type { ProductCreateFormData } from "./schemas/productSchema";
 
 // Default values for product creation form
 export const defaultValues: ProductCreateFormData = {
