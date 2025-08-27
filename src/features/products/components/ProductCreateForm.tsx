@@ -3,7 +3,10 @@ import { TextField } from "@/components/ui/form/fields/TextField";
 import { SelectField } from "@/components/ui/form/fields/SelectField";
 import { NumberField } from "@/components/ui/form/fields/NumberField";
 import { Button } from "@/components/ui/button/button";
-import { productCreateSchema, type ProductCreateFormData } from "../schemas";
+import {
+  productCreateSchema,
+  type ProductCreateFormData,
+} from "../schemas/index.js";
 import { defaultValues } from "../productTypes";
 import { logger } from "@/lib/logger";
 import { useCreateProduct } from "../hooks/useCreateProducts";
