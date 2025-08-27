@@ -3,7 +3,6 @@
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "18.19.0"
   NPM_FLAGS = "--no-audit --prefer-offline"
 
 [[redirects]]
