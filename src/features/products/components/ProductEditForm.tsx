@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button/button";
 import { GenericForm } from "@/components/ui/form/GenericForm";
-import { productEditSchema } from "../schemas/index.js";
+import { productEditSchema } from "../schemas";
 import type { z } from "zod";
 import { TextField } from "@/components/ui/form/fields/TextField";
 import { SelectField } from "@/components/ui/form/fields/SelectField";
