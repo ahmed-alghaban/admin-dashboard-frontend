@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { addCategory } from "../categoryService";
-import type { CategoryCreateDto } from "../categoryTypes";
+import { addCategory } from "../categoryService.ts";
+import type { CategoryCreateDto } from "../categoryTypes.ts";
 import type { AxiosError } from "axios";
 
 export const useAddCategory = () => {

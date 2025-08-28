@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { createProduct } from "../productService";
+import { createProduct } from "../productService.ts";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { logger } from "@/lib/logger";

@@ -5,7 +5,7 @@ import { FormSkeleton } from "@/components/ui/skeleton/FormSkeleton";
 import {
   categoryCreateSchema,
   type CategoryCreateFormData,
-} from "../schemas/categorySchema";
+} from "../schemas/categorySchema.ts";
 import { useAddCategory } from "../hooks";
 import { TextField } from "@/components/ui/form/fields/TextField";
 

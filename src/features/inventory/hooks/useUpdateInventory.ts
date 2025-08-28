@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateInventoryQuantity } from "../inventoryService";
+import { updateInventoryQuantity } from "../inventoryService.ts";
 import { toast } from "sonner";
 
 export const useUpdateInventory = () => {

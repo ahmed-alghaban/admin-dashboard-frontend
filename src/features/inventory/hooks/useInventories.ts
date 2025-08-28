@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getInventories } from "../inventoryService";
+import { getInventories } from "../inventoryService.ts";
 import type { PaginationResult } from "@/lib/types";
 import type { Inventory } from "../inventoryTypes";
 

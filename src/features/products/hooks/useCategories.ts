@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getCategories } from "../../categories/categoryService";
+import { getCategories } from "../../categories/categoryService.ts";
 import type { PaginationResult } from "@/lib/types";
 import type { Category } from "../../categories/categoryTypes";
 

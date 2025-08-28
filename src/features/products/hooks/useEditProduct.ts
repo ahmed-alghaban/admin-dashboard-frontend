@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import { updateProduct } from "../productService";
-import type { ProductUpdateDto } from "../productTypes";
+import { updateProduct } from "../productService.ts";
+import type { ProductUpdateDto } from "../productTypes.ts";
 import { queryClient } from "@/lib/queryClient";
 import { logger } from "@/lib/logger";
 import { toast } from "sonner";

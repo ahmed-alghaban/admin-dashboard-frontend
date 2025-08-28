@@ -1,12 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
-import { editUser } from "../userService";
-import type { UserUpdateDto } from "../userTypes";
+import { editUser } from "../userService.ts";
+import type { UserUpdateDto } from "../userTypes.ts";
 import { queryClient } from "@/lib/queryClient";
 import { logger } from "@/lib/logger";
 import { toast } from "sonner";
 import type { AxiosError } from "axios";
 import { z } from "zod";
-import { userEditSchema } from "../schemas/userEditSchema";
+import { userEditSchema } from "../schemas/userEditSchema.ts";
 
 export type UserEditFormData = z.infer<typeof userEditSchema>;
 

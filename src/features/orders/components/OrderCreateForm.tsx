@@ -13,7 +13,7 @@ import {
 import {
   orderCreateSchema,
   type OrderCreateFormData,
-} from "../schemas/orderSchema";
+} from "../schemas/orderSchema.ts";
 import { useAddOrder } from "../hooks/useAddOrder";
 import { useProducts } from "../../products/hooks/useProducts";
 import {

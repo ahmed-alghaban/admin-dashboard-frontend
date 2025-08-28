@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createOrder } from "../orderService";
-import type { OrderCreateDto } from "../orderTypes";
+import { createOrder } from "../orderService.ts";
+import type { OrderCreateDto } from "../orderTypes.ts";
 import { toast } from "sonner";
 import { logger } from "@/lib/logger";
 

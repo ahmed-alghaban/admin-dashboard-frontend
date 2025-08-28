@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { getUserById } from "../userService";
+import { getUserById } from "../userService.ts";
 
 export const useGetUserById = (userId: string) => {
-    return useQuery({
-        queryKey: ['user', userId],
-        queryFn: () => getUserById(userId),
-    });
+  return useQuery({
+    queryKey: ["user", userId],
+    queryFn: () => getUserById(userId),
+  });
 };

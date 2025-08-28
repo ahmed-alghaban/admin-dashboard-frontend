@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
-import { getUsers, getUserById } from "../userService";
-import type { User } from "../userTypes";
+import { getUsers, getUserById } from "../userService.ts";
+import type { User } from "../userTypes.ts";
 import type { PaginationResult } from "@/lib/types";
 
 interface UseUsersParams {

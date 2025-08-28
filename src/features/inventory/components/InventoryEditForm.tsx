@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button/button";
 import { GenericForm } from "@/components/ui/form/GenericForm";
-import { inventoryEditSchema } from "../schemas/inventoryEditSchema";
+import { inventoryEditSchema } from "../schemas/inventoryEditSchema.ts";
 import type { z } from "zod";
 import { NumberField } from "@/components/ui/form/fields/NumberField";
 import { useUpdateInventory } from "../hooks/useUpdateInventory";

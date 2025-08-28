@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button/button";
 import {
   userCreateSchema,
   type UserCreateFormData,
-} from "../schemas/userSchema";
+} from "../schemas/userSchema.ts";
 import { toast } from "sonner";
 import { defaultValues } from "../userTypes";
 import { logger } from "@/lib/logger";

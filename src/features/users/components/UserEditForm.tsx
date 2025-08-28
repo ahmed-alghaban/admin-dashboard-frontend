@@ -1,7 +1,7 @@
 // Updated UserEditForm.tsx
 import { Button } from "@/components/ui/button/button";
 import { GenericForm } from "@/components/ui/form/GenericForm";
-import { userEditSchema } from "../schemas/userEditSchema";
+import { userEditSchema } from "../schemas/userEditSchema.ts";
 import type { z } from "zod";
 import { TextField } from "@/components/ui/form/fields/TextField";
 import { SelectField } from "@/components/ui/form/fields/SelectField";

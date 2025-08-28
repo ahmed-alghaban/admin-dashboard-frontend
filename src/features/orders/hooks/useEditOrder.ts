@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateOrderStatus } from "../orderService";
+import { updateOrderStatus } from "../orderService.ts";
 import { toast } from "sonner";
 import { logger } from "@/lib/logger";
 

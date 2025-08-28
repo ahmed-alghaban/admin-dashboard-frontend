@@ -5,7 +5,7 @@ import { FormSkeleton } from "@/components/ui/skeleton/FormSkeleton";
 import {
   categoryEditSchema,
   type CategoryEditFormData,
-} from "../schemas/categoryEditSchema";
+} from "../schemas/categoryEditSchema.ts";
 import { useEditCategory, useGetCategoryById } from "../hooks";
 import { TextField } from "@/components/ui/form/fields/TextField";
 import { useEffect } from "react";

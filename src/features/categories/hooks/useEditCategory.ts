@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { updateCategory } from "../categoryService";
-import type { CategoryUpdateDto } from "../categoryTypes";
+import { updateCategory } from "../categoryService.ts";
+import type { CategoryUpdateDto } from "../categoryTypes.ts";
 import type { AxiosError } from "axios";
 
 interface EditCategoryParams {

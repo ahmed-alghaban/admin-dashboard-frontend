@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { getOrders, getOrderById } from "../orderService";
-import type { PaginatedOrdersResponse } from "../orderTypes";
+import { getOrders, getOrderById } from "../orderService.ts";
+import type { PaginatedOrdersResponse } from "../orderTypes.ts";
 
 export const useOrders = (
   pageNumber: number = 1,

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAuditLogs } from "../auditLogService";
+import { getAuditLogs } from "../auditLogService.ts";
 import type { PaginationResult } from "@/lib/types";
 import type { AuditLog } from "../auditLogTypes";
 

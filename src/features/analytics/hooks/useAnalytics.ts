@@ -4,7 +4,7 @@ import {
   getTopProducts,
   getUserGrowth,
   getOrderStatusSummary,
-} from "../analyticsService";
+} from "../analyticsService.ts";
 
 // Hook for sales summary data
 export const useSalesSummary = (
@@ -20,7 +20,10 @@ export const useSalesSummary = (
 };
 
 // Hook for top products data
-export const useTopProducts = (limit: number = 5, sortBy: string = "quantity") => {
+export const useTopProducts = (
+  limit: number = 5,
+  sortBy: string = "quantity"
+) => {
   return useQuery({
     queryKey: ["top-products", limit, sortBy],
     queryFn: () => getTopProducts(limit, sortBy),

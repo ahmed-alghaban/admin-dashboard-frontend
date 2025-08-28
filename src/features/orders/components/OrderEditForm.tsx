@@ -4,7 +4,7 @@ import { GenericForm } from "@/components/ui/form/GenericForm";
 import {
   orderEditSchema,
   type OrderEditFormData,
-} from "../schemas/orderEditSchema";
+} from "../schemas/orderEditSchema.ts";
 import { useEditOrder } from "../hooks/useEditOrder";
 import { useOrderById } from "../hooks/useOrders";
 import { Skeleton } from "@/components/ui/skeleton/skeleton";
