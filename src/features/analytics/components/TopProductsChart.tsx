@@ -1,4 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card/card";
 import { Skeleton } from "@/components/ui/skeleton/skeleton";
 import {
   BarChart,
@@ -10,18 +15,22 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Package } from "lucide-react";
-import type { TopProductDto } from "../analyticsTypes";
+import type { TopProductDto } from "../analyticsTypes.ts";
 
 interface TopProductsChartProps {
   data?: TopProductDto[];
   isLoading?: boolean;
 }
 
-const TopProductsChart = ({ data = [], isLoading = false }: TopProductsChartProps) => {
+const TopProductsChart = ({
+  data = [],
+  isLoading = false,
+}: TopProductsChartProps) => {
   const chartData = data.map((item) => ({
-    name: item.productName.length > 15 
-      ? `${item.productName.substring(0, 15)}...` 
-      : item.productName,
+    name:
+      item.productName.length > 15
+        ? `${item.productName.substring(0, 15)}...`
+        : item.productName,
     revenue: item.totalRevenue,
     quantity: item.quantitySold,
     fullName: item.productName,
@@ -45,7 +54,9 @@ const TopProductsChart = ({ data = [], isLoading = false }: TopProductsChartProp
     <Card className="backdrop-blur-sm bg-white/80 dark:bg-slate-900/80 border-white/20 dark:border-slate-700/50 shadow-xl">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div>
-          <CardTitle className="text-lg font-semibold text-slate-800 dark:text-slate-200">Top Products</CardTitle>
+          <CardTitle className="text-lg font-semibold text-slate-800 dark:text-slate-200">
+            Top Products
+          </CardTitle>
           <p className="text-sm text-slate-600 dark:text-slate-400">
             Best performing products by revenue
           </p>

@@ -5,7 +5,7 @@ import {
   CardTitle,
 } from "@/components/ui/card/card";
 import { Activity, Clock, Users, Globe } from "lucide-react";
-import type { AuditLog } from "../auditLogTypes";
+import type { AuditLog } from "../auditLogTypes.ts";
 
 interface AuditLogStatsCardsProps {
   auditLogs: AuditLog[];

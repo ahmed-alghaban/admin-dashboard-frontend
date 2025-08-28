@@ -1,5 +1,5 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import type { Product } from "../productTypes";
+import type { Product } from "../productTypes.ts";
 import {
   DropdownMenu,
   DropdownMenuContent,

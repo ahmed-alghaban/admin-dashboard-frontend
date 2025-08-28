@@ -3,7 +3,7 @@ import { Plus, Download, UserX } from "lucide-react";
 import { useUserUIStore, useUserSelectionStore } from "../store";
 import { exportToExcel, formatUserDataForExport } from "@/lib/utils";
 import { toast } from "sonner";
-import type { User } from "../userTypes";
+import type { User } from "../userTypes.ts";
 
 interface UserPageHeaderProps {
   onBulkDelete: () => void;

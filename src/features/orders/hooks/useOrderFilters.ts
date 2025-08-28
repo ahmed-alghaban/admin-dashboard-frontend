@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo } from "react";
 import { useOrders } from "./useOrders";
-import type { OrderFilters } from "../orderTypes";
+import type { OrderFilters } from "../orderTypes.ts";
 
 export const useOrderFilters = () => {
   const [filters, setFilters] = useState<OrderFilters>({

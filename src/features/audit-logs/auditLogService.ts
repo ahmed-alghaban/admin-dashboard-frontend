@@ -1,5 +1,5 @@
 import api from "@/lib/axios";
-import type { AuditLog } from "./auditLogTypes";
+import type { AuditLog } from "./auditLogTypes.ts";
 import type { PaginationResult } from "@/lib/types";
 import { logger } from "@/lib/logger";
 

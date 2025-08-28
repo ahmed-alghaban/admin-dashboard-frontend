@@ -1,5 +1,5 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import type { Order } from "../orderTypes";
+import type { Order } from "../orderTypes.ts";
 import {
   DropdownMenu,
   DropdownMenuContent,

@@ -5,7 +5,7 @@ import {
   CardTitle,
 } from "@/components/ui/card/card";
 import { Package, TrendingUp, AlertTriangle, DollarSign } from "lucide-react";
-import type { Product } from "../productTypes";
+import type { Product } from "../productTypes.ts";
 
 interface ProductStatsCardsProps {
   products: Product[];

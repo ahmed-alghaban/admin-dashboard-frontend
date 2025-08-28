@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/card/card";
 import { Skeleton } from "@/components/ui/skeleton/skeleton";
 import { Package, DollarSign, TrendingUp, Clock } from "lucide-react";
-import type { Order } from "../orderTypes";
+import type { Order } from "../orderTypes.ts";
 
 interface OrderStatsCardsProps {
   orders: Order[];

@@ -3,7 +3,7 @@ import { useCategoryUIStore, useCategorySelectionStore } from "../stores";
 import { Plus, Download, Trash2 } from "lucide-react";
 import { exportToExcel, formatCategoryDataForExport } from "@/lib/utils";
 import { toast } from "sonner";
-import type { Category } from "../categoryTypes";
+import type { Category } from "../categoryTypes.ts";
 
 interface CategoryPageHeaderProps {
   onBulkDelete: () => void;

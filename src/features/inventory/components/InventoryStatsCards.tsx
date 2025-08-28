@@ -10,7 +10,7 @@ import {
   TrendingDown,
   CheckCircle,
 } from "lucide-react";
-import type { Inventory } from "../inventoryTypes";
+import type { Inventory } from "../inventoryTypes.ts";
 
 interface InventoryStatsCardsProps {
   inventories: Inventory[];

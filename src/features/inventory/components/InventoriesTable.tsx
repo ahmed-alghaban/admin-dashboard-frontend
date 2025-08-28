@@ -1,7 +1,7 @@
 import { DataTable } from "@/components/ui/table/DataTable";
 import { createColumns } from "./InventoryTableColumns";
 import { useInventoryUIStore } from "../stores";
-import type { Inventory } from "../inventoryTypes";
+import type { Inventory } from "../inventoryTypes.ts";
 
 interface InventoriesTableProps {
   inventories: Inventory[];

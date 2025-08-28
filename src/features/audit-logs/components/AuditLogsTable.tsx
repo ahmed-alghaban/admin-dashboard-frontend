@@ -1,6 +1,6 @@
 import { DataTable } from "@/components/ui/table/DataTable";
 import { createColumns } from "./AuditLogTableColumns";
-import type { AuditLog } from "../auditLogTypes";
+import type { AuditLog } from "../auditLogTypes.ts";
 import AuditLogDetailModal from "./AuditLogDetailModal";
 import { useState } from "react";
 import { useAuditLogSelectionStore } from "../stores";

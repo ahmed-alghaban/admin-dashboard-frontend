@@ -1,7 +1,7 @@
 import { DataTable } from "@/components/ui/table/DataTable";
 import { createColumns } from "./OrderTableColumns";
 import { useOrderUIStore, useOrderSelectionStore } from "../stores";
-import type { Order } from "../orderTypes";
+import type { Order } from "../orderTypes.ts";
 import OrderDetailModal from "./OrderDetailModal";
 import { useState } from "react";
 

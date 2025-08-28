@@ -1,4 +1,4 @@
-import type { JWTPayload } from "@/features/auth/authTypes";
+import type { JWTPayload } from "@/features/auth/authTypes.ts";
 import { logger } from "./logger";
 import { useAuthStore } from "@/features/auth/store";
 import { jwtDecode } from "jwt-decode";

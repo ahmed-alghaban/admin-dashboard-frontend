@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button/button";
 import { Download, RefreshCw, Filter } from "lucide-react";
 import { exportToExcel, formatAuditLogDataForExport } from "@/lib/utils";
 import { toast } from "sonner";
-import type { AuditLog } from "../auditLogTypes";
+import type { AuditLog } from "../auditLogTypes.ts";
 import { useAuditLogSelectionStore } from "../stores";
 
 interface AuditLogPageHeaderProps {

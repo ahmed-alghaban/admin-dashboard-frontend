@@ -5,7 +5,7 @@ import {
   CardTitle,
 } from "@/components/ui/card/card";
 import { Users, UserPlus, UserCheck, UserX } from "lucide-react";
-import type { User } from "../userTypes";
+import type { User } from "../userTypes.ts";
 
 interface UserStatsCardsProps {
   users: User[];

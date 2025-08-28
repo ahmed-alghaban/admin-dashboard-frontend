@@ -1,5 +1,5 @@
 import api from "@/lib/axios";
-import type { UserCreateDto, UserUpdateDto, User } from "./userTypes";
+import type { UserCreateDto, UserUpdateDto, User } from "./userTypes.ts";
 import type { PaginationResult } from "@/lib/types";
 import { logger } from "@/lib/logger";
 

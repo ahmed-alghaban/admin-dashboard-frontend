@@ -8,7 +8,7 @@ import {
   MapPin,
   CreditCard,
 } from "lucide-react";
-import type { Order } from "../orderTypes";
+import type { Order } from "../orderTypes.ts";
 
 interface OrderDetailModalProps {
   order: Order | null;

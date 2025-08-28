@@ -3,7 +3,7 @@ import { Plus, Download, Trash2 } from "lucide-react";
 import { useProductUIStore, useProductSelectionStore } from "../stores";
 import { exportToExcel, formatProductDataForExport } from "@/lib/utils";
 import { toast } from "sonner";
-import type { Product } from "../productTypes";
+import type { Product } from "../productTypes.ts";
 
 interface ProductPageHeaderProps {
   onBulkDelete: () => void;

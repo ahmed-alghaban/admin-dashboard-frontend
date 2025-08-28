@@ -1,7 +1,7 @@
 import { DataTable } from "@/components/ui/table/DataTable";
 import { createColumns } from "./UserTableColumns";
 import { useUserUIStore, useUserSelectionStore } from "../store";
-import type { User } from "../userTypes";
+import type { User } from "../userTypes.ts";
 import { useDeleteUser } from "../hooks/useDeleteUser";
 import UserDetailModal from "./UserDetailModal";
 import { useState } from "react";
@@ -46,7 +46,7 @@ const UsersTable = ({
     setIsDetailModalOpen(true);
   };
 
-  const allUserIds = users.map(user => user.userId);
+  const allUserIds = users.map((user) => user.userId);
 
   return (
     <>

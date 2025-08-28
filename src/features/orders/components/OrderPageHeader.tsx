@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button/button";
 import { Plus, Download, Trash2 } from "lucide-react";
 import { exportToExcel, formatOrderDataForExport } from "@/lib/utils";
 import { toast } from "sonner";
-import type { Order } from "../orderTypes";
+import type { Order } from "../orderTypes.ts";
 import { useOrderSelectionStore } from "../stores";
 
 interface OrderPageHeaderProps {

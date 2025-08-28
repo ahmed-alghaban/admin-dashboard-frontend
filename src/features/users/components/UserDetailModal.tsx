@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/avatar/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Mail, Phone, Shield } from "lucide-react";
-import type { User as UserType } from "../userTypes";
+import type { User as UserType } from "../userTypes.ts";
 
 interface UserDetailModalProps {
   user: UserType | null;

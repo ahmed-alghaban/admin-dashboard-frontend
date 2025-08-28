@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown/dropdown-menu";
-import type { Inventory } from "../inventoryTypes";
+import type { Inventory } from "../inventoryTypes.ts";
 
 export const createColumns = (
   onEdit: (inventory: Inventory) => void

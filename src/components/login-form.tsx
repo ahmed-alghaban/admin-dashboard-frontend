@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/form/input";
 import { Label } from "@/components/ui/form/label";
 import { useLogin } from "@/features/auth/hooks/useLogin";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import type { LoginInput } from "@/features/auth/authTypes";
+import type { LoginInput } from "@/features/auth/authTypes.ts";
 import { Lock, Eye, EyeOff, Mail, Shield } from "lucide-react";
 import { useState } from "react";
 

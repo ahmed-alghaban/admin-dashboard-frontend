@@ -1,7 +1,7 @@
 import { DetailModal } from "@/components/ui/detail-modal";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Activity, User, Globe, FileText, Clock } from "lucide-react";
-import type { AuditLog } from "../auditLogTypes";
+import type { AuditLog } from "../auditLogTypes.ts";
 
 interface AuditLogDetailModalProps {
   auditLog: AuditLog | null;

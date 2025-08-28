@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { Category } from "../categoryTypes";
+import type { Category } from "../categoryTypes.ts";
 
 interface CategorySelectionState {
   selectedCategories: Set<string>;

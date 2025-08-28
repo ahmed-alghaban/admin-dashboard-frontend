@@ -4,7 +4,7 @@ import { inventoryEditSchema } from "../schemas/inventoryEditSchema.ts";
 import type { z } from "zod";
 import { NumberField } from "@/components/ui/form/fields/NumberField";
 import { useUpdateInventory } from "../hooks/useUpdateInventory";
-import type { Inventory } from "../inventoryTypes";
+import type { Inventory } from "../inventoryTypes.ts";
 
 interface InventoryEditFormProps {
   inventory: Inventory;

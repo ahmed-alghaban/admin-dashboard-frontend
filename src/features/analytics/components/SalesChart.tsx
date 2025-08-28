@@ -1,4 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card/card";
 import { Skeleton } from "@/components/ui/skeleton/skeleton";
 import {
   Line,
@@ -11,7 +16,7 @@ import {
   AreaChart,
 } from "recharts";
 import { TrendingUp } from "lucide-react";
-import type { SalesSummaryDto } from "../analyticsTypes";
+import type { SalesSummaryDto } from "../analyticsTypes.ts";
 
 interface SalesChartProps {
   data?: SalesSummaryDto[];
@@ -19,16 +24,26 @@ interface SalesChartProps {
   timeframe?: string;
 }
 
-const SalesChart = ({ data = [], isLoading = false, timeframe = "daily" }: SalesChartProps) => {
+const SalesChart = ({
+  data = [],
+  isLoading = false,
+  timeframe = "daily",
+}: SalesChartProps) => {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     switch (timeframe) {
       case "daily":
-        return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+        return date.toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+        });
       case "weekly":
         return `Week ${date.getDate()}`;
       case "monthly":
-        return date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+        return date.toLocaleDateString("en-US", {
+          month: "short",
+          year: "numeric",
+        });
       default:
         return date.toLocaleDateString();
     }
@@ -58,7 +73,9 @@ const SalesChart = ({ data = [], isLoading = false, timeframe = "daily" }: Sales
     <Card className="backdrop-blur-sm bg-white/80 dark:bg-slate-900/80 border-white/20 dark:border-slate-700/50 shadow-xl">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div>
-          <CardTitle className="text-lg font-semibold text-slate-800 dark:text-slate-200">Sales Overview</CardTitle>
+          <CardTitle className="text-lg font-semibold text-slate-800 dark:text-slate-200">
+            Sales Overview
+          </CardTitle>
           <p className="text-sm text-slate-600 dark:text-slate-400">
             Revenue and order trends over time
           </p>
@@ -70,7 +87,13 @@ const SalesChart = ({ data = [], isLoading = false, timeframe = "daily" }: Sales
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={chartData}>
               <defs>
-                <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
+                <linearGradient
+                  id="revenueGradient"
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="1"
+                >
                   <stop offset="5%" stopColor="#10b981" stopOpacity={0.3} />
                   <stop offset="95%" stopColor="#10b981" stopOpacity={0.1} />
                 </linearGradient>

@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { useAuditLogs } from "./useAuditLogs";
-import type { AuditLogFilters } from "../auditLogTypes";
+import type { AuditLogFilters } from "../auditLogTypes.ts";
 
 export const useAuditLogFilters = () => {
   const [filters, setFilters] = useState<AuditLogFilters>({

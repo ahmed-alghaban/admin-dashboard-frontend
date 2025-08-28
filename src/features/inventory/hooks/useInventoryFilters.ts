@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { useInventories } from "./useInventories";
-import type { InventoryFilters } from "../inventoryTypes";
+import type { InventoryFilters } from "../inventoryTypes.ts";
 
 export const useInventoryFilters = () => {
   const [filters, setFilters] = useState<InventoryFilters>({

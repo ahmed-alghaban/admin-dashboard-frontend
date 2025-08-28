@@ -1,5 +1,5 @@
 import type { ColumnDef } from "@tanstack/react-table";
-import type { Category } from "../categoryTypes";
+import type { Category } from "../categoryTypes.ts";
 import {
   DropdownMenu,
   DropdownMenuContent,

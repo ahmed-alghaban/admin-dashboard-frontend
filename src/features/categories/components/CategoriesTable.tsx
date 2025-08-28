@@ -1,7 +1,7 @@
 import { DataTable } from "@/components/ui/table/DataTable";
 import { createColumns } from "./CategoryTableColumns";
 import { useCategoryUIStore, useCategorySelectionStore } from "../stores";
-import type { Category } from "../categoryTypes";
+import type { Category } from "../categoryTypes.ts";
 import CategoryDetailModal from "./CategoryDetailModal";
 import { useState } from "react";
 

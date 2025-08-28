@@ -1,7 +1,7 @@
 import { DetailModal } from "@/components/ui/detail-modal";
 import { Badge } from "@/components/ui/badge";
 import { FolderOpen, Package } from "lucide-react";
-import type { Category } from "../categoryTypes";
+import type { Category } from "../categoryTypes.ts";
 
 interface CategoryDetailModalProps {
   category: Category | null;

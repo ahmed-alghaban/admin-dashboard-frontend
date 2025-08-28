@@ -1,4 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card/card";
 import { Skeleton } from "@/components/ui/skeleton/skeleton";
 import {
   PieChart,
@@ -9,14 +14,17 @@ import {
   Legend,
 } from "recharts";
 import { FileText } from "lucide-react";
-import type { OrderStatusSummaryDto } from "../analyticsTypes";
+import type { OrderStatusSummaryDto } from "../analyticsTypes.ts";
 
 interface OrderStatusChartProps {
   data?: OrderStatusSummaryDto[];
   isLoading?: boolean;
 }
 
-const OrderStatusChart = ({ data = [], isLoading = false }: OrderStatusChartProps) => {
+const OrderStatusChart = ({
+  data = [],
+  isLoading = false,
+}: OrderStatusChartProps) => {
   const COLORS = {
     Pending: "#f59e0b",
     Processing: "#3b82f6",
@@ -50,7 +58,9 @@ const OrderStatusChart = ({ data = [], isLoading = false }: OrderStatusChartProp
     <Card className="backdrop-blur-sm bg-white/80 dark:bg-slate-900/80 border-white/20 dark:border-slate-700/50 shadow-xl">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <div>
-          <CardTitle className="text-lg font-semibold text-slate-800 dark:text-slate-200">Order Status</CardTitle>
+          <CardTitle className="text-lg font-semibold text-slate-800 dark:text-slate-200">
+            Order Status
+          </CardTitle>
           <p className="text-sm text-slate-600 dark:text-slate-400">
             Distribution of orders by status
           </p>
@@ -66,7 +76,9 @@ const OrderStatusChart = ({ data = [], isLoading = false }: OrderStatusChartProp
                 cx="50%"
                 cy="50%"
                 labelLine={false}
-                label={({ name, percent }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
+                label={({ name, percent }) =>
+                  `${name} ${((percent || 0) * 100).toFixed(0)}%`
+                }
                 outerRadius={80}
                 fill="#8884d8"
                 dataKey="value"

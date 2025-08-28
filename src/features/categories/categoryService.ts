@@ -1,6 +1,6 @@
 import api from "@/lib/axios";
 import { logger } from "@/lib/logger";
-import type { CategoryCreateDto, CategoryUpdateDto } from "./categoryTypes";
+import type { CategoryCreateDto, CategoryUpdateDto } from "./categoryTypes.ts";
 
 export const getCategories = async () => {
   const response = await api.get("/categories");

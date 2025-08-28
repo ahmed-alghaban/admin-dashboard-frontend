@@ -23,7 +23,7 @@ import {
   CardTitle,
 } from "@/components/ui/card/card";
 import { Plus, Trash2, Package } from "lucide-react";
-import type { OrderItem } from "../orderTypes";
+import type { OrderItem } from "../orderTypes.ts";
 import { toast } from "sonner";
 
 interface OrderCreateFormProps {

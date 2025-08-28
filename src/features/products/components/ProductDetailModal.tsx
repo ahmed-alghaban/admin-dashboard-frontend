@@ -1,7 +1,7 @@
 import { DetailModal } from "@/components/ui/detail-modal";
 import { Badge } from "@/components/ui/badge";
 import { Package, DollarSign, Tag } from "lucide-react";
-import type { Product } from "../productTypes";
+import type { Product } from "../productTypes.ts";
 
 interface ProductDetailModalProps {
   product: Product | null;

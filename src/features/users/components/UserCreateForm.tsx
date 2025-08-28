@@ -7,7 +7,7 @@ import {
   type UserCreateFormData,
 } from "../schemas/userSchema.ts";
 import { toast } from "sonner";
-import { defaultValues } from "../userTypes";
+import { defaultValues } from "../userTypes.ts";
 import { logger } from "@/lib/logger";
 import { useAddUser } from "../hooks/useAddUser";
 import { useRoles } from "@/features/roles/hooks/userRoles";

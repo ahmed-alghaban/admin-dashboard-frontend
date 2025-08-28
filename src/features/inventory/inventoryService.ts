@@ -1,5 +1,5 @@
 import api from "@/lib/axios";
-import type { Inventory } from "./inventoryTypes";
+import type { Inventory } from "./inventoryTypes.ts";
 import type { PaginationResult } from "@/lib/types";
 import { logger } from "@/lib/logger";
 

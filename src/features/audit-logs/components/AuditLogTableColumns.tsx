@@ -1,6 +1,6 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Activity, Eye } from "lucide-react";
-import type { AuditLog } from "../auditLogTypes";
+import type { AuditLog } from "../auditLogTypes.ts";
 import { Checkbox } from "@/components/ui/checkbox";
 
 export const createColumns = (

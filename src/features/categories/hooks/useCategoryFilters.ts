@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useCategories } from "./useCategories";
 import { useCategoryPreferencesStore } from "../stores/categoryPreferencesStore";
-import type { Category } from "../categoryTypes";
+import type { Category } from "../categoryTypes.ts";
 
 interface CategoryFilters {
   searchTerm: string;

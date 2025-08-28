@@ -1,7 +1,7 @@
 import { DataTable } from "@/components/ui/table/DataTable";
 import { createColumns } from "./ProductTableColumns";
 import { useProductUIStore, useProductSelectionStore } from "../stores";
-import type { Product } from "../productTypes";
+import type { Product } from "../productTypes.ts";
 import ProductDetailModal from "./ProductDetailModal";
 import { useState } from "react";
 
@@ -29,7 +29,8 @@ const ProductsTable = ({
 
   // Zustand store for UI state
   const { openEditDrawer } = useProductUIStore();
-  const { selectedProducts, toggleProduct, selectAll } = useProductSelectionStore();
+  const { selectedProducts, toggleProduct, selectAll } =
+    useProductSelectionStore();
 
   const handleEditProduct = (product: Product) => {
     openEditDrawer(product.productId);
@@ -45,7 +46,7 @@ const ProductsTable = ({
     setIsDetailModalOpen(true);
   };
 
-  const allProductIds = products.map(product => product.productId);
+  const allProductIds = products.map((product) => product.productId);
 
   return (
     <>
