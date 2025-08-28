@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:netlify": "tsc -b && vite build --mode production",
     "lint": "eslint .",
     "preview": "vite preview"
   },
