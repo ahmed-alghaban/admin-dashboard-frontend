@@ -1,0 +1,5 @@
+[33m735f16b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m fix: update product schema imports to use direct file paths matching codebase pattern
+[33mc4d33e3[m fixed react ts issues for build 5
+[33ma6cabf4[m fixed react ts issues for build 4
+[33m446bf0a[m fixed react ts issues for build 3
+[33m1e74753[m fixed react ts issues for build 2
