@@ -6,11 +6,11 @@ import { Button } from "@/components/ui/button/button";
 import {
   productCreateSchema,
   type ProductCreateFormData,
-} from "../schemas/productSchema";
-import { defaultValues } from "../productTypes";
+} from "@/features/products/schemas/productSchema";
+import { defaultValues } from "@/features/products/productTypes";
 import { logger } from "@/lib/logger";
-import { useCreateProduct } from "../hooks/useCreateProducts";
-import { useCategories } from "../hooks/useCategories";
+import { useCreateProduct } from "@/features/products/hooks/useCreateProducts";
+import { useCategories } from "@/features/products/hooks/useCategories";
 import type { UserCreateFormProps } from "@/lib/types";
 
 export const ProductCreateForm = ({

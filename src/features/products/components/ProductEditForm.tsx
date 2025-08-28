@@ -5,9 +5,9 @@ import type { z } from "zod";
 import { TextField } from "@/components/ui/form/fields/TextField";
 import { SelectField } from "@/components/ui/form/fields/SelectField";
 import { NumberField } from "@/components/ui/form/fields/NumberField";
-import { useEditProduct } from "../hooks/useEditProduct";
-import { useGetProductById } from "../hooks/useGetProductById";
-import { useCategories } from "../hooks/useCategories";
+import { useEditProduct } from "@/features/products/hooks/useEditProduct";
+import { useGetProductById } from "@/features/products/hooks/useGetProductById";
+import { useCategories } from "@/features/products/hooks/useCategories";
 import type { ProductEditFormProps } from "@/lib/types";
 
 const ProductEditForm = ({
