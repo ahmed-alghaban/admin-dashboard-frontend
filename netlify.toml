@@ -1,10 +1,10 @@
 [build]
-  command = "npm ci && npm run build"
+  command = "npm ci --legacy-peer-deps && npm run build:check"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "20.19.0"
-  NPM_FLAGS = "--no-audit --prefer-offline"
+  NPM_FLAGS = "--no-audit --prefer-offline --legacy-peer-deps"
   CI = "true"
   NODE_ENV = "production"
 
