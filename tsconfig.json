@@ -3,7 +3,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx"
   },
   "files": [],
   "references": [

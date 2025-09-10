@@ -1,4 +1,4 @@
-import type { UserCreateFormData } from "./schemas/userSchema";
+import type { UserCreateFormData } from "./schemas/userSchema.ts";
 import type { PaginationResult } from "@/lib/types";
 
 export type { PaginationResult };

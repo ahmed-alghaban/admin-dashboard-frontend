@@ -1,5 +1,5 @@
 import type { Category } from "../categories/categoryTypes.ts";
-import type { ProductCreateFormData } from "@/features/products/schemas/productSchema.ts";
+import type { ProductCreateFormData } from "@/features/products/schemas/productSchema";
 
 // Product Create DTO
 export interface ProductCreateDto {
