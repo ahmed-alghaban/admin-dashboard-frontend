@@ -15,6 +15,7 @@ frontend:
       commands:
         - 'echo "Starting build..."'
         - 'echo "Running build with npm script..."'
+        - echo "VITE_API_URL=$VITE_API_URL"
         - npm run build --ignore-engines
         - 'echo "Build completed successfully!"'
         - 'echo "Checking build output..."'
